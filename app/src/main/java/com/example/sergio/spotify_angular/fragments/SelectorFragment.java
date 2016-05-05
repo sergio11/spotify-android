@@ -16,7 +16,6 @@ import com.example.sergio.spotify_angular.R;
 
 import com.example.sergio.spotify_angular.adapters.GridViewAdapter;
 
-import java.util.List;
 
 /**
  * Created by sergio on 04/05/2016.

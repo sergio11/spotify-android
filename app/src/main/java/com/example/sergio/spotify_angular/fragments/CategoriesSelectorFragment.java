@@ -4,8 +4,7 @@ import android.widget.Toast;
 
 import com.example.sergio.spotify_angular.adapters.CategoriesAdapter;
 
-import java.util.List;
-
+import com.example.sergio.spotify_angular.R;
 import kaaes.spotify.webapi.android.models.CategoriesPager;
 import kaaes.spotify.webapi.android.models.Category;
 import retrofit.Callback;
