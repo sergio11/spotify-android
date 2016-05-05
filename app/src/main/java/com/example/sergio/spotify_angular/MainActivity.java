@@ -5,6 +5,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.sergio.spotify_angular.adapters.CategoriesAdapter;
 import com.example.sergio.spotify_angular.fragments.CategoriesSelectorFragment;
@@ -14,6 +16,16 @@ import com.example.sergio.spotify_angular.fragments.PlaylistsSelectorFragment;
 
 public class MainActivity extends AppCompatActivity implements CategoriesSelectorFragment.OnCategorySelectedListener {
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
 
     public void setFragment(Fragment frag, int target, boolean replace, boolean addToBackStack )
     {

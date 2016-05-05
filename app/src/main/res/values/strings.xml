@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">spotify-angular</string>
+    <string name="preferencias">Preferencias</string>
+    <string name="ltima_escuchada">última escuchada</string>
+    <string name="buscar">buscar</string>
+    <string name="acerca_de">Acerca de ...</string>
 </resources>
