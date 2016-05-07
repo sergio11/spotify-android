@@ -10,15 +10,11 @@ import kaaes.spotify.webapi.android.SpotifyService;
  */
 public class BaseApp extends Application {
 
-    private final static String TOKEN = "c65cbfadaf724c3a89034d5672ae023a";
-
     private SpotifyService spotify;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+    public void initSpotifyService(String accessToken) {
         SpotifyApi api = new SpotifyApi();
-        api.setAccessToken(BaseApp.TOKEN);
+        api.setAccessToken(accessToken);
         spotify = api.getService();
     }
 

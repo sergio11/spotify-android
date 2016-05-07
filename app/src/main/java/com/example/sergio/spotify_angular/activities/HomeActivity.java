@@ -1,4 +1,4 @@
-package com.example.sergio.spotify_angular;
+package com.example.sergio.spotify_angular.activities;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -8,13 +8,17 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.adapters.CategoriesAdapter;
 import com.example.sergio.spotify_angular.fragments.CategoriesSelectorFragment;
 import com.example.sergio.spotify_angular.fragments.PlaylistsSelectorFragment;
 
+import java.util.ArrayList;
+
+import kaaes.spotify.webapi.android.models.Category;
 
 
-public class MainActivity extends AppCompatActivity implements CategoriesSelectorFragment.OnCategorySelectedListener {
+public class HomeActivity extends AppCompatActivity implements CategoriesSelectorFragment.OnCategorySelectedListener {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -49,9 +53,9 @@ public class MainActivity extends AppCompatActivity implements CategoriesSelecto
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.home_main);
         if (findViewById(R.id.left_content) != null){
-            CategoriesAdapter adapter = new CategoriesAdapter(this,null);
+            CategoriesAdapter adapter = new CategoriesAdapter(this,new ArrayList<Category>());
             CategoriesSelectorFragment fragment = new CategoriesSelectorFragment(adapter);
             setFragment(fragment, R.id.left_content, false, false);
         }
