@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ImageView
         android:id="@+id/poster"
-        android:layout_width="120dp"
-        android:layout_height="180dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_margin="12dp"/>
@@ -13,9 +13,10 @@
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:text="Titulo"
         android:textAlignment="center"
         android:lines="2"
-        android:textColor="#000"
+        android:textColor="@color/primary_dark"
         android:textSize="18dp"/>
-</LinearLayout>
+</FrameLayout>
