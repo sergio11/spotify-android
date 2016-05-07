@@ -34,4 +34,6 @@ dependencies {
     compile 'com.github.kaaes:spotify-web-api-android:0.4.1'
     // This library handles authentication and authorization
     compile 'com.spotify.sdk:spotify-auth:1.0.0-beta12@aar'
+    //A powerful image downloading and caching library for Android
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

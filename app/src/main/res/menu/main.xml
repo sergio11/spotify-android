@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="be.hcpl.android.example.MainActivity" >
 
     <item
         android:id="@+id/menu_buscar"
         android:icon="@android:drawable/ic_menu_search"
-        android:orderInCategory="1"
-        android:showAsAction="always|collapseActionView"
+        android:orderInCategory="100"
+        app:showAsAction="always|collapseActionView"
         android:title="@string/buscar"/>
 
     <item
         android:id="@+id/menu_ultimo"
         android:icon="@android:drawable/ic_menu_set_as"
-        android:orderInCategory="2"
-        android:showAsAction="ifRoom|withText"
+        android:orderInCategory="200"
+        app:showAsAction="ifRoom|withText"
         android:title="@string/ltima_escuchada"/>
 
     <item
         android:id="@+id/menu_preferencias"
         android:icon="@android:drawable/ic_menu_preferences"
-        android:orderInCategory="3"
-        android:showAsAction="ifRoom"
+        android:orderInCategory="300"
+        app:showAsAction="ifRoom"
         android:title="@string/preferencias"/>
 
 
     <item
         android:id="@+id/menu_acerca"
-        android:orderInCategory="110"
-        android:showAsAction="never"
+        android:orderInCategory="400"
+        app:showAsAction="never"
         android:title="@string/acerca_de"/>
 </menu>

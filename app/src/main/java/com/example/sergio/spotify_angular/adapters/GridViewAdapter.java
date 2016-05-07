@@ -13,10 +13,12 @@ import com.example.sergio.spotify_angular.R;
  */
 public abstract class GridViewAdapter<Model> extends BaseAdapter {
 
+    protected Context context;
     protected LayoutInflater inflater;
     protected List<Model> data;
 
     public GridViewAdapter(Context context, List<Model> data){
+        this.context = context;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.data = data;
     }
