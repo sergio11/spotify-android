@@ -4,15 +4,13 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 
-import com.example.sergio.spotify_angular.adapters.GridViewAdapter;
+import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
 
 import kaaes.spotify.webapi.android.models.PlaylistSimple;
 import kaaes.spotify.webapi.android.models.PlaylistsPager;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-
-import com.example.sergio.spotify_angular.R;
 
 /**
  * Created by sergio on 05/05/2016.
@@ -21,7 +19,7 @@ public class PlaylistsSelectorFragment extends SelectorFragment<PlaylistSimple> 
 
     public final static String ARG_CATEGORY_ID = "category_id";
 
-    public PlaylistsSelectorFragment(GridViewAdapter<PlaylistSimple> adapter) {
+    public PlaylistsSelectorFragment(RecyclerViewBaseAdapter<PlaylistSimple> adapter) {
         super(adapter);
     }
 

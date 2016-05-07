@@ -3,13 +3,30 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="vertical"
+    android:background="@android:color/background_dark">
+    <LinearLayout
+        android:id="@+id/featured_playlists"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:orientation="vertical">
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/g_neros_y_estados_de_nimo"
+        android:textSize="20dp"
+        android:textAllCaps="true"
+        android:paddingTop="15dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="7dp"
+        android:paddingRight="7dp"
+        android:textColor="@android:color/darker_gray"/>
     <LinearLayout
         android:id="@+id/left_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-
     </LinearLayout>
 
 </LinearLayout>

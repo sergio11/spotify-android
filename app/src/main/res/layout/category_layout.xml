@@ -8,15 +8,17 @@
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="12dp"/>
+        android:layout_margin="6dp"/>
     <TextView
-        android:id="@+id/title"
-        android:layout_width="fill_parent"
+        android:id="@+id/tittle"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:text="Titulo"
-        android:textAlignment="center"
-        android:lines="2"
-        android:textColor="@color/primary_dark"
-        android:textSize="18dp"/>
+        android:layout_gravity="center"
+        android:textSize="18dp"
+        android:gravity="center|bottom"
+        android:layout_marginTop="15dp"
+        android:lines="3"
+        android:ellipsize="end"
+        android:textColor="@android:color/white"
+        />
 </FrameLayout>

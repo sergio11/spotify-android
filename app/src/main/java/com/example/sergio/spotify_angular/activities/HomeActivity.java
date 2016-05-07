@@ -7,8 +7,9 @@ import android.view.MenuItem;
 
 import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.adapters.CategoriesAdapter;
-import com.example.sergio.spotify_angular.adapters.PlayListAdapter;
+import com.example.sergio.spotify_angular.adapters.PlaylistsAdapter;
 import com.example.sergio.spotify_angular.fragments.CategoriesSelectorFragment;
+import com.example.sergio.spotify_angular.fragments.FeaturedPlaylistsFragment;
 import com.example.sergio.spotify_angular.fragments.PlaylistsSelectorFragment;
 import com.example.sergio.spotify_angular.utils.AppHelpers;
 
@@ -22,7 +23,7 @@ public class HomeActivity extends AppCompatActivity implements CategoriesSelecto
 
 
     private CategoriesAdapter categoriesAdapter;
-    private PlayListAdapter playListAdapter;
+    private PlaylistsAdapter playListAdapter;
 
 
     @Override
@@ -41,8 +42,9 @@ public class HomeActivity extends AppCompatActivity implements CategoriesSelecto
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         categoriesAdapter = new CategoriesAdapter(this,new ArrayList<Category>());
-        playListAdapter = new PlayListAdapter(this,new ArrayList<PlaylistSimple>());
+        playListAdapter = new PlaylistsAdapter(this, new ArrayList<PlaylistSimple>());
         setContentView(R.layout.home_main);
+        showFeaturedPlaylistsFragment(R.id.featured_playlists);
         showCategoriesSelectorFragment(R.id.left_content);
     }
 
@@ -50,6 +52,14 @@ public class HomeActivity extends AppCompatActivity implements CategoriesSelecto
     public void onCategorySelected(String categoryId) {
         Bundle args = new Bundle();
         args.putString(PlaylistsSelectorFragment.ARG_CATEGORY_ID, categoryId);
+
+    }
+
+    private void showFeaturedPlaylistsFragment(int target){
+        if (findViewById(target) != null && playListAdapter != null){
+            FeaturedPlaylistsFragment fragment = new FeaturedPlaylistsFragment(playListAdapter);
+            AppHelpers.setFragment(this,fragment,target, false, false);
+        }
 
     }
 
