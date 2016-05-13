@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="explorer_menu_items">
+        <item>@array/lists</item>
+        <item>@array/new_releases</item>
+        <item>@array/discover</item>
+        <item>@array/concerts</item>
+    </array>
+
+    <array name="lists">
+        <item>fa_line_chart</item>
+        <item>Listas</item>
+    </array>
+
+    <array name="new_releases">
+        <item>fa_calendar_o</item>
+        <item>New Releases</item>
+    </array>
+
+    <array name="discover">
+        <item>fa_calendar_o</item>
+        <item>Discover</item>
+    </array>
+
+    <array name="concerts">
+        <item>fa_ticket</item>
+        <item>Concerts</item>
+    </array>
+
+
+</resources>

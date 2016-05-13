@@ -7,10 +7,13 @@ import android.view.MenuItem;
 
 import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.adapters.CategoriesAdapter;
+import com.example.sergio.spotify_angular.adapters.MenuAdapter;
 import com.example.sergio.spotify_angular.adapters.PlaylistsAdapter;
 import com.example.sergio.spotify_angular.fragments.CategoriesSelectorFragment;
 import com.example.sergio.spotify_angular.fragments.FeaturedPlaylistsFragment;
+import com.example.sergio.spotify_angular.fragments.MenuExplorerFragment;
 import com.example.sergio.spotify_angular.fragments.PlaylistsSelectorFragment;
+import com.example.sergio.spotify_angular.models.MenuAppItem;
 import com.example.sergio.spotify_angular.utils.AppHelpers;
 
 import java.util.ArrayList;
@@ -24,6 +27,7 @@ public class HomeActivity extends AppCompatActivity implements CategoriesSelecto
 
     private CategoriesAdapter categoriesAdapter;
     private PlaylistsAdapter playListAdapter;
+    private MenuAdapter menuAdapter;
 
 
     @Override
@@ -43,9 +47,11 @@ public class HomeActivity extends AppCompatActivity implements CategoriesSelecto
         super.onCreate(savedInstanceState);
         categoriesAdapter = new CategoriesAdapter(this,new ArrayList<Category>());
         playListAdapter = new PlaylistsAdapter(this, new ArrayList<PlaylistSimple>());
+        menuAdapter = new MenuAdapter(this, new ArrayList<MenuAppItem>());
         setContentView(R.layout.home_main);
         showFeaturedPlaylistsFragment(R.id.featured_playlists);
         showCategoriesSelectorFragment(R.id.left_content);
+        showMenuExplorerFragment(R.id.menu_explorer_container);
     }
 
     @Override
@@ -53,6 +59,13 @@ public class HomeActivity extends AppCompatActivity implements CategoriesSelecto
         Bundle args = new Bundle();
         args.putString(PlaylistsSelectorFragment.ARG_CATEGORY_ID, categoryId);
 
+    }
+
+    private  void showMenuExplorerFragment(int target){
+        if (findViewById(target) != null && menuAdapter != null){
+            MenuExplorerFragment fragment = new MenuExplorerFragment(menuAdapter);
+            AppHelpers.setFragment(this,fragment,target, false, false);
+        }
     }
 
     private void showFeaturedPlaylistsFragment(int target){
