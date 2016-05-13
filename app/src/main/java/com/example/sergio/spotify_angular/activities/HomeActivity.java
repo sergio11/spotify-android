@@ -9,10 +9,12 @@ import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.adapters.CategoriesAdapter;
 import com.example.sergio.spotify_angular.adapters.MenuAdapter;
 import com.example.sergio.spotify_angular.adapters.PlaylistsAdapter;
+import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
 import com.example.sergio.spotify_angular.fragments.CategoriesSelectorFragment;
 import com.example.sergio.spotify_angular.fragments.FeaturedPlaylistsFragment;
 import com.example.sergio.spotify_angular.fragments.MenuExplorerFragment;
 import com.example.sergio.spotify_angular.fragments.PlaylistsSelectorFragment;
+import com.example.sergio.spotify_angular.fragments.SelectorFragment;
 import com.example.sergio.spotify_angular.models.MenuAppItem;
 import com.example.sergio.spotify_angular.utils.AppHelpers;
 
@@ -60,6 +62,7 @@ public class HomeActivity extends AppCompatActivity implements CategoriesSelecto
         args.putString(PlaylistsSelectorFragment.ARG_CATEGORY_ID, categoryId);
 
     }
+
 
     private  void showMenuExplorerFragment(int target){
         if (findViewById(target) != null && menuAdapter != null){
