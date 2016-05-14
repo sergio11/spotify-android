@@ -7,4 +7,8 @@
     <string name="g_neros_y_estados_de_nimo">Géneros y estados de ánimo</string>
     <string name="drawer_open">Navigation Drawer opened</string>
     <string name="drawer_close">Navigation Drawer closed</string>
+    <string name="search">Buscar</string>
+    <string name="explorar">Explorar</string>
+    <string name="radio">Radio</string>
+    <string name="your_music">Tu Música</string>
 </resources>

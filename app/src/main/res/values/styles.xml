@@ -8,6 +8,11 @@
         <item name="colorAccent">@color/accent</item>
     </style>
 
+    <style name="NavigationDrawerStyle">
+        <item name="android:textSize">20sp</item><!-- text size in menu-->
+        <item name="android:listPreferredItemHeightSmall">40dp</item><!-- item size in menu-->
+    </style>
+
     <style name="LoginScreen" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowBackground">@drawable/login_background</item>
     </style>

@@ -58,7 +58,7 @@ public class HomeActivity extends AppCompatActivity  {
         // Create a new fragment and specify the fragment to show based on nav item clicked
         Fragment fragment = null;
         switch(menuItem.getItemId()) {
-            case R.id.nav_first_fragment:
+            case R.id.nav_explorer:
                 fragment =  new ExplorerFragment();
                 break;
             default:
