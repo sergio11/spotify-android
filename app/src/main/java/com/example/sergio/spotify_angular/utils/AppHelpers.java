@@ -6,11 +6,13 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.telephony.TelephonyManager;
 
 import com.example.sergio.spotify_angular.models.MenuAppItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -53,4 +55,6 @@ public class AppHelpers {
 
         return menu;
     }
+
+
 }
