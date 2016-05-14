@@ -5,4 +5,6 @@
     <string name="buscar">buscar</string>
     <string name="acerca_de">Acerca de ...</string>
     <string name="g_neros_y_estados_de_nimo">Géneros y estados de ánimo</string>
+    <string name="drawer_open">Navigation Drawer opened</string>
+    <string name="drawer_close">Navigation Drawer closed</string>
 </resources>

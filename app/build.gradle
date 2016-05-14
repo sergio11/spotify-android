@@ -39,4 +39,6 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.0.+'
     compile 'com.android.support:recyclerview-v7:23.0.+'
     compile 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
+    compile 'com.jakewharton:butterknife:8.0.1'
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

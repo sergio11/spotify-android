@@ -1,10 +1,19 @@
 package com.example.sergio.spotify_angular;
 
 import android.app.Application;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.example.sergio.spotify_angular.events.ApiErrorEvent;
+import com.example.sergio.spotify_angular.services.CategoriesService;
+import com.example.sergio.spotify_angular.services.PlaylistsService;
+import com.example.sergio.spotify_angular.services.UserService;
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
@@ -14,7 +23,10 @@ import kaaes.spotify.webapi.android.SpotifyService;
  */
 public class BaseApp extends Application {
 
-    private SpotifyService spotify;
+    private UserService userService;
+    private CategoriesService categoriesService;
+    private PlaylistsService playlistsService;
+    private EventBus bus = EventBus.getDefault();
 
     @Override
     public void onCreate() {
@@ -22,13 +34,27 @@ public class BaseApp extends Application {
         Iconify.with(new FontAwesomeModule());
     }
 
-    public void initSpotifyService(String accessToken) {
+    public void initServices(String accessToken) {
         SpotifyApi api = new SpotifyApi();
         api.setAccessToken(accessToken);
-        spotify = api.getService();
+        SpotifyService spotify = api.getService();
+
+        userService = new UserService(spotify, bus);
+        categoriesService = new CategoriesService(spotify, bus);
+        playlistsService = new PlaylistsService(spotify,bus);
+
+        bus.register(userService);
+        bus.register(categoriesService);
+        bus.register(playlistsService);
+        bus.register(this); //listen for "global" events
+
     }
 
-    public SpotifyService getSpotify() {
-        return spotify;
+    @Subscribe
+    public void onApiError(ApiErrorEvent event) {
+        Toast.makeText(this,event.getError().getMessage(), Toast.LENGTH_LONG).show();
+        Log.e("ReaderApp", event.getError().getMessage());
     }
+
+
 }

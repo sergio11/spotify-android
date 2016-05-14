@@ -2,10 +2,9 @@ package com.example.sergio.spotify_angular.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
-
-import com.example.sergio.spotify_angular.BaseApp;
-
 import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
+
+import org.greenrobot.eventbus.EventBus;
 
 
 /**
@@ -14,7 +13,6 @@ import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
 public abstract class SelectorFragment<Model> extends Fragment {
 
     protected RecyclerViewBaseAdapter<Model> adapter;
-    protected BaseApp app;
 
     public SelectorFragment(RecyclerViewBaseAdapter<Model> adapter) {
         this.adapter = adapter;
@@ -28,7 +26,6 @@ public abstract class SelectorFragment<Model> extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        app = (BaseApp) activity.getApplication();
     }
 
     @Override
@@ -37,4 +34,6 @@ public abstract class SelectorFragment<Model> extends Fragment {
         //load data
         this.loadData();
     }
+
+
 }

@@ -9,30 +9,35 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.adapters.PlaylistsAdapter;
+import com.example.sergio.spotify_angular.events.FeaturedPlaylistLoadedEvent;
+import com.example.sergio.spotify_angular.events.LoadFeaturedPlaylistEvent;
 
-import kaaes.spotify.webapi.android.models.FeaturedPlaylists;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import kaaes.spotify.webapi.android.models.PlaylistSimple;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+
 
 /**
  * Created by sergio on 07/05/2016.
  */
 public class FeaturedPlaylistsFragment extends SelectorFragment<PlaylistSimple> {
 
+    protected EventBus bus;
+    protected TextView message;
+
     public FeaturedPlaylistsFragment(PlaylistsAdapter adapter) {
         super(adapter);
+        bus = EventBus.getDefault();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.featured_playlist_fragment, container, false);
+        message = (TextView) view.findViewById(R.id.message);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerList = (RecyclerView) view.findViewById(R.id.featured_playlists_recyclerview);
         recyclerList.setLayoutManager(layoutManager);
@@ -40,23 +45,31 @@ public class FeaturedPlaylistsFragment extends SelectorFragment<PlaylistSimple> 
         return view;
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
     @Override
     protected void loadData() {
-
-        app.getSpotify().getFeaturedPlaylists(new Callback<FeaturedPlaylists>() {
-            @Override
-            public void success(FeaturedPlaylists featuredPlaylists, Response response) {
-                TextView message = (TextView) getView().findViewById(R.id.message);
-                message.setText(featuredPlaylists.message);
-                adapter.setData(featuredPlaylists.playlists.items);
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Toast.makeText(app, error.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-
+        bus.post(new LoadFeaturedPlaylistEvent());
     }
+
+
+    @Subscribe
+    public void onFeaturedPlaylistLoaded(FeaturedPlaylistLoadedEvent event){
+        message.setText(event.getMessage());
+        adapter.setData(event.getPlaylist());
+        adapter.notifyDataSetChanged();
+    }
+
+
 }

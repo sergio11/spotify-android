@@ -3,22 +3,20 @@ package com.example.sergio.spotify_angular.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.adapters.CategoriesAdapter;
+import com.example.sergio.spotify_angular.events.CategoriesLoadedEvent;
+import com.example.sergio.spotify_angular.events.LoadCategoriesEvent;
 
-import kaaes.spotify.webapi.android.models.CategoriesPager;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import kaaes.spotify.webapi.android.models.Category;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+
 
 /**
  * Created by sergio on 04/05/2016.
@@ -26,10 +24,12 @@ import retrofit.client.Response;
 public class CategoriesSelectorFragment extends SelectorFragment<Category> {
 
     private final static String TAG = "CATEGORIES";
+    protected EventBus bus;
 
 
     public CategoriesSelectorFragment(CategoriesAdapter adapter) {
         super(adapter);
+        bus = EventBus.getDefault();
     }
 
     @Nullable
@@ -44,23 +44,31 @@ public class CategoriesSelectorFragment extends SelectorFragment<Category> {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
 
     @Override
     protected void loadData() {
-        app.getSpotify().getCategories(null, new Callback<CategoriesPager>() {
-            @Override
-            public void success(CategoriesPager categoriesPager, Response response) {
-                adapter.setData(categoriesPager.categories.items);
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.e(TAG,error.getMessage());
-                Toast.makeText(app, error.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+        bus.post(new LoadCategoriesEvent());
     }
+
+    @Subscribe
+    public void onCategoriesLoaded(CategoriesLoadedEvent event){
+        adapter.setData(event.getCategories());
+        adapter.notifyDataSetChanged();
+    }
+
+
 
     public interface OnCategorySelectedListener{
         void onCategorySelected(String categoryId);

@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE) {
             AuthenticationResponse response = AuthenticationClient.getResponse(resultCode, intent);
             if (response.getType() == AuthenticationResponse.Type.TOKEN) {
-                ((BaseApp) getApplication()).initSpotifyService(response.getAccessToken());
+                ((BaseApp) getApplication()).initServices(response.getAccessToken());
                 Intent homeIntent = new Intent(this, HomeActivity.class);
                 homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(homeIntent);

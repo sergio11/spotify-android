@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 
 import java.util.List;
 
-import com.example.sergio.spotify_angular.R;
-
 /**
  * Created by sergio on 04/05/2016.
  */
