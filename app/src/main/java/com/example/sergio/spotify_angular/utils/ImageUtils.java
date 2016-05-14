@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -83,7 +86,7 @@ public class ImageUtils {
     }
 
     public static void getBlurredImage(final Context context,
-                                       final int bitmapRes, final String nameToSave, final int radius,
+                                       final String url, final String nameToSave, final int radius,
                                        final BlurEffectListener listener) {
         new Thread(new Runnable() {
 
@@ -93,15 +96,17 @@ public class ImageUtils {
                 Bitmap blurredBitmap = null;
                 if (!saveFile.exists()) {
                     try {
-                        Bitmap orgBitmap = BitmapFactory.decodeResource(
-                                context.getResources(), bitmapRes);
-                        blurredBitmap = Blur.fastblur(context, orgBitmap,
-                                radius);
+                        URL ulrn = new URL(url);
+                        HttpURLConnection con = (HttpURLConnection)ulrn.openConnection();
+                        InputStream is = con.getInputStream();
+                        Bitmap bmp = BitmapFactory.decodeStream(is);
+                        blurredBitmap = Blur.fastblur(context, bmp,radius);
                         saveFile.createNewFile();
                         ImageUtils.storeImage(blurredBitmap, saveFile);
+
                     } catch (IOException e) {
                         e.printStackTrace();
-                    }
+                    }catch(Exception e){}
 
                 } else {
                     blurredBitmap = BitmapFactory.decodeFile(saveFile

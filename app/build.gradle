@@ -32,6 +32,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:design:23.1.1'
+    //A circular ImageView for Android
+    compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.github.kaaes:spotify-web-api-android:0.4.1'
     // This library handles authentication and authorization
     compile 'com.spotify.sdk:spotify-auth:1.0.0-beta12@aar'
