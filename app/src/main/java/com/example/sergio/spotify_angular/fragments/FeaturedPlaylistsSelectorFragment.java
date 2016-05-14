@@ -23,12 +23,12 @@ import kaaes.spotify.webapi.android.models.PlaylistSimple;
 /**
  * Created by sergio on 07/05/2016.
  */
-public class FeaturedPlaylistsFragment extends SelectorFragment<PlaylistSimple> {
+public class FeaturedPlaylistsSelectorFragment extends SelectorFragment<PlaylistSimple> {
 
     protected EventBus bus;
     protected TextView message;
 
-    public FeaturedPlaylistsFragment(PlaylistsAdapter adapter) {
+    public FeaturedPlaylistsSelectorFragment(PlaylistsAdapter adapter) {
         super(adapter);
         bus = EventBus.getDefault();
     }

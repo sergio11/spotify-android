@@ -1,53 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true">
 
-    <ScrollView
+    <!-- This LinearLayout represents the contents of the screen  -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-        <LinearLayout
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- The ActionBar displayed at the top -->
+        <include
+            layout="@layout/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@android:color/background_dark">
-            <LinearLayout
-                android:id="@+id/featured_playlists"
-                android:layout_width="match_parent"
-                android:layout_height="260dp"
-                android:orientation="vertical">
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/menu_explorer_container"
-                android:layout_width="match_parent"
-                android:layout_height="260dp"
-                android:orientation="vertical">
-            </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/g_neros_y_estados_de_nimo"
-                android:textSize="20dp"
-                android:textAllCaps="true"
-                android:paddingTop="15dp"
-                android:paddingBottom="5dp"
-                android:paddingLeft="7dp"
-                android:paddingRight="7dp"
-                android:textColor="@color/primary"/>
-            <LinearLayout
-                android:id="@+id/left_content"
-                android:layout_width="match_parent"
-                android:layout_height="1200dp"
-                android:orientation="horizontal">
-            </LinearLayout>
+            android:layout_height="wrap_content" />
 
-        </LinearLayout>
-    </ScrollView>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
 
+            <!-- The main content view where fragments are loaded -->
+            <FrameLayout
+                android:id="@+id/flContent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </ScrollView>
+    </LinearLayout>
 
-    <include layout="@layout/navigation_drawer"></include>
+    <!-- The navigation drawer that comes from the left -->
+    <!-- Note that `android:layout_gravity` needs to be set to 'start' -->
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nvView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@android:color/black"
+        app:menu="@menu/drawer_view"
+        app:headerLayout="@layout/nav_header"/>
 
 </android.support.v4.widget.DrawerLayout>
