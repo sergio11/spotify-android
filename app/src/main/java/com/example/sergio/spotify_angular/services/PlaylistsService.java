@@ -1,8 +1,6 @@
 package com.example.sergio.spotify_angular.services;
 
-import android.widget.TextView;
 
-import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.events.ApiErrorEvent;
 import com.example.sergio.spotify_angular.events.FeaturedPlaylistLoadedEvent;
 import com.example.sergio.spotify_angular.events.LoadFeaturedPlaylistEvent;
@@ -19,19 +17,16 @@ import retrofit.client.Response;
 /**
  * Created by sergio on 14/05/2016.
  */
-public class PlaylistsService {
+public class PlaylistsService extends BaseService {
 
-    private SpotifyService service;
-    private EventBus bus;
 
     public PlaylistsService(SpotifyService service, EventBus bus) {
-        this.service = service;
-        this.bus = bus;
+        super(service, bus);
     }
 
     @Subscribe
     public void onLoadFeaturedPlaylists(LoadFeaturedPlaylistEvent event){
-        service.getFeaturedPlaylists(new Callback<FeaturedPlaylists>() {
+        service.getFeaturedPlaylists(options,new Callback<FeaturedPlaylists>() {
             @Override
             public void success(FeaturedPlaylists featuredPlaylists, Response response) {
                 bus.post(new FeaturedPlaylistLoadedEvent(featuredPlaylists.message,featuredPlaylists.playlists.items));

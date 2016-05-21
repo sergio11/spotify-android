@@ -4,14 +4,9 @@ package com.example.sergio.spotify_angular.services;
 import com.example.sergio.spotify_angular.events.ApiErrorEvent;
 import com.example.sergio.spotify_angular.events.CategoriesLoadedEvent;
 import com.example.sergio.spotify_angular.events.LoadCategoriesEvent;
-import com.neovisionaries.i18n.CountryCode;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 import kaaes.spotify.webapi.android.SpotifyService;
 import kaaes.spotify.webapi.android.models.CategoriesPager;
@@ -22,18 +17,10 @@ import retrofit.client.Response;
 /**
  * Created by sergio on 14/05/2016.
  */
-public class CategoriesService {
-
-    private SpotifyService service;
-    private EventBus bus;
-    private Map<String,Object> options = new HashMap<>();
+public class CategoriesService extends BaseService{
 
     public CategoriesService(SpotifyService service, EventBus bus) {
-        this.service = service;
-        this.bus = bus;
-        String country = CountryCode.getByLocale(Locale.getDefault()).getAlpha2();
-        options.put("country", country);
-        options.put("locale", "es_"+country );
+        super(service,bus);
     }
 
     @Subscribe

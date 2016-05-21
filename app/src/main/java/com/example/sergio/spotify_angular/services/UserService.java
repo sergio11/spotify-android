@@ -13,14 +13,10 @@ import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
-public class UserService {
-
-    private SpotifyService service;
-    private EventBus bus;
+public class UserService extends BaseService {
 
     public UserService(SpotifyService service, EventBus bus) {
-        this.service = service;
-        this.bus = bus;
+        super(service, bus);
     }
 
     @Subscribe
