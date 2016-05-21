@@ -20,8 +20,10 @@ import android.widget.TextView;
 
 import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.events.LoadProfileEvent;
+import com.example.sergio.spotify_angular.events.PlaylistSelectedEvent;
 import com.example.sergio.spotify_angular.events.ProfileLoadedEvent;
 import com.example.sergio.spotify_angular.fragments.ExplorerFragment;
+import com.example.sergio.spotify_angular.fragments.PlaylistPreviewFragment;
 import com.example.sergio.spotify_angular.utils.AppHelpers;
 import com.example.sergio.spotify_angular.utils.ImageUtils;
 import com.squareup.picasso.Picasso;
@@ -32,7 +34,7 @@ import org.greenrobot.eventbus.Subscribe;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class HomeActivity extends AppCompatActivity  {
+public class HomeActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
@@ -63,7 +65,7 @@ public class HomeActivity extends AppCompatActivity  {
         }
 
 
-        AppHelpers.setFragment(this,fragment, R.id.flContent, false,true);
+        AppHelpers.setFragment(this,fragment, R.id.flContent, true,true);
 
         // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
@@ -169,6 +171,11 @@ public class HomeActivity extends AppCompatActivity  {
                 header.setBackground(new BitmapDrawable(getResources(),bitmap));
             }
         } );
-
     }
+
+    @Subscribe
+    public void onPlaylistSelected(PlaylistSelectedEvent event){
+        AppHelpers.setFragment(this,new PlaylistPreviewFragment(), R.id.flContent, true,true);
+    }
+
 }

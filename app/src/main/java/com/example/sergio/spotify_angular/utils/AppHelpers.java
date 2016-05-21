@@ -23,16 +23,14 @@ public class AppHelpers {
     public static void setFragment(Activity activity, Fragment frag, int target, boolean replace, boolean addToBackStack )
     {
         FragmentManager fm = activity.getFragmentManager();
-        if (fm.findFragmentById(target) == null) {
-            FragmentTransaction transaction = fm.beginTransaction();
-            if(replace){
-                transaction.replace(target, frag);
-            }else{
-                transaction.add(target, frag);
-            }
-            if(addToBackStack) transaction.addToBackStack(null);
-            transaction.commit();
+        FragmentTransaction transaction = fm.beginTransaction();
+        if(replace){
+            transaction.replace(target,frag,"FRAGMENT");
+        }else{
+            transaction.add(target, frag, "FRAGMENT");
         }
+        if(addToBackStack) transaction.addToBackStack(null);
+        transaction.commit();
 
     }
 

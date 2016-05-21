@@ -28,7 +28,7 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:design:23.1.1'
@@ -45,6 +45,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.0.1'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.neovisionaries:nv-i18n:1.18'
-    //Parallax ListView and ScrollView for Android
+    //Parallax ScrollView and ListView for Android
     compile 'com.github.nirhart:parallaxscroll:1.0'
 }

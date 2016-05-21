@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.adapters.CategoriesAdapter;
+import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
 import com.example.sergio.spotify_angular.events.CategoriesLoadedEvent;
 import com.example.sergio.spotify_angular.events.LoadCategoriesEvent;
 import com.example.sergio.spotify_angular.utils.GridAutofitLayoutManager;
@@ -22,10 +23,12 @@ import kaaes.spotify.webapi.android.models.Category;
 /**
  * Created by sergio on 04/05/2016.
  */
-public class CategoriesSelectorFragment extends SelectorFragment<Category> {
+public class CategoriesSelectorFragment extends SelectorFragment<Category> implements RecyclerViewBaseAdapter.OnItemClickListener<Category>{
 
     private final static String TAG = "CATEGORIES";
+    private final static int COLUMN_WIDTH = 350;
     protected EventBus bus;
+    private RecyclerView recyclerList;
 
 
     public CategoriesSelectorFragment(CategoriesAdapter adapter) {
@@ -37,8 +40,8 @@ public class CategoriesSelectorFragment extends SelectorFragment<Category> {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.category_selector_fragment, container, false);
-        GridAutofitLayoutManager gridLayoutManager = new GridAutofitLayoutManager(getActivity(),350, GridLayoutManager.VERTICAL, false);
-        RecyclerView recyclerList = (RecyclerView) view.findViewById(R.id.categories_recyclerview);
+        GridAutofitLayoutManager gridLayoutManager = new GridAutofitLayoutManager(getActivity(),COLUMN_WIDTH, GridLayoutManager.VERTICAL, false);
+        recyclerList = (RecyclerView) view.findViewById(R.id.categories_recyclerview);
         recyclerList.setLayoutManager(gridLayoutManager);
         recyclerList.setAdapter(adapter);
         return view;
@@ -69,9 +72,10 @@ public class CategoriesSelectorFragment extends SelectorFragment<Category> {
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onItemClick(Category item) {
 
-
-    public interface OnCategorySelectedListener{
-        void onCategorySelected(String categoryId);
     }
+
+
 }

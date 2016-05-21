@@ -12,8 +12,10 @@ import android.widget.TextView;
 
 import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.adapters.PlaylistsAdapter;
+import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
 import com.example.sergio.spotify_angular.events.FeaturedPlaylistLoadedEvent;
 import com.example.sergio.spotify_angular.events.LoadFeaturedPlaylistEvent;
+import com.example.sergio.spotify_angular.events.PlaylistSelectedEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -23,10 +25,11 @@ import kaaes.spotify.webapi.android.models.PlaylistSimple;
 /**
  * Created by sergio on 07/05/2016.
  */
-public class FeaturedPlaylistsSelectorFragment extends SelectorFragment<PlaylistSimple> {
+public class FeaturedPlaylistsSelectorFragment extends SelectorFragment<PlaylistSimple> implements RecyclerViewBaseAdapter.OnItemClickListener<PlaylistSimple>{
 
     protected EventBus bus;
     protected TextView message;
+    private RecyclerView recyclerList;
 
     public FeaturedPlaylistsSelectorFragment(PlaylistsAdapter adapter) {
         super(adapter);
@@ -39,7 +42,7 @@ public class FeaturedPlaylistsSelectorFragment extends SelectorFragment<Playlist
         View view = inflater.inflate(R.layout.featured_playlist_fragment, container, false);
         message = (TextView) view.findViewById(R.id.message);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView recyclerList = (RecyclerView) view.findViewById(R.id.featured_playlists_recyclerview);
+        recyclerList = (RecyclerView) view.findViewById(R.id.featured_playlists_recyclerview);
         recyclerList.setLayoutManager(layoutManager);
         recyclerList.setAdapter(adapter);
         return view;
@@ -71,4 +74,9 @@ public class FeaturedPlaylistsSelectorFragment extends SelectorFragment<Playlist
         adapter.notifyDataSetChanged();
     }
 
+
+    @Override
+    public void onItemClick(PlaylistSimple item) {
+        bus.post(new PlaylistSelectedEvent(item));
+    }
 }

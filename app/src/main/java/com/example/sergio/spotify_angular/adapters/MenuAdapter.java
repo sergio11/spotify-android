@@ -67,5 +67,7 @@ public class MenuAdapter extends RecyclerViewBaseAdapter<MenuAppItem> {
         public void setText(String text) {
             this.text.setText(text);
         }
+
+
     }
 }

@@ -28,5 +28,16 @@
         <item>Concerts</item>
     </array>
 
+    <string-array name="data">
+        <item>text_string</item>
+        <item>text_string</item>
+        <item>text_string</item>
+        <item>text_string</item>
+        <item>text_string</item>
+        <item>text_string</item>
+        <item>text_string</item>
+        <item>text_string</item>
+    </string-array>
+
 
 </resources>
