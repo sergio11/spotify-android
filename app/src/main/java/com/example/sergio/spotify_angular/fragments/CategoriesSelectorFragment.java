@@ -12,6 +12,7 @@ import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.adapters.CategoriesAdapter;
 import com.example.sergio.spotify_angular.events.CategoriesLoadedEvent;
 import com.example.sergio.spotify_angular.events.LoadCategoriesEvent;
+import com.example.sergio.spotify_angular.utils.GridAutofitLayoutManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -36,7 +37,7 @@ public class CategoriesSelectorFragment extends SelectorFragment<Category> {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.category_selector_fragment, container, false);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(),3,GridLayoutManager.VERTICAL, false);
+        GridAutofitLayoutManager gridLayoutManager = new GridAutofitLayoutManager(getActivity(),350, GridLayoutManager.VERTICAL, false);
         RecyclerView recyclerList = (RecyclerView) view.findViewById(R.id.categories_recyclerview);
         recyclerList.setLayoutManager(gridLayoutManager);
         recyclerList.setAdapter(adapter);

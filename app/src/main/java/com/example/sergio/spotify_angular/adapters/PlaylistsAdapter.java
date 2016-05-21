@@ -39,6 +39,7 @@ public class PlaylistsAdapter extends RecyclerViewBaseAdapter<PlaylistSimple> {
     }
 
 
+
     static class FeaturedPlaylistsViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView image;

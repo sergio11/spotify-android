@@ -45,4 +45,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.0.1'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.neovisionaries:nv-i18n:1.18'
+    //Parallax ListView and ScrollView for Android
+    compile 'com.github.nirhart:parallaxscroll:1.0'
 }

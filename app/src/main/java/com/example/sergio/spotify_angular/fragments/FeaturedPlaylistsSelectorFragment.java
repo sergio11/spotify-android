@@ -71,5 +71,4 @@ public class FeaturedPlaylistsSelectorFragment extends SelectorFragment<Playlist
         adapter.notifyDataSetChanged();
     }
 
-
 }
