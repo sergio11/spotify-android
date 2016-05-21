@@ -1,6 +1,7 @@
 package com.example.sergio.spotify_angular.fragments;
 
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,21 +20,27 @@ import com.example.sergio.spotify_angular.events.PlaylistSelectedEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
+
 import kaaes.spotify.webapi.android.models.PlaylistSimple;
 
 
 /**
  * Created by sergio on 07/05/2016.
  */
-public class FeaturedPlaylistsSelectorFragment extends SelectorFragment<PlaylistSimple> implements RecyclerViewBaseAdapter.OnItemClickListener<PlaylistSimple>{
+public class FeaturedPlaylistsSelectorFragment extends Fragment implements RecyclerViewBaseAdapter.OnItemClickListener<PlaylistSimple>{
 
-    protected EventBus bus;
+    protected EventBus bus = EventBus.getDefault();
     protected TextView message;
     private RecyclerView recyclerList;
+    private PlaylistsAdapter adapter;
 
-    public FeaturedPlaylistsSelectorFragment(PlaylistsAdapter adapter) {
-        super(adapter);
-        bus = EventBus.getDefault();
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        bus.register(this);
     }
 
     @Nullable
@@ -41,29 +48,28 @@ public class FeaturedPlaylistsSelectorFragment extends SelectorFragment<Playlist
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.featured_playlist_fragment, container, false);
         message = (TextView) view.findViewById(R.id.message);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerList = (RecyclerView) view.findViewById(R.id.featured_playlists_recyclerview);
         recyclerList.setLayoutManager(layoutManager);
+
+        adapter = new PlaylistsAdapter(getActivity(), new ArrayList<PlaylistSimple>());
+        adapter.setOnItemClickListener(this);
+
         recyclerList.setAdapter(adapter);
         return view;
     }
 
-
     @Override
-    public void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        EventBus.getDefault().unregister(this);
-        super.onStop();
-    }
-
-    @Override
-    protected void loadData() {
+    public void onResume() {
+        super.onResume();
         bus.post(new LoadFeaturedPlaylistEvent());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        bus.unregister(this);
     }
 
 

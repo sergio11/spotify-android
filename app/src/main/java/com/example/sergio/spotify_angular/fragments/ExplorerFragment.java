@@ -29,26 +29,22 @@ public class ExplorerFragment extends Fragment{
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_explorer, container, false);
+        return view;
+    }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         //Load FeaturedPlayList Fragment
-        PlaylistsAdapter playListAdapter = new PlaylistsAdapter(getActivity(), new ArrayList<PlaylistSimple>());
 
-        FeaturedPlaylistsSelectorFragment featuredPlaylistsFragment = new FeaturedPlaylistsSelectorFragment(playListAdapter);
+        FeaturedPlaylistsSelectorFragment featuredPlaylistsFragment = new FeaturedPlaylistsSelectorFragment();
         AppHelpers.setFragment(getActivity(),featuredPlaylistsFragment,R.id.featured_playlists, false, false);
         //Load MenuExplorer Fragment
-        MenuAdapter menuAdapter = new MenuAdapter(getActivity(), new ArrayList<MenuAppItem>());
-        MenuExplorerFragment menuExplorerFragment = new MenuExplorerFragment(menuAdapter);
+        MenuExplorerFragment menuExplorerFragment = new MenuExplorerFragment();
         AppHelpers.setFragment(getActivity(),menuExplorerFragment,R.id.menu_explorer_container, false, false);
 
         //Load Categories Fragment
-        CategoriesAdapter categoriesAdapter = new CategoriesAdapter(getActivity(), new ArrayList<Category>());
-        CategoriesSelectorFragment categoriesSelectorFragment = new CategoriesSelectorFragment(categoriesAdapter);
+        CategoriesSelectorFragment categoriesSelectorFragment = new CategoriesSelectorFragment();
         AppHelpers.setFragment(getActivity(),categoriesSelectorFragment,R.id.left_content, false, false);
-
-        return view;
-
     }
-
-
-
 }

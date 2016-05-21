@@ -38,8 +38,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@android:color/black"
-        app:itemTextColor="@color/primary"
-        app:itemIconTint="@color/primary_dark"
+        app:itemTextColor="@android:color/white"
+        app:itemIconTint="@color/primary"
         app:theme="@style/NavigationDrawerStyle"
         app:menu="@menu/drawer_view"
         app:headerLayout="@layout/nav_header"/>

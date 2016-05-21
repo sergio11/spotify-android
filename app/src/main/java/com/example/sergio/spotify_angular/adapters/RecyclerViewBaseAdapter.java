@@ -17,6 +17,7 @@ public abstract class RecyclerViewBaseAdapter<T> extends RecyclerView.Adapter {
     protected List<T> data;
     private  OnItemClickListener<T> listener;
 
+
     public RecyclerViewBaseAdapter(Context context, List<T> data){
         this.context = context;
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -40,11 +41,13 @@ public abstract class RecyclerViewBaseAdapter<T> extends RecyclerView.Adapter {
     }
 
     public void bindToListener(final RecyclerView.ViewHolder view) {
-        view.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                listener.onItemClick(data.get(view.getLayoutPosition()));
-            }
-        });
+        if(listener != null){
+            view.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    listener.onItemClick(data.get(view.getLayoutPosition()));
+                }
+            });
+        }
     }
 
     public void setOnItemClickListener(OnItemClickListener<T> listener){

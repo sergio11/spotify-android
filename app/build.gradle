@@ -21,7 +21,8 @@ android {
 
 repositories {
     mavenCentral()
-    maven { url "https://jitpack.io" }
+    maven {url "https://jitpack.io"}
+    maven {url "https://clojars.org/repo/"}
     flatDir {
         dirs 'libs'
     }
@@ -45,6 +46,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.0.1'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.neovisionaries:nv-i18n:1.18'
-    //Parallax ScrollView and ListView for Android
-    compile 'com.github.nirhart:parallaxscroll:1.0'
+    //An adapter which could be used to achieve a parallax effect on RecyclerView.
+    compile 'com.github.kanytu:android-parallax-recyclerview:v1.7'
 }

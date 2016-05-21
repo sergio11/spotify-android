@@ -3,113 +3,92 @@ package com.example.sergio.spotify_angular.fragments;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sergio.spotify_angular.R;
-import com.example.sergio.spotify_angular.utils.AnotherView;
-import com.nirhart.parallaxscroll.views.ParallaxScrollView;
+import com.poliveira.parallaxrecyclerview.HeaderLayoutManagerFixed;
+import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by sergio on 21/05/2016.
  */
 public class PlaylistPreviewFragment extends Fragment {
 
-    private ParallaxScrollView mScrollView;
-    private ListView lvMain;
-    private LinearLayout llMain, llMainHolder;
-    private AnotherView anotherView;
-    private ImageView iv;
-    private TextView tvTitle;
+    protected RecyclerView recyclerPlaylistTracks;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //super.onCreateView(inflater, container, savedInstanceState);
-
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.playlist_preview_fragment,container,false);
+        recyclerPlaylistTracks = (RecyclerView)view.findViewById(R.id.playlist_tracks);
 
-        // Initialize components
+        final List<String> content = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            content.add("item " + i);
+        }
 
-        mScrollView = (ParallaxScrollView) view.findViewById(R.id.scroll_view);
-
-        llMain = (LinearLayout) view.findViewById(R.id.llMain);
-
-        llMainHolder = (LinearLayout) view.findViewById(R.id.llMainHolder);
-
-        lvMain = (ListView) view.findViewById(R.id.lvMain);
-
-        iv = (ImageView) view.findViewById(R.id.iv);
-
-        tvTitle = (TextView) view.findViewById(R.id.tvTitle);
-
-        anotherView = (AnotherView) view.findViewById(R.id.anotherView);
-
-        String[] items = {"one", "two", "three", "four", "five", "six", "seven", "eight",
-                "nine", "ten", "evelen", "twelve", "thirteen", "fourteen"};
-
-        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, items);
-
-        lvMain.setAdapter(itemsAdapter);
-
-
-        lvMain.post(new Runnable() {
+        final ParallaxRecyclerAdapter<String> adapter = new ParallaxRecyclerAdapter<String>(content) {
+            @Override
+            public void onBindViewHolderImpl(RecyclerView.ViewHolder viewHolder, ParallaxRecyclerAdapter<String> adapter, int i) {
+                TrackViewHolder trackViewHolder = (TrackViewHolder)viewHolder;
+                trackViewHolder.setTitle(content.get(i));
+            }
 
             @Override
-            public void run() {
+            public RecyclerView.ViewHolder onCreateViewHolderImpl(ViewGroup viewGroup, final ParallaxRecyclerAdapter<String> adapter, int i) {
+                return new TrackViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.playlist_track_layout, viewGroup, false));
+            }
 
-                // Adjusts llMain's height to match ListView's height
-                setListViewHeight(lvMain, llMain);
+            @Override
+            public int getItemCountImpl(ParallaxRecyclerAdapter<String> adapter) {
+                return content.size();
+            }
+        };
 
-                // LayoutParams to set the top margin of LinearLayout holding
-                // the content.
-                // topMargin = iv.getHeight() - tvTitle.getHeight()
-                LinearLayout.LayoutParams p =
-                        (LinearLayout.LayoutParams)llMainHolder.getLayoutParams();
-                p.topMargin = iv.getHeight() - tvTitle.getHeight();
-                llMainHolder.setLayoutParams(p);
+        adapter.setOnClickEvent(new ParallaxRecyclerAdapter.OnClickEvent() {
+            @Override
+            public void onClick(View v, int position) {
+                Toast.makeText(getActivity(), "You clicked '" + position + "'", Toast.LENGTH_SHORT).show();
             }
         });
+
+        recyclerPlaylistTracks.setLayoutManager(new LinearLayoutManager(getActivity()));
+        View header = inflater.inflate(R.layout.playlist_tracks_header, recyclerPlaylistTracks, false);
+        adapter.setParallaxHeader(header, recyclerPlaylistTracks);
+        adapter.setData(content);
+        recyclerPlaylistTracks.setAdapter(adapter);
+
 
         return view;
     }
 
-    // Sets the ListView holder's height
-    public void setListViewHeight(ListView listView, LinearLayout llMain) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
 
-            return;
+
+    static class TrackViewHolder extends RecyclerView.ViewHolder{
+
+        private TextView title;
+
+        public TrackViewHolder(View itemView) {
+            super(itemView);
+            title = (TextView)itemView.findViewById(R.id.title);
         }
 
-        int totalHeight = 0;
-        int firstHeight = 0;
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(
-                listView.getWidth(), View.MeasureSpec.AT_MOST);
-
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-
-            if (i == 0) {
-                View listItem = listAdapter.getView(i, null, listView);
-                listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-                firstHeight = listItem.getMeasuredHeight();
-            }
-            totalHeight += firstHeight;
+        public void setTitle(String title) {
+            this.title.setText(title);
         }
 
-        LinearLayout.LayoutParams params =
-                (LinearLayout.LayoutParams)llMain.getLayoutParams();
-
-        params.height = totalHeight + (listView.getDividerHeight() *
-                (listAdapter.getCount() - 1));
-        llMain.setLayoutParams(params);
-        anotherView.requestLayout();
+        public String getTitle() {
+            return title.toString();
+        }
     }
 }

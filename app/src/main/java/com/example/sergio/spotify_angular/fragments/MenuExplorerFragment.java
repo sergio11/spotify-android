@@ -1,5 +1,6 @@
 package com.example.sergio.spotify_angular.fragments;
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,17 +14,15 @@ import com.example.sergio.spotify_angular.adapters.MenuAdapter;
 import com.example.sergio.spotify_angular.models.MenuAppItem;
 import com.example.sergio.spotify_angular.utils.AppHelpers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by sergio on 13/05/2016.
  */
-public class MenuExplorerFragment extends SelectorFragment<MenuAppItem> {
+public class MenuExplorerFragment extends Fragment {
 
-
-    public MenuExplorerFragment(MenuAdapter adapter) {
-        super(adapter);
-    }
+    private MenuAdapter adapter;
 
     @Nullable
     @Override
@@ -32,15 +31,19 @@ public class MenuExplorerFragment extends SelectorFragment<MenuAppItem> {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         RecyclerView recyclerList = (RecyclerView) view.findViewById(R.id.menu_explorer_recyclerview);
         recyclerList.setLayoutManager(linearLayoutManager);
+
+        adapter =  new MenuAdapter(getActivity(), new ArrayList<MenuAppItem>());
         recyclerList.setAdapter(adapter);
         return view;
 
     }
 
     @Override
-    protected void loadData() {
+    public void onResume() {
+        super.onResume();
         List<MenuAppItem> menu = AppHelpers.getMenuFromResources(getActivity(), R.array.explorer_menu_items );
         adapter.setData(menu);
         adapter.notifyDataSetChanged();
     }
+
 }

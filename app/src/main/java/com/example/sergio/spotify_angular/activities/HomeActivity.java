@@ -33,25 +33,14 @@ import org.greenrobot.eventbus.Subscribe;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-
 public class HomeActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private ActionBarDrawerToggle drawerToggle;
-    private EventBus bus;
+    private EventBus bus = EventBus.getDefault();
     private NavigationView nvDrawer;
 
-    private void setupDrawerContent(NavigationView navigationView) {
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        selectDrawerItem(menuItem);
-                        return true;
-                    }
-                });
-    }
 
     public void selectDrawerItem(MenuItem menuItem) {
         // Create a new fragment and specify the fragment to show based on nav item clicked
@@ -61,7 +50,7 @@ public class HomeActivity extends AppCompatActivity {
                 fragment =  new ExplorerFragment();
                 break;
             default:
-                fragment =  new ExplorerFragment();
+                fragment =  new PlaylistPreviewFragment();
         }
 
 
@@ -73,6 +62,7 @@ public class HomeActivity extends AppCompatActivity {
         setTitle(menuItem.getTitle());
         // Close the navigation drawer
         mDrawer.closeDrawers();
+
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
@@ -97,10 +87,17 @@ public class HomeActivity extends AppCompatActivity {
         // Find our drawer view
         nvDrawer = (NavigationView) findViewById(R.id.nvView);
         // Setup drawer view
-        setupDrawerContent(nvDrawer);
+        nvDrawer.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
 
-        //get EventBus
-        bus = EventBus.getDefault();
+
+
 
     }
 
