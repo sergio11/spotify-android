@@ -36,7 +36,7 @@ public class PlaylistsAdapter extends RecyclerViewBaseAdapter<PlaylistSimple> {
         FeaturedPlaylistsViewHolder playlistsViewHolder = (FeaturedPlaylistsViewHolder)holder;
         playlistsViewHolder.setName(playlist.name);
         bindToListener(playlistsViewHolder);
-        Picasso.with(context).load(playlist.images.get(0).url).placeholder(R.drawable.loader).into(playlistsViewHolder.getImage());
+        Picasso.with(context).load(playlist.images.get(0).url).placeholder(R.drawable.ic_playlist).into(playlistsViewHolder.getImage());
     }
 
 

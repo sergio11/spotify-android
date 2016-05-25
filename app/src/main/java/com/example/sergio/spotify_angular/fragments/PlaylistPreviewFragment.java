@@ -28,7 +28,6 @@ public class PlaylistPreviewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.playlist_preview_fragment,container,false);
         recyclerPlaylistTracks = (RecyclerView)view.findViewById(R.id.playlist_tracks);
 
@@ -65,9 +64,7 @@ public class PlaylistPreviewFragment extends Fragment {
         recyclerPlaylistTracks.setLayoutManager(new LinearLayoutManager(getActivity()));
         View header = inflater.inflate(R.layout.playlist_tracks_header, recyclerPlaylistTracks, false);
         adapter.setParallaxHeader(header, recyclerPlaylistTracks);
-        adapter.setData(content);
         recyclerPlaylistTracks.setAdapter(adapter);
-
 
         return view;
     }

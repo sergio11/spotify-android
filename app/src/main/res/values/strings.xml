@@ -11,4 +11,6 @@
     <string name="explorar">Explorar</string>
     <string name="radio">Radio</string>
     <string name="your_music">Tu Música</string>
+    <string name="spotify_login_fail_title">Fallo al iniciar sesión</string>
+    <string name="spotify_login_fail_message">Error al iniciar sesión en Spotify</string>
 </resources>
