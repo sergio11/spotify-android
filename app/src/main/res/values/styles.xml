@@ -14,7 +14,7 @@
     </style>
 
     <style name="LoginScreen" parent="Theme.AppCompat.Light.NoActionBar">
-        <!--<item name="android:windowBackground">@drawable/login_background</item>-->
+        <item name="android:windowBackground">@drawable/login_background</item>
     </style>
 
 </resources>

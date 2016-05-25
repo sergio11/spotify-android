@@ -36,7 +36,7 @@ public class CategoriesAdapter extends RecyclerViewBaseAdapter<Category> {
         CategoriesViewHolder categoryViewHolder = (CategoriesViewHolder)holder;
         categoryViewHolder.setName(category.name);
         bindToListener(categoryViewHolder);
-        Picasso.with(context).load(category.icons.get(0).url).placeholder(R.drawable.loader).into(categoryViewHolder.getImage());
+        Picasso.with(context).load(category.icons.get(0).url).placeholder(R.drawable.ic_categories).into(categoryViewHolder.getImage());
     }
 
 
