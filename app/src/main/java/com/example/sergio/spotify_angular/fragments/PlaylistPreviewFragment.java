@@ -8,27 +8,45 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sergio.spotify_angular.R;
 import com.poliveira.parallaxrecyclerview.HeaderLayoutManagerFixed;
 import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import kaaes.spotify.webapi.android.models.PlaylistSimple;
 
 /**
  * Created by sergio on 21/05/2016.
  */
 public class PlaylistPreviewFragment extends Fragment {
 
+    public final static String PLAYLIST_PARAM = "playlist";
+
     protected RecyclerView recyclerPlaylistTracks;
+    protected PlaylistSimple playlist;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle arguments = getArguments();
+        if (arguments != null) playlist = arguments.getParcelable(PLAYLIST_PARAM);
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.playlist_preview_fragment,container,false);
+        View header = inflater.inflate(R.layout.playlist_tracks_header, recyclerPlaylistTracks, false);
+        ImageView image = (ImageView) header.findViewById(R.id.playlist_image);
+        Picasso.with(getActivity()).load(playlist.images.get(0).url).into(image);
+
         recyclerPlaylistTracks = (RecyclerView)view.findViewById(R.id.playlist_tracks);
 
         final List<String> content = new ArrayList<>();
@@ -62,7 +80,7 @@ public class PlaylistPreviewFragment extends Fragment {
         });
 
         recyclerPlaylistTracks.setLayoutManager(new LinearLayoutManager(getActivity()));
-        View header = inflater.inflate(R.layout.playlist_tracks_header, recyclerPlaylistTracks, false);
+
         adapter.setParallaxHeader(header, recyclerPlaylistTracks);
         recyclerPlaylistTracks.setAdapter(adapter);
 

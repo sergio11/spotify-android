@@ -18,16 +18,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <ScrollView
+        <!-- The main content view where fragments are loaded -->
+        <FrameLayout
+            android:id="@+id/flContent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <!-- The main content view where fragments are loaded -->
-            <FrameLayout
-                android:id="@+id/flContent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </ScrollView>
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <!-- The navigation drawer that comes from the left -->
