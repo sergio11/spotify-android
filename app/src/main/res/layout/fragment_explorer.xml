@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/background_dark">
+    android:background="@color/secondary">
     <LinearLayout
         android:id="@+id/featured_playlists"
         android:layout_width="match_parent"
