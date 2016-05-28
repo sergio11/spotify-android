@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/playlist"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorPrimaryDark"
+    android:orientation="vertical"
     android:paddingTop="100dp"
-    android:paddingBottom="100dp">
+    android:paddingBottom="100dp"
+    android:gravity="center_horizontal">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/playlist_image"
         android:layout_width="96dp"
         android:layout_height="96dp"
         app:civ_border_width="2dp"
-        android:layout_centerInParent="true"
         app:civ_border_color="#fff"/>
 
     <TextView
@@ -23,9 +24,26 @@
         android:layout_height="wrap_content"
         android:textSize="45dp"
         android:textStyle="bold"
-        android:layout_below="@id/playlist_image"
-        android:layout_centerHorizontal="true"
         android:textColor="@android:color/white"
-        android:layout_marginTop="80dp"/>
+        android:layout_marginTop="50dp"/>
 
-</RelativeLayout>
+    <Button
+        android:id="@+id/follow_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:text="Follow"
+        android:background="@drawable/no_follow_btn"
+        android:layout_marginTop="50dp"/>
+
+    <TextView
+        android:id="@+id/user_and_followers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="15dp"
+        android:layout_below="@id/follow_btn"
+        android:layout_marginTop="50dp"/>
+
+
+</LinearLayout>

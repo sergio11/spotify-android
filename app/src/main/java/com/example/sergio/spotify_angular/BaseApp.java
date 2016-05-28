@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.sergio.spotify_angular.events.ApiErrorEvent;
+import com.example.sergio.spotify_angular.events.ProfileLoadedEvent;
 import com.example.sergio.spotify_angular.services.CategoriesService;
 import com.example.sergio.spotify_angular.services.PlaylistsService;
 import com.example.sergio.spotify_angular.services.UserService;
@@ -17,6 +18,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
+import kaaes.spotify.webapi.android.models.UserPrivate;
 
 /**
  * Created by sergio on 05/05/2016.
@@ -27,6 +29,7 @@ public class BaseApp extends Application {
     private CategoriesService categoriesService;
     private PlaylistsService playlistsService;
     private EventBus bus = EventBus.getDefault();
+    private UserPrivate me;
 
     @Override
     public void onCreate() {
@@ -52,10 +55,18 @@ public class BaseApp extends Application {
     }
 
     @Subscribe
+    public void onProfileLoaded(ProfileLoadedEvent event){
+        me = event.getUser();
+
+    }
+
+    @Subscribe
     public void onApiError(ApiErrorEvent event) {
         Toast.makeText(this,event.getError().getMessage(), Toast.LENGTH_LONG).show();
         Log.e("ReaderApp", event.getError().getMessage());
     }
 
-
+    public UserPrivate getMe() {
+        return me;
+    }
 }

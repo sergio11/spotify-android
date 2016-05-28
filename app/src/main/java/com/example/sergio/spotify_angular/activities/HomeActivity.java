@@ -173,7 +173,8 @@ public class HomeActivity extends AppCompatActivity {
     @Subscribe
     public void onPlaylistSelected(PlaylistSelectedEvent event){
         Bundle bundle = new Bundle();
-        bundle.putParcelable(PlaylistPreviewFragment.PLAYLIST_PARAM, event.getPlaylist());
+        bundle.putString(PlaylistPreviewFragment.PLAYLIST_ID_PARAM, event.getPlaylist().id);
+        bundle.putString(PlaylistPreviewFragment.PLAYLIST_OWNER_ID_PARAM, event.getPlaylist().owner.id);
         PlaylistPreviewFragment fragment = new PlaylistPreviewFragment();
         fragment.setArguments(bundle);
         AppHelpers.setFragment(this,fragment, R.id.flContent, true,true);

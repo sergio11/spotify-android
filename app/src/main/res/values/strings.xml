@@ -13,4 +13,5 @@
     <string name="your_music">Tu Música</string>
     <string name="spotify_login_fail_title">Fallo al iniciar sesión</string>
     <string name="spotify_login_fail_message">Error al iniciar sesión en Spotify</string>
+    <string formatted="false" name="playlist_followers_and_user">%d FOLLOWERS. BY %s </string>
 </resources>

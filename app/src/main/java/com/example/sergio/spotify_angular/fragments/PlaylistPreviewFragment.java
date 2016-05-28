@@ -11,13 +11,22 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sergio.spotify_angular.BaseApp;
 import com.example.sergio.spotify_angular.R;
-import com.example.sergio.spotify_angular.events.LoadPlaylistTracks;
-import com.example.sergio.spotify_angular.events.PlaylistTracksLoadedEvent;
+import com.example.sergio.spotify_angular.events.AreFollowingPlaylistCheckedEvent;
+import com.example.sergio.spotify_angular.events.AreFollowingPlaylistEvent;
+import com.example.sergio.spotify_angular.events.FollowPlaylistEvent;
+import com.example.sergio.spotify_angular.events.FollowPlaylistSuccessEvent;
+import com.example.sergio.spotify_angular.events.LoadMyPlaylistsEvent;
+import com.example.sergio.spotify_angular.events.LoadPlaylistEvent;
+import com.example.sergio.spotify_angular.events.LoadPlaylistTracksEvent;
+import com.example.sergio.spotify_angular.events.MyPlaylistsLoadedEvent;
+import com.example.sergio.spotify_angular.events.PlaylistLoadedEvent;
 import com.example.sergio.spotify_angular.utils.ImageUtils;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
@@ -29,10 +38,12 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import kaaes.spotify.webapi.android.models.ArtistSimple;
-import kaaes.spotify.webapi.android.models.PlaylistSimple;
+import kaaes.spotify.webapi.android.models.Playlist;
 import kaaes.spotify.webapi.android.models.PlaylistTrack;
+import kaaes.spotify.webapi.android.models.UserPrivate;
 
 /**
  * Created by sergio on 21/05/2016.
@@ -41,10 +52,14 @@ public class PlaylistPreviewFragment extends Fragment {
 
     private final static String TAG = "PlaylistPreviewFragment";
 
-    public final static String PLAYLIST_PARAM = "playlist";
+    public final static String PLAYLIST_ID_PARAM = "playlist_id";
+    public final static String PLAYLIST_OWNER_ID_PARAM = "owner_id";
 
     private RecyclerView recyclerPlaylistTracks;
-    private PlaylistSimple playlist;
+    private View recyclerHeader;
+    private Playlist playlist;
+    private UserPrivate me;
+    private Button btnFollow;
     private EventBus eventBus = EventBus.getDefault();
     private ParallaxAdapter adapter;
 
@@ -52,8 +67,6 @@ public class PlaylistPreviewFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         eventBus.register(this);
-        Bundle arguments = getArguments();
-        if (arguments != null) playlist = arguments.getParcelable(PLAYLIST_PARAM);
 
     }
 
@@ -61,41 +74,19 @@ public class PlaylistPreviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.playlist_preview_fragment,container,false);
-        final View header = inflater.inflate(R.layout.playlist_tracks_header, recyclerPlaylistTracks, false);
-
-        String url = playlist.images.get(0).url;
-        //background image
-        ImageUtils.getBlurredImage(getActivity(),url,playlist.name,10, new ImageUtils.BlurEffectListener(){
-            @Override
-            public void onDone(Bitmap bitmap) {
-                header.setBackground(new BitmapDrawable(getResources(),bitmap));
-            }
-        } );
-        //playlist image
-        ImageView image = (ImageView) header.findViewById(R.id.playlist_image);
-        Picasso.with(getActivity()).load(url).into(image);
-        //Playlist name
-        TextView textView = (TextView) header.findViewById(R.id.playlist_name);
-        textView.setText(playlist.name);
-
-        recyclerPlaylistTracks = (RecyclerView)view.findViewById(R.id.playlist_tracks);
-        recyclerPlaylistTracks.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        adapter = new ParallaxAdapter(new ArrayList<PlaylistTrack>());
-        adapter.setOnClickEvent(new ParallaxRecyclerAdapter.OnClickEvent() {
-            @Override
-            public void onClick(View v, int position) {
-                Toast.makeText(getActivity(), "You clicked '" + position + "'", Toast.LENGTH_SHORT).show();
-            }
-        });
-        adapter.setParallaxHeader(header, recyclerPlaylistTracks);
-        recyclerPlaylistTracks.setAdapter(adapter);
-
-        //Load Tracks
-        eventBus.post(new LoadPlaylistTracks(playlist.owner.id,playlist.id));
-
+        Bundle arguments = getArguments();
+        View view = null;
+        if(arguments != null && arguments.containsKey(PLAYLIST_ID_PARAM) && arguments.containsKey(PLAYLIST_OWNER_ID_PARAM) ){
+            view = inflater.inflate(R.layout.playlist_preview_fragment,container,false);
+            recyclerPlaylistTracks = (RecyclerView)view.findViewById(R.id.playlist_tracks);
+            recyclerPlaylistTracks.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerHeader = LayoutInflater.from(getActivity()).inflate(R.layout.playlist_tracks_header, recyclerPlaylistTracks, false);
+            me = ((BaseApp) getActivity().getApplication()).getMe();
+            //Load Tracks
+            eventBus.post(new LoadPlaylistEvent(arguments.getString(PLAYLIST_OWNER_ID_PARAM),arguments.getString(PLAYLIST_ID_PARAM)));
+        }
         return view;
+
     }
 
     @Override
@@ -104,11 +95,66 @@ public class PlaylistPreviewFragment extends Fragment {
         eventBus.unregister(this);
     }
 
-    @Subscribe
-    public void onPlaylistTracksLoaded(PlaylistTracksLoadedEvent event){
 
-        adapter.setData(event.getItems());
-        adapter.notifyDataSetChanged();
+
+    @Subscribe
+    public void onPlaylistLoaded(final PlaylistLoadedEvent event){
+
+        playlist = event.getPlaylist();
+
+        String url = playlist.images.get(0).url;
+        //background image
+        ImageUtils.getBlurredImage(getActivity(),url,playlist.name,10, new ImageUtils.BlurEffectListener(){
+            @Override
+            public void onDone(Bitmap bitmap) {
+                recyclerHeader.setBackground(new BitmapDrawable(getResources(),bitmap));
+            }
+        } );
+        //playlist image
+        ImageView image = (ImageView) recyclerHeader.findViewById(R.id.playlist_image);
+        Picasso.with(getActivity()).load(url).into(image);
+        //Playlist name
+        TextView textView = (TextView) recyclerHeader.findViewById(R.id.playlist_name);
+        textView.setText(playlist.name);
+
+        //followers and user
+        TextView followers = (TextView) recyclerHeader.findViewById(R.id.user_and_followers);
+        int total = playlist.followers != null ? playlist.followers.total : 0;
+        followers.setText(String.format(Locale.getDefault(),getResources().getString(R.string.playlist_followers_and_user),total,playlist.owner.display_name));
+
+        adapter = new ParallaxAdapter(new ArrayList<PlaylistTrack>());
+        adapter.setOnClickEvent(new ParallaxRecyclerAdapter.OnClickEvent() {
+            @Override
+            public void onClick(View v, int position) {
+                Toast.makeText(getActivity(), "You clicked '" + position + "'", Toast.LENGTH_SHORT).show();
+            }
+        });
+        adapter.setParallaxHeader(recyclerHeader, recyclerPlaylistTracks);
+        adapter.setData(playlist.tracks.items);
+        recyclerPlaylistTracks.setAdapter(adapter);
+        List<String> users = new ArrayList<>();
+        users.add(me.id);
+        eventBus.post(new AreFollowingPlaylistEvent(playlist.owner.id,playlist.id,users));
+    }
+
+    @Subscribe
+    public void onAreFollowingPlaylistChecked(AreFollowingPlaylistCheckedEvent event){
+        final boolean result = event.getResult().get(me.id);
+        btnFollow = (Button) recyclerHeader.findViewById(R.id.follow_btn);
+        if(result){
+            btnFollow.setBackground(getResources().getDrawable(R.drawable.follow_btn));
+        }
+        btnFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                eventBus.post(new FollowPlaylistEvent(playlist.owner.id,playlist.id));
+            }
+        });
+    }
+
+    @Subscribe
+    public void onFollowPlaylistSuccess(FollowPlaylistSuccessEvent event){
+        btnFollow.setBackground(getResources().getDrawable(R.drawable.follow_btn));
     }
 
     static class ParallaxAdapter extends ParallaxRecyclerAdapter<PlaylistTrack>{
