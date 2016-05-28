@@ -32,7 +32,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         AuthenticationRequest.Builder builder = new AuthenticationRequest.Builder(CLIENT_ID,AuthenticationResponse.Type.TOKEN,REDIRECT_URI);
-        builder.setScopes(new String[]{"user-read-private","user-follow-modify","user-follow-read","playlist-modify-private"});
+        builder.setScopes(new String[]{
+                "playlist-read-private",
+                "playlist-read-collaborative",
+                "playlist-modify-public",
+                "playlist-modify-private",
+                "user-follow-modify",
+                "user-follow-read",
+                "user-library-read",
+                "user-library-modify",
+                "user-read-private",
+                "user-read-birthdate",
+                "user-read-email",
+                "user-top-read"
+        });
         AuthenticationRequest request = builder.build();
 
         AuthenticationClient.openLoginActivity(this, REQUEST_CODE, request);

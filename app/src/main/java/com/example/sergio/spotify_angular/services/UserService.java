@@ -9,6 +9,8 @@ import com.example.sergio.spotify_angular.events.LoadMyPlaylistsEvent;
 import com.example.sergio.spotify_angular.events.LoadProfileEvent;
 import com.example.sergio.spotify_angular.events.MyPlaylistsLoadedEvent;
 import com.example.sergio.spotify_angular.events.ProfileLoadedEvent;
+import com.example.sergio.spotify_angular.events.UnFollowPlaylistEvent;
+import com.example.sergio.spotify_angular.events.UnFollowPlaylistSuccessEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -37,6 +39,21 @@ public class UserService extends BaseService {
             @Override
             public void success(Result result, Response response) {
                 bus.post(new FollowPlaylistSuccessEvent(result));
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                bus.post(new ApiErrorEvent(error));
+            }
+        });
+    }
+
+    @Subscribe
+    public void onUnFollowPlaylist(UnFollowPlaylistEvent event){
+        service.unfollowPlaylist(event.getOwner(), event.getPlaylist(), new Callback<Result>() {
+            @Override
+            public void success(Result result, Response response) {
+                bus.post(new UnFollowPlaylistSuccessEvent(result));
             }
 
             @Override

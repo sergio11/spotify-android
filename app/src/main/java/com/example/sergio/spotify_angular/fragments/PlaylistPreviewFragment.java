@@ -27,6 +27,8 @@ import com.example.sergio.spotify_angular.events.LoadPlaylistEvent;
 import com.example.sergio.spotify_angular.events.LoadPlaylistTracksEvent;
 import com.example.sergio.spotify_angular.events.MyPlaylistsLoadedEvent;
 import com.example.sergio.spotify_angular.events.PlaylistLoadedEvent;
+import com.example.sergio.spotify_angular.events.UnFollowPlaylistEvent;
+import com.example.sergio.spotify_angular.events.UnFollowPlaylistSuccessEvent;
 import com.example.sergio.spotify_angular.utils.ImageUtils;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
@@ -59,6 +61,7 @@ public class PlaylistPreviewFragment extends Fragment {
     private View recyclerHeader;
     private Playlist playlist;
     private UserPrivate me;
+    private boolean isFollowing;
     private Button btnFollow;
     private EventBus eventBus = EventBus.getDefault();
     private ParallaxAdapter adapter;
@@ -139,22 +142,45 @@ public class PlaylistPreviewFragment extends Fragment {
 
     @Subscribe
     public void onAreFollowingPlaylistChecked(AreFollowingPlaylistCheckedEvent event){
-        final boolean result = event.getResult().get(me.id);
+        isFollowing = event.getResult().get(me.id);
         btnFollow = (Button) recyclerHeader.findViewById(R.id.follow_btn);
-        if(result){
-            btnFollow.setBackground(getResources().getDrawable(R.drawable.follow_btn));
+        if(isFollowing){
+            setBtnAsFollowing();
         }
         btnFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                eventBus.post(new FollowPlaylistEvent(playlist.owner.id,playlist.id));
+                if(!isFollowing){
+                    eventBus.post(new FollowPlaylistEvent(playlist.owner.id,playlist.id));
+                }else{
+                    eventBus.post(new UnFollowPlaylistEvent(playlist.owner.id,playlist.id));
+                }
             }
         });
     }
 
     @Subscribe
     public void onFollowPlaylistSuccess(FollowPlaylistSuccessEvent event){
+        setBtnAsFollowing();
+    }
+
+    @Subscribe
+    public void onUnFollowPlaylistSuccess(UnFollowPlaylistSuccessEvent event){
+        setBtnAsNotFollow();
+    }
+
+    private void setBtnAsFollowing(){
         btnFollow.setBackground(getResources().getDrawable(R.drawable.follow_btn));
+        btnFollow.setText(getResources().getString(R.string.follow));
+        btnFollow.setTextColor(getResources().getColor(R.color.primary));
+        isFollowing = true;
+    }
+
+    private void setBtnAsNotFollow(){
+        btnFollow.setBackground(getResources().getDrawable(R.drawable.no_follow_btn));
+        btnFollow.setText(getResources().getString(R.string.not_follow));
+        btnFollow.setTextColor(getResources().getColor(android.R.color.white));
+        isFollowing = false;
     }
 
     static class ParallaxAdapter extends ParallaxRecyclerAdapter<PlaylistTrack>{
