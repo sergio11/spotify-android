@@ -32,6 +32,7 @@ public class BaseApp extends Application {
     public void onCreate() {
         super.onCreate();
         Iconify.with(new FontAwesomeModule());
+        bus.register(this); //listen for "global" events
     }
 
     public void initServices(String accessToken) {
@@ -46,7 +47,7 @@ public class BaseApp extends Application {
         bus.register(userService);
         bus.register(categoriesService);
         bus.register(playlistsService);
-        bus.register(this); //listen for "global" events
+
 
     }
 

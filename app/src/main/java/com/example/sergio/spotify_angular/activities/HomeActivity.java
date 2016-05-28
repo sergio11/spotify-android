@@ -179,4 +179,7 @@ public class HomeActivity extends AppCompatActivity {
         AppHelpers.setFragment(this,fragment, R.id.flContent, true,true);
     }
 
+    public Toolbar getToolbar() {
+        return toolbar;
+    }
 }

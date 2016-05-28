@@ -48,4 +48,6 @@ dependencies {
     compile 'com.neovisionaries:nv-i18n:1.18'
     //An adapter which could be used to achieve a parallax effect on RecyclerView.
     compile 'com.github.kanytu:android-parallax-recyclerview:v1.7'
+    //Guava: Google Core Libraries for Java
+    compile 'com.google.guava:guava:19.0'
 }
