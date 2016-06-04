@@ -17,7 +17,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.HomeActivity" android:theme="@style/AppTheme"></activity>
+        <activity android:name=".activities.HomeActivity" android:theme="@style/AppTheme">
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".activities.HomeActivity" />
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
         <!-- Needed for LoginActivity to work -->
         <activity
             android:name="com.spotify.sdk.android.authentication.LoginActivity"

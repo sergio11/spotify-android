@@ -25,4 +25,7 @@
     <string name="explorer_menu_discover">Discover</string>
     <string name="explorer_menu_concerts">Conciertos</string>
 
+    <string name="search_hint">Busca artistas, playlist, canciones por nombre</string>
+    <string name="search_description">Busca tu canción favorita, artistas, albumes, podcast, playlists y amigos</string>
+
 </resources>

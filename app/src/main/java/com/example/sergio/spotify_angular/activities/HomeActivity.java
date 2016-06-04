@@ -27,6 +27,7 @@ import com.example.sergio.spotify_angular.events.ProfileLoadedEvent;
 import com.example.sergio.spotify_angular.fragments.ExplorerFragment;
 import com.example.sergio.spotify_angular.fragments.NewReleasesFragment;
 import com.example.sergio.spotify_angular.fragments.PlaylistPreviewFragment;
+import com.example.sergio.spotify_angular.fragments.SearchFragment;
 import com.example.sergio.spotify_angular.utils.AppHelpers;
 import com.example.sergio.spotify_angular.utils.ImageUtils;
 import com.squareup.picasso.Picasso;
@@ -47,8 +48,11 @@ public class HomeActivity extends AppCompatActivity  {
 
     public void selectDrawerItem(MenuItem menuItem) {
         // Create a new fragment and specify the fragment to show based on nav item clicked
-        Fragment fragment = null;
+        Fragment fragment;
         switch(menuItem.getItemId()) {
+            case R.id.nav_search:
+                fragment = new SearchFragment();
+                break;
             case R.id.nav_explorer:
                 fragment =  new ExplorerFragment();
                 break;
