@@ -36,15 +36,5 @@ public class ExplorerFragment extends Fragment{
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //Load FeaturedPlayList Fragment
-
-        FeaturedPlaylistsSelectorFragment featuredPlaylistsFragment = new FeaturedPlaylistsSelectorFragment();
-        AppHelpers.setFragment(getActivity(),featuredPlaylistsFragment,R.id.featured_playlists, false, false);
-        //Load MenuExplorer Fragment
-        MenuExplorerFragment menuExplorerFragment = new MenuExplorerFragment();
-        AppHelpers.setFragment(getActivity(),menuExplorerFragment,R.id.menu_explorer_container, false, false);
-
-        //Load Categories Fragment
-        CategoriesSelectorFragment categoriesSelectorFragment = new CategoriesSelectorFragment();
-        AppHelpers.setFragment(getActivity(),categoriesSelectorFragment,R.id.left_content, false, false);
     }
 }

@@ -101,7 +101,7 @@ public class HomeActivity extends AppCompatActivity  {
                 });
 
 
-
+        selectDrawerItem(nvDrawer.getMenu().getItem(1));
 
     }
 

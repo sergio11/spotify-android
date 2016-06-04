@@ -1,30 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/secondary">
+    android:layout_height="match_parent">
     <LinearLayout
-        android:id="@+id/featured_playlists"
         android:layout_width="match_parent"
-        android:layout_height="260dp"
-        android:orientation="vertical">
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/menu_explorer_container"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/secondary">
+    <fragment
+        android:id="@+id/featured_playlists_fragment"
         android:layout_width="match_parent"
-        android:layout_height="260dp"
-        android:orientation="vertical">
-    </LinearLayout>
-    <TextView
+        android:layout_height="280dp"
+        class="com.example.sergio.spotify_angular.fragments.FeaturedPlaylistsSelectorFragment"></fragment>
+    <fragment
+        android:id="@+id/menu_explorer_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        class="com.example.sergio.spotify_angular.fragments.MenuExplorerFragment"></fragment>
+     <TextView
         android:text="@string/g_neros_y_estados_de_nimo"
         style="@style/Subtitle"/>
-    <LinearLayout
-        android:id="@+id/left_content"
+    <fragment
+        android:id="@+id/categories_fragment"
         android:layout_width="match_parent"
-        android:layout_height="1200dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        class="com.example.sergio.spotify_angular.fragments.CategoriesSelectorFragment"></fragment>
+
     </LinearLayout>
 
-</LinearLayout>
+</android.support.v4.widget.NestedScrollView>

@@ -17,9 +17,6 @@ import com.example.sergio.spotify_angular.utils.GridAutofitLayoutManager;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import kaaes.spotify.webapi.android.models.AlbumSimple;
 
 

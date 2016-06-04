@@ -27,20 +27,12 @@ import kaaes.spotify.webapi.android.models.Category;
 /**
  * Created by sergio on 04/05/2016.
  */
-public class CategoriesSelectorFragment extends Fragment implements RecyclerViewBaseAdapter.OnItemClickListener<Category>{
+public class CategoriesSelectorFragment extends EventBusFragment implements RecyclerViewBaseAdapter.OnItemClickListener<Category>{
 
     private final static String TAG = "CATEGORIES";
-    private final static int COLUMN_WIDTH = 460;
-    protected EventBus bus = EventBus.getDefault();
+    private final static int COLUMN_WIDTH = 360;
     private RecyclerView recyclerList;
     private CategoriesAdapter adapter;
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        bus.register(this);
-    }
 
 
     @Nullable
@@ -64,11 +56,6 @@ public class CategoriesSelectorFragment extends Fragment implements RecyclerView
         bus.post(new LoadCategoriesEvent());
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        bus.unregister(this);
-    }
 
 
     @Subscribe
