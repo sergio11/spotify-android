@@ -5,13 +5,6 @@
     tools:context="be.hcpl.android.example.MainActivity">
 
     <item
-        android:id="@+id/menu_buscar"
-        android:icon="@android:drawable/ic_menu_search"
-        android:orderInCategory="100"
-        app:showAsAction="always|collapseActionView"
-        android:title="@string/buscar"/>
-
-    <item
         android:id="@+id/menu_ultimo"
         android:icon="@android:drawable/ic_menu_set_as"
         android:orderInCategory="200"
@@ -24,7 +17,6 @@
         android:orderInCategory="300"
         app:showAsAction="ifRoom"
         android:title="@string/preferencias"/>
-
 
     <item
         android:id="@+id/menu_acerca"

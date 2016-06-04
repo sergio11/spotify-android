@@ -1,12 +1,14 @@
 package com.example.sergio.spotify_angular.fragments;
 
-import android.app.Fragment;
+
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,14 +20,12 @@ import android.widget.Toast;
 
 import com.example.sergio.spotify_angular.BaseApp;
 import com.example.sergio.spotify_angular.R;
+import com.example.sergio.spotify_angular.activities.HomeActivity;
 import com.example.sergio.spotify_angular.events.AreFollowingPlaylistCheckedEvent;
 import com.example.sergio.spotify_angular.events.AreFollowingPlaylistEvent;
 import com.example.sergio.spotify_angular.events.FollowPlaylistEvent;
 import com.example.sergio.spotify_angular.events.FollowPlaylistSuccessEvent;
-import com.example.sergio.spotify_angular.events.LoadMyPlaylistsEvent;
 import com.example.sergio.spotify_angular.events.LoadPlaylistEvent;
-import com.example.sergio.spotify_angular.events.LoadPlaylistTracksEvent;
-import com.example.sergio.spotify_angular.events.MyPlaylistsLoadedEvent;
 import com.example.sergio.spotify_angular.events.PlaylistLoadedEvent;
 import com.example.sergio.spotify_angular.events.UnFollowPlaylistEvent;
 import com.example.sergio.spotify_angular.events.UnFollowPlaylistSuccessEvent;
@@ -34,8 +34,6 @@ import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.poliveira.parallaxrecyclerview.ParallaxRecyclerAdapter;
 import com.squareup.picasso.Picasso;
-
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -50,7 +48,7 @@ import kaaes.spotify.webapi.android.models.UserPrivate;
 /**
  * Created by sergio on 21/05/2016.
  */
-public class PlaylistPreviewFragment extends Fragment {
+public class PlaylistPreviewFragment extends EventBusFragment {
 
     private final static String TAG = "PlaylistPreviewFragment";
 
@@ -63,15 +61,8 @@ public class PlaylistPreviewFragment extends Fragment {
     private UserPrivate me;
     private boolean isFollowing;
     private Button btnFollow;
-    private EventBus eventBus = EventBus.getDefault();
     private ParallaxAdapter adapter;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        eventBus.register(this);
-
-    }
 
     @Nullable
     @Override
@@ -81,23 +72,18 @@ public class PlaylistPreviewFragment extends Fragment {
         View view = null;
         if(arguments != null && arguments.containsKey(PLAYLIST_ID_PARAM) && arguments.containsKey(PLAYLIST_OWNER_ID_PARAM) ){
             view = inflater.inflate(R.layout.playlist_preview_fragment,container,false);
+            //clear the toolbar
+            ((HomeActivity) getActivity()).clearToolbar();
             recyclerPlaylistTracks = (RecyclerView)view.findViewById(R.id.playlist_tracks);
             recyclerPlaylistTracks.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerHeader = LayoutInflater.from(getActivity()).inflate(R.layout.playlist_tracks_header, recyclerPlaylistTracks, false);
             me = ((BaseApp) getActivity().getApplication()).getMe();
             //Load Tracks
-            eventBus.post(new LoadPlaylistEvent(arguments.getString(PLAYLIST_OWNER_ID_PARAM),arguments.getString(PLAYLIST_ID_PARAM)));
+            bus.post(new LoadPlaylistEvent(arguments.getString(PLAYLIST_OWNER_ID_PARAM),arguments.getString(PLAYLIST_ID_PARAM)));
         }
         return view;
 
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        eventBus.unregister(this);
-    }
-
 
 
     @Subscribe
@@ -137,7 +123,7 @@ public class PlaylistPreviewFragment extends Fragment {
         recyclerPlaylistTracks.setAdapter(adapter);
         List<String> users = new ArrayList<>();
         users.add(me.id);
-        eventBus.post(new AreFollowingPlaylistEvent(playlist.owner.id,playlist.id,users));
+        bus.post(new AreFollowingPlaylistEvent(playlist.owner.id,playlist.id,users));
     }
 
     @Subscribe
@@ -151,9 +137,9 @@ public class PlaylistPreviewFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(!isFollowing){
-                    eventBus.post(new FollowPlaylistEvent(playlist.owner.id,playlist.id));
+                    bus.post(new FollowPlaylistEvent(playlist.owner.id,playlist.id));
                 }else{
-                    eventBus.post(new UnFollowPlaylistEvent(playlist.owner.id,playlist.id));
+                    bus.post(new UnFollowPlaylistEvent(playlist.owner.id,playlist.id));
                 }
             }
         });

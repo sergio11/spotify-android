@@ -25,7 +25,6 @@ import com.example.sergio.spotify_angular.events.LoadProfileEvent;
 import com.example.sergio.spotify_angular.events.PlaylistSelectedEvent;
 import com.example.sergio.spotify_angular.events.ProfileLoadedEvent;
 import com.example.sergio.spotify_angular.fragments.ExplorerFragment;
-import com.example.sergio.spotify_angular.fragments.MenuExplorerFragment;
 import com.example.sergio.spotify_angular.fragments.NewReleasesFragment;
 import com.example.sergio.spotify_angular.fragments.PlaylistPreviewFragment;
 import com.example.sergio.spotify_angular.utils.AppHelpers;
@@ -105,13 +104,6 @@ public class HomeActivity extends AppCompatActivity  {
 
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (drawerToggle.onOptionsItemSelected(item)) {
@@ -126,6 +118,9 @@ public class HomeActivity extends AppCompatActivity  {
 
         return super.onOptionsItemSelected(item);
     }
+
+
+
 
     // `onPostCreate` called when activity start-up is complete after `onStart()`
     // NOTE! Make sure to override the method with only a single `Bundle` argument
@@ -196,10 +191,9 @@ public class HomeActivity extends AppCompatActivity  {
         AppHelpers.setFragment(this,fragment, R.id.flContent, true,true);
     }
 
-
-
-    public Toolbar getToolbar() {
-        return toolbar;
+    public void clearToolbar(){
+        toolbar.getMenu().clear();
     }
+
 
 }
