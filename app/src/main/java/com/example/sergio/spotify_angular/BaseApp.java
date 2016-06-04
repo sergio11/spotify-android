@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.example.sergio.spotify_angular.events.ApiErrorEvent;
 import com.example.sergio.spotify_angular.events.ProfileLoadedEvent;
 import com.example.sergio.spotify_angular.services.AlbumsService;
+import com.example.sergio.spotify_angular.services.BaseService;
 import com.example.sergio.spotify_angular.services.CategoriesService;
 import com.example.sergio.spotify_angular.services.PlaylistsService;
 import com.example.sergio.spotify_angular.services.UserService;
@@ -17,6 +18,10 @@ import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.util.Set;
+
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
 import kaaes.spotify.webapi.android.models.UserPrivate;
@@ -26,13 +31,8 @@ import kaaes.spotify.webapi.android.models.UserPrivate;
  */
 public class BaseApp extends Application {
 
-    private UserService userService;
-    private CategoriesService categoriesService;
-    private PlaylistsService playlistsService;
-    private AlbumsService albumsService;
     private EventBus bus = EventBus.getDefault();
     private UserPrivate me;
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -45,18 +45,20 @@ public class BaseApp extends Application {
         api.setAccessToken(accessToken);
         SpotifyService spotify = api.getService();
 
-        userService = new UserService(spotify, bus);
-        categoriesService = new CategoriesService(spotify, bus);
-        playlistsService = new PlaylistsService(spotify,bus);
-        albumsService = new AlbumsService(spotify,bus);
-
-        bus.register(userService);
-        bus.register(categoriesService);
-        bus.register(playlistsService);
-        bus.register(albumsService);
-
+        //Load all app services
+        String[] services = getResources().getStringArray(R.array.app_services);
+        String packageName = getApplicationContext().getPackageName()+ File.separatorChar + "services" + File.separatorChar;
+        for (int i = 0, len = services.length; i < len; i++){
+            try {
+                String classPath = packageName + services[i];
+                bus.register(Class.forName(classPath.replace(File.separatorChar, '.')).getDeclaredConstructor(SpotifyService.class, EventBus.class).newInstance(spotify,bus));
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
 
     }
+
 
     @Subscribe
     public void onProfileLoaded(ProfileLoadedEvent event){

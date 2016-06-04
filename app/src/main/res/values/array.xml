@@ -32,6 +32,13 @@
         <item>@string/explorer_menu_concerts</item>
     </array>
 
+    <!-- App Services -->
+    <string-array name="app_services">
+        <item>UserService</item>
+        <item>CategoriesService</item>
+        <item>PlaylistsService</item>
+        <item>AlbumsService</item>
+    </string-array>
 
 
 </resources>
