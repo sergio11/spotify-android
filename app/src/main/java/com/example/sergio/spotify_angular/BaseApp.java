@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.example.sergio.spotify_angular.events.ApiErrorEvent;
 import com.example.sergio.spotify_angular.events.ProfileLoadedEvent;
+import com.example.sergio.spotify_angular.services.AlbumsService;
 import com.example.sergio.spotify_angular.services.CategoriesService;
 import com.example.sergio.spotify_angular.services.PlaylistsService;
 import com.example.sergio.spotify_angular.services.UserService;
@@ -28,6 +29,7 @@ public class BaseApp extends Application {
     private UserService userService;
     private CategoriesService categoriesService;
     private PlaylistsService playlistsService;
+    private AlbumsService albumsService;
     private EventBus bus = EventBus.getDefault();
     private UserPrivate me;
 
@@ -46,10 +48,12 @@ public class BaseApp extends Application {
         userService = new UserService(spotify, bus);
         categoriesService = new CategoriesService(spotify, bus);
         playlistsService = new PlaylistsService(spotify,bus);
+        albumsService = new AlbumsService(spotify,bus);
 
         bus.register(userService);
         bus.register(categoriesService);
         bus.register(playlistsService);
+        bus.register(albumsService);
 
 
     }

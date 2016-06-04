@@ -34,7 +34,10 @@ public class AppHelpers {
 
     }
 
+    @SuppressWarnings("ResourceType")
     public static List<MenuAppItem> getMenuFromResources(Context context, int id){
+
+        int ID_POS = 0, ICON_POS = 1, TEXT_POS = 2;
 
         TypedArray menuResources = context.getResources().obtainTypedArray(id);
         List<MenuAppItem> menu = new ArrayList<>();
@@ -43,9 +46,10 @@ public class AppHelpers {
             int resId = menuResources.getResourceId(i, -1);
             if (resId > 0) {
                 TypedArray itemDef = context.getResources().obtainTypedArray(resId);
-                String icon = itemDef.getString(0);
-                String name = itemDef.getString(1);
-                menu.add(new MenuAppItem(icon, name));
+                int ide = itemDef.getResourceId(ID_POS,0);
+                String icon = itemDef.getString(ICON_POS);
+                String name = itemDef.getString(TEXT_POS);
+                menu.add(new MenuAppItem(ide,icon, name));
             }
         }
 

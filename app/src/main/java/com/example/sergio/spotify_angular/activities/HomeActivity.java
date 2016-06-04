@@ -17,12 +17,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sergio.spotify_angular.R;
+import com.example.sergio.spotify_angular.events.ExplorerMenuItemSelected;
 import com.example.sergio.spotify_angular.events.LoadProfileEvent;
 import com.example.sergio.spotify_angular.events.PlaylistSelectedEvent;
 import com.example.sergio.spotify_angular.events.ProfileLoadedEvent;
 import com.example.sergio.spotify_angular.fragments.ExplorerFragment;
+import com.example.sergio.spotify_angular.fragments.MenuExplorerFragment;
+import com.example.sergio.spotify_angular.fragments.NewReleasesFragment;
 import com.example.sergio.spotify_angular.fragments.PlaylistPreviewFragment;
 import com.example.sergio.spotify_angular.utils.AppHelpers;
 import com.example.sergio.spotify_angular.utils.ImageUtils;
@@ -33,7 +37,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity  {
 
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
@@ -171,6 +175,18 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     @Subscribe
+    public void onExplorerMenuItemSelected(ExplorerMenuItemSelected event){
+        switch (event.getId()){
+            case R.id.discover:
+                NewReleasesFragment fragment = new NewReleasesFragment();
+                AppHelpers.setFragment(this,fragment, R.id.flContent, true,true);
+                break;
+            default:
+                Toast.makeText(this,"Opción no implementada", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Subscribe
     public void onPlaylistSelected(PlaylistSelectedEvent event){
         Bundle bundle = new Bundle();
         bundle.putString(PlaylistPreviewFragment.PLAYLIST_ID_PARAM, event.getPlaylist().id);
@@ -180,7 +196,10 @@ public class HomeActivity extends AppCompatActivity {
         AppHelpers.setFragment(this,fragment, R.id.flContent, true,true);
     }
 
+
+
     public Toolbar getToolbar() {
         return toolbar;
     }
+
 }

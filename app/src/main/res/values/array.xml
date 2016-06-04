@@ -9,35 +9,29 @@
     </array>
 
     <array name="lists">
+        <item>@id/lists</item>
         <item>fa_line_chart</item>
-        <item>Listas</item>
+        <item>@string/explorer_menu_lists</item>
     </array>
 
     <array name="new_releases">
+        <item>@id/new_releases</item>
         <item>fa_calendar_o</item>
-        <item>New Releases</item>
+        <item>@string/explorer_menu_new_releases</item>
     </array>
 
     <array name="discover">
+        <item>@id/discover</item>
         <item>fa_calendar_o</item>
-        <item>Discover</item>
+        <item>@string/explorer_menu_discover</item>
     </array>
 
     <array name="concerts">
+        <item>@id/concerts</item>
         <item>fa_ticket</item>
-        <item>Concerts</item>
+        <item>@string/explorer_menu_concerts</item>
     </array>
 
-    <string-array name="data">
-        <item>text_string</item>
-        <item>text_string</item>
-        <item>text_string</item>
-        <item>text_string</item>
-        <item>text_string</item>
-        <item>text_string</item>
-        <item>text_string</item>
-        <item>text_string</item>
-    </string-array>
 
 
 </resources>

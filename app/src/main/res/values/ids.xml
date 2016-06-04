@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="lists" type="id"></item>
+    <item name="discover" type="id"></item>
+    <item name="new_releases" type="id"></item>
+    <item name="concerts" type="id"></item>
+</resources>

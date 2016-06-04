@@ -18,30 +18,28 @@ import java.util.List;
 /**
  * Created by sergio on 13/05/2016.
  */
-public class MenuAdapter extends RecyclerViewBaseAdapter<MenuAppItem> {
+public class MenuAdapter extends RecyclerViewBaseAdapter<MenuAppItem,MenuAdapter.MenuViewHolder> {
 
     public MenuAdapter(Context context, List<MenuAppItem> data) {
         super(context, data);
     }
 
-
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MenuViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.menu_item_layout, parent, false);
         return new MenuViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(MenuViewHolder holder, int position) {
         MenuAppItem item = data.get(position);
-        MenuViewHolder menuViewHolder = (MenuViewHolder)holder;
-        menuViewHolder.setText(item.getText());
-        menuViewHolder.setIcon(new IconDrawable(context, FontAwesomeIcons.valueOf(item.getIcon())).colorRes(R.color.primary));
-
+        holder.setText(item.getText());
+        holder.setIcon(new IconDrawable(context, FontAwesomeIcons.valueOf(item.getIcon())).colorRes(R.color.primary));
+        bindToListener(holder);
     }
 
 
-    static class MenuViewHolder extends RecyclerView.ViewHolder{
+    public class MenuViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView icon;
         private TextView text;

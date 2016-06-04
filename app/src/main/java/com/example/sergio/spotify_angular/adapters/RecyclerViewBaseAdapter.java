@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by sergio on 04/05/2016.
  */
-public abstract class RecyclerViewBaseAdapter<T> extends RecyclerView.Adapter {
+public abstract class RecyclerViewBaseAdapter<T,E extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<E> {
 
     protected Context context;
     protected LayoutInflater inflater;

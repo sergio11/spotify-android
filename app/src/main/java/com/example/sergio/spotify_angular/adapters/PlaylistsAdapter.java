@@ -17,31 +17,28 @@ import kaaes.spotify.webapi.android.models.PlaylistSimple;
 /**
  * Created by sergio on 07/05/2016.
  */
-public class PlaylistsAdapter extends RecyclerViewBaseAdapter<PlaylistSimple> {
+public class PlaylistsAdapter extends RecyclerViewBaseAdapter<PlaylistSimple, PlaylistsAdapter.FeaturedPlaylistsViewHolder> {
 
     public PlaylistsAdapter(Context context, List<PlaylistSimple> data) {
         super(context, data);
     }
 
-
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FeaturedPlaylistsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.playlist_layout, parent, false);
         return new FeaturedPlaylistsViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(FeaturedPlaylistsViewHolder holder, int position) {
         PlaylistSimple playlist = data.get(position);
-        FeaturedPlaylistsViewHolder playlistsViewHolder = (FeaturedPlaylistsViewHolder)holder;
-        playlistsViewHolder.setName(playlist.name);
-        bindToListener(playlistsViewHolder);
-        Picasso.with(context).load(playlist.images.get(0).url).placeholder(R.drawable.ic_playlist).into(playlistsViewHolder.getImage());
+        holder.setName(playlist.name);
+        bindToListener(holder);
+        Picasso.with(context).load(playlist.images.get(0).url).placeholder(R.drawable.ic_playlist).into(holder.getImage());
     }
 
 
-
-    static class FeaturedPlaylistsViewHolder extends RecyclerView.ViewHolder{
+    public class FeaturedPlaylistsViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView image;
         private TextView name;

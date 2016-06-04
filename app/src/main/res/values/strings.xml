@@ -15,5 +15,14 @@
     <string name="spotify_login_fail_message">Error al iniciar sesión en Spotify</string>
     <string name="not_follow">Follow</string>
     <string name="follow">Following</string>
-    <string formatted="false" name="playlist_followers_and_user">%d FOLLOWERS. BY %s </string>
+    <string name="playlist_followers_and_user" formatted="false">%d FOLLOWERS. BY %s </string>
+
+    <string name="new_releases_subtitle">Nuevos Lanzamientos</string>
+
+    <!-- Explorer Menu Items -->
+    <string name="explorer_menu_lists">Listas</string>
+    <string name="explorer_menu_new_releases">Nuevos Lanzamientos</string>
+    <string name="explorer_menu_discover">Discover</string>
+    <string name="explorer_menu_concerts">Conciertos</string>
+
 </resources>

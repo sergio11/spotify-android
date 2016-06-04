@@ -18,20 +18,20 @@ import com.squareup.picasso.Picasso;
 /**
  * Created by sergio on 04/05/2016.
  */
-public class CategoriesAdapter extends RecyclerViewBaseAdapter<Category> {
+public class CategoriesAdapter extends RecyclerViewBaseAdapter<Category,CategoriesAdapter.CategoriesViewHolder> {
     private final static String TAG = "CATEGORIES_ADAPTER";
     public CategoriesAdapter(Context context, List<Category> list) {
         super(context, list);
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public CategoriesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.category_layout, parent, false);
         return new CategoriesViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(CategoriesViewHolder holder, int position) {
         Category category = data.get(position);
         CategoriesViewHolder categoryViewHolder = (CategoriesViewHolder)holder;
         categoryViewHolder.setName(category.name);
@@ -40,7 +40,7 @@ public class CategoriesAdapter extends RecyclerViewBaseAdapter<Category> {
     }
 
 
-    static class CategoriesViewHolder extends RecyclerView.ViewHolder{
+    public class CategoriesViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView image;
         private TextView name;
