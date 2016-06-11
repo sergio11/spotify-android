@@ -32,9 +32,13 @@ public class MenuExplorerFragment extends Fragment implements RecyclerViewBaseAd
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.menu_explorer_fragment, container, false);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         RecyclerView recyclerList = (RecyclerView) view.findViewById(R.id.menu_explorer_recyclerview);
-        recyclerList.setLayoutManager(linearLayoutManager);
+        recyclerList.setLayoutManager( new LinearLayoutManager(getActivity()) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
         List<MenuAppItem> menu = AppHelpers.getMenuFromResources(getActivity(), R.array.explorer_menu_items );
         adapter =  new MenuAdapter(getActivity(), menu);
         adapter.setOnItemClickListener(this);

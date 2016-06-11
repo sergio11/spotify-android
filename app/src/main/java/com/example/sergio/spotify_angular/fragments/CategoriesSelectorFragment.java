@@ -4,6 +4,7 @@ package com.example.sergio.spotify_angular.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,7 @@ public class CategoriesSelectorFragment extends EventBusFragment implements Recy
         recyclerList = (RecyclerView) view.findViewById(R.id.categories_recyclerview);
         recyclerList.setLayoutManager(gridLayoutManager);
         recyclerList.addItemDecoration(new GridSpacingItemDecoration(2, AppHelpers.dpToPx(getResources(),5), true));
+        recyclerList.setNestedScrollingEnabled(false);
         adapter = new CategoriesAdapter(getActivity(), new ArrayList<Category>());
         adapter.setOnItemClickListener(this);
 
