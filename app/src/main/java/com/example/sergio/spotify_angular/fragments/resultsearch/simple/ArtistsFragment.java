@@ -35,8 +35,13 @@ public class ArtistsFragment extends AbstractFragment<Artist> {
 
     @Subscribe
     public void onArtistsFound(ArtistsFoundEvent event){
-        adapter.setData(event.getArtists());
-        adapter.notifyDataSetChanged();
+        if (event.getArtists().size() > 0){
+            adapter.setData(event.getArtists());
+            adapter.notifyDataSetChanged();
+            listener.onDataFound(getView());
+        }else{
+            listener.onDataNotFound(getView());
+        }
     }
 
 

@@ -34,7 +34,12 @@ public class AlbumsFragment extends AbstractFragment<AlbumSimple> {
 
     @Subscribe
     public void onAlbumsFound(AlbumsFoundEvent event){
-        adapter.setData(event.getAlbums());
-        adapter.notifyDataSetChanged();
+        if (event.getAlbums().size() > 0){
+            adapter.setData(event.getAlbums());
+            adapter.notifyDataSetChanged();
+            listener.onDataFound(getView());
+        }else{
+            listener.onDataNotFound(getView());
+        }
     }
 }

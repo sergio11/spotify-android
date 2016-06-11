@@ -34,7 +34,13 @@ public class TracksFragment extends AbstractFragment {
 
     @Subscribe
     public void onTracksFound(TracksFoundEvent event){
-        adapter.setData(event.getTracks());
-        adapter.notifyDataSetChanged();
+        if (event.getTracks().size() > 0){
+            adapter.setData(event.getTracks());
+            adapter.notifyDataSetChanged();
+            listener.onDataFound(getView());
+        }else{
+            listener.onDataNotFound(getView());
+        }
+
     }
 }

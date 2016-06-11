@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.activities.HomeActivity;
@@ -24,6 +25,7 @@ import com.example.sergio.spotify_angular.utils.AppHelpers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -35,6 +37,8 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     private InputMethodManager imm;
     private List<AbstractFragment> resultFragments;
 
+    private TextView notResultFoundTextView;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
             Class[] fragments = {ArtistsFragment.class, AlbumsFragment.class, PlaylistFragment.class, TracksFragment.class};
             for (int i = 0, len = fragments.length; i < len; i++){
                 AbstractFragment fragment = (AbstractFragment) fragments[i].newInstance();
+                fragment.setListener(this);
                 resultFragments.add(fragment);
                 AppHelpers.setFragment(getActivity(),fragment,R.id.results,false,false);
             }
@@ -56,6 +61,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_layout, container, false);
+        notResultFoundTextView = (TextView) view.findViewById(R.id.not_result_found_primary);
         imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         setHasOptionsMenu(true);
         return view;
@@ -109,11 +115,11 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     @Override
     public void onDataNotFound(View view) {
         view.setVisibility(View.GONE);
-        int i = 0, len = resultFragments.size();
+        int i = 0, len = resultFragments.size() - 1;
         for(; i < len || resultFragments.get(i).isVisible(); i++ );
         if (i == len){
             AppHelpers.showViewById((ViewGroup) getView(),R.id.not_result_found);
-           // notResultFoundTextView.setText(String.format(Locale.getDefault(), getString(R.string.search_not_result_found_primary), searchView.getQuery().toString() ));
+           notResultFoundTextView.setText(String.format(Locale.getDefault(), getString(R.string.search_not_result_found_primary), searchView.getQuery().toString() ));
         }
     }
 

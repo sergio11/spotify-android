@@ -45,8 +45,13 @@ public class PlaylistFragment extends AbstractFragment<PlaylistSimple> implement
 
     @Subscribe
     public void onPlaylistsFound(PlaylistsFoundEvent event){
-        adapter.setData(event.getPlaylists());
-        adapter.notifyDataSetChanged();
+        if (event.getPlaylists().size() > 0){
+            adapter.setData(event.getPlaylists());
+            adapter.notifyDataSetChanged();
+            listener.onDataFound(getView());
+        }else{
+            listener.onDataNotFound(getView());
+        }
     }
 
     @Override
