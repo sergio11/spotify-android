@@ -48,6 +48,7 @@ public abstract class SearchResultAbstractAdapter<T,E extends SearchResultAbstra
             super(itemView);
             photo = (ImageView)itemView.findViewById(R.id.search_result_photo);
             title = (TextView)itemView.findViewById(R.id.search_result_title);
+            title.setSelected(true);
             subtitle = (TextView)itemView.findViewById(R.id.search_result_subtitle);
         }
 

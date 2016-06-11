@@ -11,18 +11,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginLeft="12dp">
+        android:layout_marginLeft="12dp"
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/search_result_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            style="@style/listItem.Title"
             android:textColor="@android:color/white"/>
 
         <TextView
             android:id="@+id/search_result_subtitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:textAppearanceSmall"
             android:textColor="@android:color/white"/>

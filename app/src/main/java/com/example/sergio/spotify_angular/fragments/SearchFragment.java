@@ -96,10 +96,13 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         if (!query.isEmpty()){
             noSearch.setVisibility(View.GONE);
             resultsContainer.setVisibility(View.VISIBLE);
+            for (SimpleResultSearchFragment fragment : resultFragments)
+                fragment.load(query);
+        }else{
+            noSearch.setVisibility(View.VISIBLE);
+            resultsContainer.setVisibility(View.GONE);
         }
 
-        for (SimpleResultSearchFragment fragment : resultFragments)
-            fragment.load(query);
         return true;
     }
 
