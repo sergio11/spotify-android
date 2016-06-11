@@ -9,5 +9,5 @@
     android:minHeight="?attr/actionBarSize"
     android:elevation="@dimen/toolbar_elevation"
     android:background="@android:color/transparent"
-    app:theme="@style/Rushmore.Toolbar.Transparent">
+    app:theme="@style/TransparentToolbar">
 </android.support.v7.widget.Toolbar>

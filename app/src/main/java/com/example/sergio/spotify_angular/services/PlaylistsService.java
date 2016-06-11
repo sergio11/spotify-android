@@ -8,6 +8,9 @@ import com.example.sergio.spotify_angular.events.LoadPlaylistEvent;
 import com.example.sergio.spotify_angular.events.LoadPlaylistTracksEvent;
 import com.example.sergio.spotify_angular.events.PlaylistLoadedEvent;
 import com.example.sergio.spotify_angular.events.PlaylistTracksLoadedEvent;
+import com.example.sergio.spotify_angular.events.PlaylistsFoundEvent;
+import com.example.sergio.spotify_angular.events.SearchPlaylistEvent;
+import com.example.sergio.spotify_angular.utils.AppHelpers;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -17,6 +20,7 @@ import kaaes.spotify.webapi.android.models.FeaturedPlaylists;
 import kaaes.spotify.webapi.android.models.Pager;
 import kaaes.spotify.webapi.android.models.Playlist;
 import kaaes.spotify.webapi.android.models.PlaylistTrack;
+import kaaes.spotify.webapi.android.models.PlaylistsPager;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -67,6 +71,21 @@ public class PlaylistsService extends BaseService {
             @Override
             public void success(Pager<PlaylistTrack> playlistTrackPager, Response response) {
                 bus.post(new PlaylistTracksLoadedEvent(playlistTrackPager.items));
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                bus.post(new ApiErrorEvent(error));
+            }
+        });
+    }
+
+    @Subscribe
+    public void onSearchPlaylists(SearchPlaylistEvent event){
+        service.searchPlaylists(event.getText(), AppHelpers.deepMerge(options, event.getOptions()), new Callback<PlaylistsPager>() {
+            @Override
+            public void success(PlaylistsPager playlistsPager, Response response) {
+                bus.post(new PlaylistsFoundEvent(playlistsPager.playlists.items));
             }
 
             @Override

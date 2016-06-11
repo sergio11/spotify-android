@@ -38,6 +38,7 @@
         <item>CategoriesService</item>
         <item>PlaylistsService</item>
         <item>AlbumsService</item>
+        <item>ArtistsService</item>
     </string-array>
 
 
