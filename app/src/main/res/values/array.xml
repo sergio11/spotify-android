@@ -39,6 +39,7 @@
         <item>PlaylistsService</item>
         <item>AlbumsService</item>
         <item>ArtistsService</item>
+        <item>TracksServices</item>
     </string-array>
 
 

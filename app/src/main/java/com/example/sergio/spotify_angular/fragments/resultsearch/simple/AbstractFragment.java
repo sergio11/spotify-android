@@ -1,4 +1,4 @@
-package com.example.sergio.spotify_angular.fragments.resultsearch;
+package com.example.sergio.spotify_angular.fragments.resultsearch.simple;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.sergio.spotify_angular.R;
-import com.example.sergio.spotify_angular.adapters.SearchResultAbstractAdapter;
+import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
 import com.example.sergio.spotify_angular.fragments.EventBusFragment;
 import com.example.sergio.spotify_angular.utils.DividerItemDecoration;
 
@@ -18,14 +18,15 @@ import java.util.List;
 import java.util.Map;
 
 
-public abstract class SimpleResultSearchFragment<T> extends EventBusFragment {
+public abstract class AbstractFragment<T> extends EventBusFragment {
 
     protected TextView titleTextView;
     protected RecyclerView recyclerView;
 
     protected List<T> data;
-    protected SearchResultAbstractAdapter adapter;
+    protected RecyclerViewBaseAdapter adapter;
     protected Map<String, Object> options;
+    protected OnResultSearchListener listener;
 
 
     @Override
@@ -49,16 +50,25 @@ public abstract class SimpleResultSearchFragment<T> extends EventBusFragment {
                 return false;
             }
         });
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), null,true, true));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.white_divider),false, false));
         adapter = getAdapter();
         recyclerView.setAdapter(adapter);
         return view;
     }
 
-    protected abstract SearchResultAbstractAdapter getAdapter();
+    protected abstract RecyclerViewBaseAdapter getAdapter();
 
     protected abstract int getTitle();
 
-    public abstract void load(String text);
+    public abstract void search(String text);
+
+    public void setListener(OnResultSearchListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnResultSearchListener{
+        void onDataNotFound(View view);
+        void onDataFound(View view);
+    }
 
 }

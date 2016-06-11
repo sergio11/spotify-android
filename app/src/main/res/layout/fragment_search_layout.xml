@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/secondary">
+    android:background="@drawable/search_background"
+    >
 
     <ProgressBar
         android:id="@+id/loadingView"
@@ -20,12 +21,13 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        >
 
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:src="@android:drawable/ic_menu_search"
+            android:src="@drawable/ic_action_pageview"
             android:layout_marginBottom="12dp"/>
 
         <TextView
@@ -41,12 +43,55 @@
 
     </LinearLayout>
 
+    <!-- Data not found -->
+
+    <LinearLayout
+        android:id="@+id/not_result_found"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_image_assistant_photo"
+            android:layout_marginBottom="12dp"/>
+
+        <TextView
+            android:id="@+id/not_result_found_primary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="15dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="10dp"
+            android:textStyle="bold"
+            android:textColor="@color/primary_dark"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="15dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:textColor="@color/primary"
+            android:text="@string/search_not_result_found_secondary"
+            />
+    </LinearLayout>
+
 
     <ScrollView
         android:id="@+id/results_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:background="@color/primary_transparent">
         <LinearLayout
             android:id="@+id/results"
             android:layout_width="match_parent"

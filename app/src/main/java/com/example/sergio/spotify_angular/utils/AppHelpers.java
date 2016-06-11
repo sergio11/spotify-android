@@ -6,6 +6,8 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.sergio.spotify_angular.models.MenuAppItem;
 
@@ -55,6 +57,17 @@ public class AppHelpers {
         }
 
         return menu;
+    }
+
+    public static void showViewById(ViewGroup view ,int id){
+        for (int i = 0, len = view.getChildCount(); i < len; i++){
+            View child = view.getChildAt(i);
+            if (child.getId() == id){
+                child.setVisibility(View.VISIBLE);
+            }else{
+                child.setVisibility(View.GONE);
+            }
+        }
     }
 
 

@@ -1,8 +1,8 @@
-package com.example.sergio.spotify_angular.fragments.resultsearch;
+package com.example.sergio.spotify_angular.fragments.resultsearch.simple;
 
 import com.example.sergio.spotify_angular.R;
-import com.example.sergio.spotify_angular.adapters.AlbumsSearchResultAdapter;
-import com.example.sergio.spotify_angular.adapters.SearchResultAbstractAdapter;
+import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
+import com.example.sergio.spotify_angular.adapters.resultsearch.AlbumsAdapter;
 import com.example.sergio.spotify_angular.events.AlbumsFoundEvent;
 import com.example.sergio.spotify_angular.events.SearchAlbumsEvent;
 
@@ -15,11 +15,11 @@ import kaaes.spotify.webapi.android.models.AlbumSimple;
 /**
  * Created by sergio on 11/06/2016.
  */
-public class AlbumsSimpleResultSearchFragment extends SimpleResultSearchFragment<AlbumSimple> {
+public class AlbumsFragment extends AbstractFragment<AlbumSimple> {
 
     @Override
-    protected SearchResultAbstractAdapter getAdapter() {
-        return new AlbumsSearchResultAdapter(getActivity(), new ArrayList<AlbumSimple>());
+    protected RecyclerViewBaseAdapter getAdapter() {
+        return new AlbumsAdapter(getActivity(), new ArrayList<AlbumSimple>());
     }
 
     @Override
@@ -28,7 +28,7 @@ public class AlbumsSimpleResultSearchFragment extends SimpleResultSearchFragment
     }
 
     @Override
-    public void load(String text) {
+    public void search(String text) {
         bus.post(new SearchAlbumsEvent(text,options));
     }
 
