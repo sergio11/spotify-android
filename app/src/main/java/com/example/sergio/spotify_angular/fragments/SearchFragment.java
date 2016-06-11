@@ -12,9 +12,19 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.activities.HomeActivity;
+import com.example.sergio.spotify_angular.fragments.resultsearch.AlbumsSimpleResultSearchFragment;
+import com.example.sergio.spotify_angular.fragments.resultsearch.ArtistsSimpleResultSearchFragment;
+import com.example.sergio.spotify_angular.fragments.resultsearch.SimpleResultSearchFragment;
+import com.example.sergio.spotify_angular.utils.AppHelpers;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Created by sergio on 04/06/2016.
@@ -23,9 +33,35 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
     private SearchView searchView;
     private InputMethodManager imm;
+    private List<SimpleResultSearchFragment> resultFragments;
+
+    private ProgressBar loadingView;
+    private ViewGroup noSearch;
+    private ViewGroup resultsContainer;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        resultFragments = new ArrayList<>();
+        try {
+            Class[] fragments = {ArtistsSimpleResultSearchFragment.class, AlbumsSimpleResultSearchFragment.class};
+            for (int i = 0, len = fragments.length; i < len; i++){
+                SimpleResultSearchFragment fragment = (SimpleResultSearchFragment) fragments[i].newInstance();
+                resultFragments.add(fragment);
+                AppHelpers.setFragment(getActivity(),fragment,R.id.results,false,false);
+            }
+        } catch (java.lang.InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_layout, container, false);
+        resultsContainer = (ViewGroup) view.findViewById(R.id.results_container);
+        noSearch = (ViewGroup)view.findViewById(R.id.no_search);
+        loadingView = (ProgressBar) view.findViewById(R.id.loadingView);
         imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         setHasOptionsMenu(true);
         return view;
@@ -56,7 +92,14 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     }
 
     @Override
-    public boolean onQueryTextChange(String newText) {
+    public boolean onQueryTextChange(String query) {
+        if (!query.isEmpty()){
+            noSearch.setVisibility(View.GONE);
+            resultsContainer.setVisibility(View.VISIBLE);
+        }
+
+        for (SimpleResultSearchFragment fragment : resultFragments)
+            fragment.load(query);
         return true;
     }
 
@@ -66,5 +109,6 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         //hide the Android Soft Keyboard
         imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
     }
+
 
 }

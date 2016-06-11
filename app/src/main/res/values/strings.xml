@@ -28,4 +28,8 @@
     <string name="search_hint">Busca artistas, playlist, canciones por nombre</string>
     <string name="search_description">Busca tu canción favorita, artistas, albumes, podcast, playlists y amigos</string>
 
+    <!-- Search Results Titles -->
+    <string name="search_result_artists">Artistas</string>
+    <string name="search_result_albums">Albumes</string>
+
 </resources>

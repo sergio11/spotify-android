@@ -1,0 +1,17 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".fragments.resultsearch.SimpleResultSearchFragment">
+
+    <TextView
+        android:id="@+id/result_title"
+        style="@style/Subtitle"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/result_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+</LinearLayout>
