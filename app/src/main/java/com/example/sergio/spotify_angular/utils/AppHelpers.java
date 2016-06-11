@@ -5,7 +5,9 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -70,6 +72,12 @@ public class AppHelpers {
         }
     }
 
+    /**
+     * Converting dp to pixel
+     */
+    public static int dpToPx(Resources r, int dp) {
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
+    }
 
     // This is fancier than Map.putAll(Map)
     public static Map deepMerge(Map original, Map newMap) {

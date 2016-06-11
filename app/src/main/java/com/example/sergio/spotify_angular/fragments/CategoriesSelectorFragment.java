@@ -1,6 +1,6 @@
 package com.example.sergio.spotify_angular.fragments;
 
-import android.app.Fragment;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,9 +14,10 @@ import com.example.sergio.spotify_angular.adapters.CategoriesAdapter;
 import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
 import com.example.sergio.spotify_angular.events.CategoriesLoadedEvent;
 import com.example.sergio.spotify_angular.events.LoadCategoriesEvent;
-import com.example.sergio.spotify_angular.utils.GridAutofitLayoutManager;
+import com.example.sergio.spotify_angular.utils.AppHelpers;
+import com.example.sergio.spotify_angular.utils.GridSpacingItemDecoration;
 
-import org.greenrobot.eventbus.EventBus;
+
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -30,7 +31,6 @@ import kaaes.spotify.webapi.android.models.Category;
 public class CategoriesSelectorFragment extends EventBusFragment implements RecyclerViewBaseAdapter.OnItemClickListener<Category>{
 
     private final static String TAG = "CATEGORIES";
-    private final static int COLUMN_WIDTH = 360;
     private RecyclerView recyclerList;
     private CategoriesAdapter adapter;
 
@@ -39,10 +39,10 @@ public class CategoriesSelectorFragment extends EventBusFragment implements Recy
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.category_selector_fragment, container, false);
-        GridAutofitLayoutManager gridLayoutManager = new GridAutofitLayoutManager(getActivity(),COLUMN_WIDTH, GridLayoutManager.VERTICAL, false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerList = (RecyclerView) view.findViewById(R.id.categories_recyclerview);
         recyclerList.setLayoutManager(gridLayoutManager);
-
+        recyclerList.addItemDecoration(new GridSpacingItemDecoration(2, AppHelpers.dpToPx(getResources(),5), true));
         adapter = new CategoriesAdapter(getActivity(), new ArrayList<Category>());
         adapter.setOnItemClickListener(this);
 
