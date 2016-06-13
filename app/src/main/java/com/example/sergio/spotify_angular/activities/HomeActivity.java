@@ -177,9 +177,10 @@ public class HomeActivity extends AppCompatActivity  {
     @Subscribe
     public void onExplorerMenuItemSelected(ExplorerMenuItemSelected event){
         switch (event.getId()){
-            case R.id.discover:
+            case R.id.new_releases:
                 NewReleasesFragment fragment = new NewReleasesFragment();
                 AppHelpers.setFragment(this,fragment, R.id.flContent, true,true);
+                setTitle(getString(R.string.new_releases_fragment_title));
                 break;
             default:
                 Toast.makeText(this,"Opción no implementada", Toast.LENGTH_LONG).show();
@@ -194,6 +195,7 @@ public class HomeActivity extends AppCompatActivity  {
         PlaylistPreviewFragment fragment = new PlaylistPreviewFragment();
         fragment.setArguments(bundle);
         AppHelpers.setFragment(this,fragment, R.id.flContent, true,true);
+        setTitle(event.getPlaylist().name);
     }
 
     public void clearToolbar(){

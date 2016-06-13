@@ -3,4 +3,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="toolbar_elevation">10dp</dimen>
+
+    <dimen name="span_column_width_albums">180dp</dimen>
 </resources>

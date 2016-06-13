@@ -35,5 +35,8 @@
     <string name="search_result_playlist">Playlists</string>
     <string name="search_result_tracks">Pistas</string>
 
+    <!-- Fragments Titles -->
+    <string name="new_releases_fragment_title">Nuevos Lanzamientos</string>
+
 
 </resources>

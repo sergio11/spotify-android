@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/secondary_dark">
+    android:background="@drawable/new_releases_background">
 
     <TextView
         android:text="@string/new_releases_subtitle"

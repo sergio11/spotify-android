@@ -12,7 +12,9 @@ import com.example.sergio.spotify_angular.adapters.AlbumsAdapter;
 import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
 import com.example.sergio.spotify_angular.events.LoadNewReleases;
 import com.example.sergio.spotify_angular.events.NewReleasesLoaded;
+import com.example.sergio.spotify_angular.utils.AppHelpers;
 import com.example.sergio.spotify_angular.utils.GridAutofitLayoutManager;
+import com.example.sergio.spotify_angular.utils.GridSpacingItemDecoration;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -22,7 +24,6 @@ import kaaes.spotify.webapi.android.models.AlbumSimple;
 
 public class NewReleasesFragment extends EventBusFragment implements RecyclerViewBaseAdapter.OnItemClickListener<AlbumSimple>{
 
-    private final static int COLUMN_WIDTH = 460;
     private RecyclerView recyclerView;
     private AlbumsAdapter adapter;
 
@@ -31,9 +32,10 @@ public class NewReleasesFragment extends EventBusFragment implements RecyclerVie
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_new_releases, container, false);
+        float spanColumnWidth = getResources().getDimension(R.dimen.span_column_width_albums);
         recyclerView = (RecyclerView) view.findViewById(R.id.newReleases);
-        GridAutofitLayoutManager gridLayoutManager = new GridAutofitLayoutManager(getActivity(),COLUMN_WIDTH, GridLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.setLayoutManager(new GridAutofitLayoutManager(getActivity(), (int) spanColumnWidth));
+        recyclerView.setNestedScrollingEnabled(false);
         adapter = new AlbumsAdapter(getActivity(), new ArrayList<AlbumSimple>());
         adapter.setOnItemClickListener(this);
         recyclerView.setAdapter(adapter);
