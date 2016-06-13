@@ -17,8 +17,6 @@ public abstract class EventBusFragment extends Fragment{
         bus.register(this);
     }
 
-
-
     @Override
     public void onDestroy() {
         super.onDestroy();

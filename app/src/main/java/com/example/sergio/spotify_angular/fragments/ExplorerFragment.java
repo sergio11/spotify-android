@@ -16,6 +16,8 @@ import com.example.sergio.spotify_angular.R;
  */
 public class ExplorerFragment extends Fragment{
 
+    public final static String ID = "EXPLORER_FRAGMENT";
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_explorer, container, false);
         setHasOptionsMenu(true);

@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +40,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class HomeActivity extends AppCompatActivity  {
 
+    private final static String CURRENT_TITLE = "title";
     private DrawerLayout mDrawer;
     private Toolbar toolbar;
     private ActionBarDrawerToggle drawerToggle;
@@ -81,6 +83,7 @@ public class HomeActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_main);
 
+
         // Set a Toolbar to replace the ActionBar.
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -105,7 +108,10 @@ public class HomeActivity extends AppCompatActivity  {
                 });
 
 
-        selectDrawerItem(nvDrawer.getMenu().getItem(1));
+        if (savedInstanceState == null)
+            selectDrawerItem(nvDrawer.getMenu().getItem(1));
+        else
+            setTitle(savedInstanceState.getString(CURRENT_TITLE));
 
     }
 
@@ -125,7 +131,11 @@ public class HomeActivity extends AppCompatActivity  {
     }
 
 
-
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(CURRENT_TITLE, getTitle().toString());
+    }
 
     // `onPostCreate` called when activity start-up is complete after `onStart()`
     // NOTE! Make sure to override the method with only a single `Bundle` argument
@@ -155,6 +165,8 @@ public class HomeActivity extends AppCompatActivity  {
         super.onPause();
         bus.unregister(this);
     }
+
+
 
     @Subscribe
     public void onProfileLoaded(ProfileLoadedEvent event){

@@ -50,19 +50,20 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
                 AbstractFragment fragment = (AbstractFragment) fragments[i].newInstance();
                 fragment.setListener(this);
                 resultFragments.add(fragment);
-                AppHelpers.setFragment(getActivity(),fragment,R.id.results,false,false);
+                AppHelpers.setFragment(getActivity(),fragment,R.id.results,false,true);
             }
         } catch (java.lang.InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+
+        imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_layout, container, false);
         notResultFoundTextView = (TextView) view.findViewById(R.id.not_result_found_primary);
-        imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         setHasOptionsMenu(true);
         return view;
     }
@@ -78,11 +79,6 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        imm.showSoftInput(searchView,0);
-    }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
@@ -104,12 +100,11 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onPause() {
+        super.onPause();
         //hide the Android Soft Keyboard
         imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
     }
-
 
 
     @Override

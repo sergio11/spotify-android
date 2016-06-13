@@ -34,6 +34,7 @@ public abstract class AbstractFragment<T> extends EventBusFragment {
         super.onCreate(savedInstanceState);
         options = new HashMap<>();
         options.put("limit",5);
+        adapter = getAdapter();
     }
 
     @Override
@@ -51,7 +52,6 @@ public abstract class AbstractFragment<T> extends EventBusFragment {
             }
         });
         recyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.white_divider),false, false));
-        adapter = getAdapter();
         recyclerView.setAdapter(adapter);
         return view;
     }
