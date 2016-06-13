@@ -1,6 +1,7 @@
 package com.example.sergio.spotify_angular.fragments.resultsearch.simple;
 
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,10 +21,6 @@ import java.util.Map;
 
 public abstract class AbstractFragment<T> extends EventBusFragment {
 
-    protected TextView titleTextView;
-    protected RecyclerView recyclerView;
-
-    protected List<T> data;
     protected RecyclerViewBaseAdapter adapter;
     protected Map<String, Object> options;
     protected OnResultSearchListener listener;
@@ -42,23 +39,34 @@ public abstract class AbstractFragment<T> extends EventBusFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_result_search_simple, container, false);
-        titleTextView = (TextView) view.findViewById(R.id.result_title);
+        TextView titleTextView = (TextView) view.findViewById(R.id.result_title);
         titleTextView.setText(getString(getTitle()));
-        recyclerView = (RecyclerView) view.findViewById(R.id.result_recyclerView);
+        TextView seeAll = (TextView) view.findViewById(R.id.see_all);
+        seeAll.setText(getString(getSeeAllText()));
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.result_recyclerView);
         recyclerView.setLayoutManager( new LinearLayoutManager(getActivity()) {
             @Override
             public boolean canScrollVertically() {
                 return false;
             }
         });
-        recyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.white_divider),false, false));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.white_divider),false, true));
         recyclerView.setAdapter(adapter);
+        DefaultItemAnimator animator = new DefaultItemAnimator() {
+            @Override
+            public boolean canReuseUpdatedViewHolder(RecyclerView.ViewHolder viewHolder) {
+                return true;
+            }
+        };
+        recyclerView.setItemAnimator(animator);
         return view;
     }
 
     protected abstract RecyclerViewBaseAdapter getAdapter();
 
     protected abstract int getTitle();
+
+    protected abstract int getSeeAllText();
 
     public abstract void search(String text);
 

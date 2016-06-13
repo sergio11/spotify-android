@@ -1,15 +1,20 @@
 package com.example.sergio.spotify_angular.fragments.resultsearch.simple;
 
 
+import android.os.Bundle;
+
+
 import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
 import com.example.sergio.spotify_angular.adapters.resultsearch.ArtistsAdapter;
 import com.example.sergio.spotify_angular.events.ArtistsFoundEvent;
+import com.example.sergio.spotify_angular.events.FollowedArtistFoundEvent;
+import com.example.sergio.spotify_angular.events.GetFollowedArtistsEvent;
 import com.example.sergio.spotify_angular.events.SearchArtistsEvent;
-
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import kaaes.spotify.webapi.android.models.Artist;
 
@@ -17,6 +22,14 @@ import kaaes.spotify.webapi.android.models.Artist;
  * Created by sergio on 11/06/2016.
  */
 public class ArtistsFragment extends AbstractFragment<Artist> {
+
+    private List<Artist> followedArtists;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        bus.post(new GetFollowedArtistsEvent());
+    }
 
     @Override
     protected RecyclerViewBaseAdapter getAdapter() {
@@ -29,8 +42,25 @@ public class ArtistsFragment extends AbstractFragment<Artist> {
     }
 
     @Override
+    protected int getSeeAllText() {
+        return R.string.see_all_artists;
+    }
+
+    @Override
     public void search(String text) {
         bus.post(new SearchArtistsEvent(text,options));
+    }
+
+    private void markFollowedArtists(){
+        List<Artist> artists = adapter.getData();
+        for (int i = 0, leni = followedArtists.size(); i < leni; i++){
+            for (int k = 0, lenk = artists.size(); k < lenk; k++){
+                if (followedArtists.get(i).id.equals(artists.get(k).id)){
+                    adapter.notifyItemChanged(k,"Follow");
+                }
+            }
+
+        }
     }
 
     @Subscribe
@@ -38,10 +68,21 @@ public class ArtistsFragment extends AbstractFragment<Artist> {
         if (event.getArtists().size() > 0){
             adapter.setData(event.getArtists());
             adapter.notifyDataSetChanged();
+            if (followedArtists != null && followedArtists.size() > 0)
+                markFollowedArtists();
             listener.onDataFound(getView());
         }else{
             listener.onDataNotFound(getView());
         }
+    }
+
+    @Subscribe
+    public void onFollowedArtistFound(FollowedArtistFoundEvent event){
+        followedArtists = event.getArtists();
+        if (adapter.getData() != null && adapter.getData().size() > 0){
+            markFollowedArtists();
+        }
+
     }
 
 

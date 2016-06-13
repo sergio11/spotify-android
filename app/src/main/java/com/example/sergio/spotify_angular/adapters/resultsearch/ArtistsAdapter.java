@@ -37,6 +37,13 @@ public class ArtistsAdapter extends RecyclerViewBaseAdapter<Artist, ArtistsAdapt
         bindToListener(holder);
     }
 
+    @Override
+    public void onBindViewHolder(ArtistViewHolder holder, int position, List<Object> payloads) {
+        holder.bind(data.get(position));
+        bindToListener(holder);
+    }
+
+
 
     public class ArtistViewHolder extends RecyclerView.ViewHolder{
 

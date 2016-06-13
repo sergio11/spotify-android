@@ -28,6 +28,11 @@ public class AlbumsFragment extends AbstractFragment<AlbumSimple> {
     }
 
     @Override
+    protected int getSeeAllText() {
+        return R.string.see_all_albums;
+    }
+
+    @Override
     public void search(String text) {
         bus.post(new SearchAlbumsEvent(text,options));
     }

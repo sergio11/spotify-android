@@ -5,6 +5,8 @@ import com.example.sergio.spotify_angular.events.AreFollowingPlaylistCheckedEven
 import com.example.sergio.spotify_angular.events.AreFollowingPlaylistEvent;
 import com.example.sergio.spotify_angular.events.FollowPlaylistEvent;
 import com.example.sergio.spotify_angular.events.FollowPlaylistSuccessEvent;
+import com.example.sergio.spotify_angular.events.FollowedArtistFoundEvent;
+import com.example.sergio.spotify_angular.events.GetFollowedArtistsEvent;
 import com.example.sergio.spotify_angular.events.LoadMyPlaylistsEvent;
 import com.example.sergio.spotify_angular.events.LoadProfileEvent;
 import com.example.sergio.spotify_angular.events.MyPlaylistsLoadedEvent;
@@ -19,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import kaaes.spotify.webapi.android.SpotifyService;
+import kaaes.spotify.webapi.android.models.ArtistsCursorPager;
 import kaaes.spotify.webapi.android.models.Pager;
 import kaaes.spotify.webapi.android.models.PlaylistSimple;
 import kaaes.spotify.webapi.android.models.Result;
@@ -103,6 +106,21 @@ public class UserService extends BaseService {
             @Override
             public void success(Pager<PlaylistSimple> playlistSimplePager, Response response) {
                 bus.post(new MyPlaylistsLoadedEvent(playlistSimplePager.items));
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                bus.post(new ApiErrorEvent(error));
+            }
+        });
+    }
+
+    @Subscribe
+    public void onGetFollowedArtists(GetFollowedArtistsEvent event){
+        service.getFollowedArtists(options, new Callback<ArtistsCursorPager>() {
+            @Override
+            public void success(ArtistsCursorPager artistsCursorPager, Response response) {
+                bus.post(new FollowedArtistFoundEvent(artistsCursorPager.artists.items));
             }
 
             @Override

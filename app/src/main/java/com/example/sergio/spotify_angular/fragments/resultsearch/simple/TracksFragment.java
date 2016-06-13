@@ -28,6 +28,11 @@ public class TracksFragment extends AbstractFragment {
     }
 
     @Override
+    protected int getSeeAllText() {
+        return R.string.see_all_tracks;
+    }
+
+    @Override
     public void search(String text) {
         bus.post(new SearchTracksEvent(text,options));
     }

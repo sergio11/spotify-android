@@ -14,4 +14,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
 
+    <TextView
+        android:id="@+id/see_all"
+        android:gravity="center_vertical"
+        android:textColor="@android:color/white"
+        android:paddingLeft="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/listPreferredItemHeight" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/white_divider"></View>
+
 </LinearLayout>

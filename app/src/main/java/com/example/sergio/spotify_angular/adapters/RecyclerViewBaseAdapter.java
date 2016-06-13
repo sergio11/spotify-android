@@ -40,6 +40,10 @@ public abstract class RecyclerViewBaseAdapter<T,E extends RecyclerView.ViewHolde
         this.data = data;
     }
 
+    public List<T> getData(){
+        return this.data;
+    };
+
     public void bindToListener(final RecyclerView.ViewHolder view) {
         if(listener != null){
             view.itemView.setOnClickListener(new View.OnClickListener() {

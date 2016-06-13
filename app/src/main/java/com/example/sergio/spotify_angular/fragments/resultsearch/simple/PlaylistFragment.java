@@ -39,6 +39,11 @@ public class PlaylistFragment extends AbstractFragment<PlaylistSimple> implement
     }
 
     @Override
+    protected int getSeeAllText() {
+        return R.string.see_all_playlist;
+    }
+
+    @Override
     public void search(String text) {
         bus.post(new SearchPlaylistEvent(text, options));
     }
