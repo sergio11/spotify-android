@@ -93,7 +93,7 @@ public class PlaylistPreviewFragment extends EventBusFragment {
 
         String url = playlist.images.get(0).url;
         //background image
-        ImageUtils.getBlurredImage(getActivity(),url,playlist.name,10, new ImageUtils.BlurEffectListener(){
+        ImageUtils.getBlurredImage(getActivity(),url,playlist.name,25, new ImageUtils.BlurEffectListener(){
             @Override
             public void onDone(Bitmap bitmap) {
                 recyclerHeader.setBackground(new BitmapDrawable(getResources(),bitmap));
