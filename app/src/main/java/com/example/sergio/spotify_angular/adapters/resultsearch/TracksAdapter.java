@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sergio.spotify_angular.R;
+import com.example.sergio.spotify_angular.adapters.ProgressLoadedAdapter;
 import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
@@ -22,22 +23,18 @@ import kaaes.spotify.webapi.android.models.Track;
 /**
  * Created by sergio on 11/06/2016.
  */
-public class TracksAdapter extends RecyclerViewBaseAdapter<Track, TracksAdapter.TrackViewHolder> {
+public class TracksAdapter extends ProgressLoadedAdapter<Track, TracksAdapter.TrackViewHolder> {
 
     public TracksAdapter(Context context, List<Track> data) {
         super(context, data);
     }
 
     @Override
-    public TrackViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    protected RecyclerViewBaseAdapter.BaseViewHolder getViewHolderItem(ViewGroup parent) {
         View view = LayoutInflater.from(context).inflate(R.layout.track_result_search_item, parent, false);
         return new TrackViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(TrackViewHolder holder, int position) {
-        holder.bind(data.get(position));
-    }
 
     public class TrackViewHolder extends  RecyclerViewBaseAdapter<Track, TracksAdapter.TrackViewHolder>.BaseViewHolder<Track>{
 

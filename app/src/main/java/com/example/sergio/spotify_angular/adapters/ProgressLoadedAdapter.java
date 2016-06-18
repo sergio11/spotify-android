@@ -35,7 +35,7 @@ public abstract class ProgressLoadedAdapter<T, E extends RecyclerViewBaseAdapter
     }
 
     @Override
-    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerViewBaseAdapter.BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         BaseViewHolder vh;
         if (viewType == VIEW_TYPE_ITEM) {
 
@@ -64,7 +64,7 @@ public abstract class ProgressLoadedAdapter<T, E extends RecyclerViewBaseAdapter
         this.isFooterEnabled = isEnabled;
     }
 
-    protected abstract BaseViewHolder getViewHolderItem(ViewGroup parent);
+    protected abstract RecyclerViewBaseAdapter.BaseViewHolder getViewHolderItem(ViewGroup parent);
 
     public  class ProgressViewHolder extends RecyclerViewBaseAdapter<T, RecyclerViewBaseAdapter.BaseViewHolder>.BaseViewHolder<T> {
         public ProgressBar progressBar;

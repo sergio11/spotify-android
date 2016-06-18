@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sergio.spotify_angular.R;
+import com.example.sergio.spotify_angular.adapters.ProgressLoadedAdapter;
 import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
 import com.squareup.picasso.Picasso;
 
@@ -19,24 +20,19 @@ import kaaes.spotify.webapi.android.models.AlbumSimple;
 /**
  * Created by sergio on 11/06/2016.
  */
-public class AlbumsAdapter extends RecyclerViewBaseAdapter<AlbumSimple, AlbumsAdapter.AlbumViewHolder> {
+public class AlbumsAdapter extends ProgressLoadedAdapter<AlbumSimple, AlbumsAdapter.AlbumViewHolder> {
 
 
     public AlbumsAdapter(Context context, List<AlbumSimple> data) {
         super(context, data);
     }
 
-
     @Override
-    public AlbumViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    protected RecyclerViewBaseAdapter.BaseViewHolder getViewHolderItem(ViewGroup parent) {
         View view = LayoutInflater.from(context).inflate(R.layout.album_result_search_item, parent, false);
         return new AlbumViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(AlbumViewHolder holder, int position) {
-        holder.bind(data.get(position));
-    }
 
     public class AlbumViewHolder extends RecyclerViewBaseAdapter<AlbumSimple, AlbumsAdapter.AlbumViewHolder>.BaseViewHolder<AlbumSimple>{
 

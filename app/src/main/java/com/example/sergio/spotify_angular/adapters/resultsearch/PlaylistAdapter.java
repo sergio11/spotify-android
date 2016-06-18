@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sergio.spotify_angular.R;
+import com.example.sergio.spotify_angular.adapters.ProgressLoadedAdapter;
 import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
 import com.squareup.picasso.Picasso;
 
@@ -18,22 +19,18 @@ import kaaes.spotify.webapi.android.models.PlaylistSimple;
 /**
  * Created by sergio on 11/06/2016.
  */
-public class PlaylistAdapter extends RecyclerViewBaseAdapter<PlaylistSimple, PlaylistAdapter.PlaylistViewHolder> {
+public class PlaylistAdapter extends ProgressLoadedAdapter<PlaylistSimple, PlaylistAdapter.PlaylistViewHolder> {
 
     public PlaylistAdapter(Context context, List<PlaylistSimple> data) {
         super(context, data);
     }
 
     @Override
-    public PlaylistViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    protected RecyclerViewBaseAdapter.BaseViewHolder getViewHolderItem(ViewGroup parent) {
         View view = LayoutInflater.from(context).inflate(R.layout.playlist_result_search_item, parent, false);
         return new PlaylistViewHolder(view);
     }
 
-    @Override
-    public void onBindViewHolder(PlaylistViewHolder holder, int position) {
-        holder.bind(data.get(position));
-    }
 
     public class PlaylistViewHolder extends RecyclerViewBaseAdapter<PlaylistSimple, PlaylistAdapter.PlaylistViewHolder>.BaseViewHolder<PlaylistSimple>{
 

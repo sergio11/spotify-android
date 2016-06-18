@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sergio.spotify_angular.R;
+import com.example.sergio.spotify_angular.adapters.ProgressLoadedAdapter;
 import com.example.sergio.spotify_angular.adapters.resultsearch.ArtistsAdapter;
 import com.example.sergio.spotify_angular.events.ArtistsFoundEvent;
 import com.example.sergio.spotify_angular.events.NotFoundArtistEvent;
@@ -29,49 +30,29 @@ import kaaes.spotify.webapi.android.models.Artist;
 /**
  * Created by sergio on 18/06/2016.
  */
-public class ArtistFragment extends EventBusFragment {
+public class ArtistFragment extends AbstractEndlessScrollFragment<Artist,LinearLayoutManager> {
 
-    private static final String ARG_TEXT = "text_search";
-    private static final int DEFAULT_TOTAL_ITEM = 20;
-
-    private String text;
-
-    private RecyclerView recyclerView;
-    private ArtistsAdapter artistsAdapter;
-    private List<Artist> artists = new ArrayList<>();
-
-    public static ArtistFragment newInstance(String text) {
-        ArtistFragment fragment = new ArtistFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_TEXT, text);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private LinearLayoutManager linearLayoutManager =  new LinearLayoutManager(getActivity());
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            text = getArguments().getString(ARG_TEXT);
-        }
-        Map<String,Object> options = new HashMap<>();
-        options.put("limit",DEFAULT_TOTAL_ITEM);
-        options.put("offset",0);
-        bus.post(new SearchArtistsEvent(text,options));
+        bus.post(new SearchArtistsEvent(text,defaultOptions));
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_see_all_results, container, false);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.white_divider),false, true));
-        artistsAdapter = new ArtistsAdapter(getActivity(), artists);
-        artistsAdapter.enableFooter(true);
-        recyclerView.setAdapter(artistsAdapter);
-        recyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+    protected LinearLayoutManager getLayoutManager() {
+        return linearLayoutManager;
+    }
+
+    @Override
+    protected ProgressLoadedAdapter getAdapter() {
+        return new ArtistsAdapter(getActivity(),data);
+    }
+
+    @Override
+    protected EndlessRecyclerViewScrollListener getEndlessRecyclerViewScrollListener() {
+        return new EndlessRecyclerViewScrollListener(linearLayoutManager) {
 
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
@@ -81,30 +62,29 @@ public class ArtistFragment extends EventBusFragment {
                 bus.post(new SearchArtistsEvent(text,options));
 
             }
-        });
-
-        return view;
+        };
     }
+
 
     @Subscribe
     public void onArtistsFound(ArtistsFoundEvent event){
 
         List<Artist> artistsFound = event.getArtists();
         if (artistsFound.size() > 0){
-            artists.addAll(artistsFound);
+            data.addAll(artistsFound);
             // For efficiency purposes, notify the adapter of only the elements that got changed
             // curSize will equal to the index of the first element inserted because the list is 0-indexed
-            int curSize = artistsAdapter.getItemCount();
-            artistsAdapter.notifyItemRangeInserted(curSize, artists.size() - 1);
+            int curSize = adapter.getItemCount();
+            adapter.notifyItemRangeInserted(curSize, data.size() - 1);
         }else{
-            artistsAdapter.enableFooter(false);
+            adapter.enableFooter(false);
         }
     }
 
     @Subscribe
     public void onNotFoundArtist(NotFoundArtistEvent event){
-        artistsAdapter.enableFooter(false);
-        artistsAdapter.notifyItemChanged(artists.size());
+        adapter.enableFooter(false);
+        adapter.notifyItemChanged(data.size());
     }
 
 
