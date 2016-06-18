@@ -42,8 +42,10 @@
     <string name="see_all_tracks">Ver todas las pistas</string>
 
     <!-- See all results -->
-    <string formatted="false" name="see_all_artists_title">%s IN ARTIST</string>
-    <string formatted="false" name="see_all_artists_playlist_title">%s IN PLAYLIST</string>
+    <string formatted="false" name="see_all_artists_title">%s EN ARTISTAS</string>
+    <string formatted="false" name="see_all_artists_playlist_title">%s EN PLAYLIST</string>
+    <string formatted="false" name="see_all_artists_albums_title">%s EN ALBUMES</string>
+    <string formatted="false" name="see_all_artists_tracks_title">%s EN CANCIONES</string>
 
     <!-- Fragments Titles -->
     <string name="new_releases_fragment_title">Nuevos Lanzamientos</string>
@@ -51,6 +53,12 @@
     <!-- Errors -->
     <string name="search_artist_status_code_400">No se han encontrado más artistas</string>
     <string name="search_artist_status_code_500">Error al obtener los artistas</string>
+    <string name="search_albums_status_code_400">No se han encontrado más albumes</string>
+    <string name="search_albums_status_code_500">Error al obtener los albumes</string>
+    <string name="search_tracks_status_code_400">No se han encontrado más pistas</string>
+    <string name="search_tracks_status_code_500">Error al obtener las pistas</string>
+    <string name="search_playlist_status_code_400">No se han encontrado más playlists</string>
+    <string name="search_playlist_status_code_500">Error al obtener las pistas</string>
 
 
 

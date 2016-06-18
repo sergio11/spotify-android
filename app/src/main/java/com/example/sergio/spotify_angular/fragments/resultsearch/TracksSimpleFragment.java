@@ -4,11 +4,13 @@ import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
 import com.example.sergio.spotify_angular.adapters.resultsearch.TracksAdapter;
 import com.example.sergio.spotify_angular.events.SearchTracksEvent;
+import com.example.sergio.spotify_angular.events.SeeAllResultsEvent;
 import com.example.sergio.spotify_angular.events.TracksFoundEvent;
 
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import kaaes.spotify.webapi.android.models.Track;
 
@@ -16,6 +18,8 @@ import kaaes.spotify.webapi.android.models.Track;
  * Created by sergio on 11/06/2016.
  */
 public class TracksSimpleFragment extends AbstractSimpleFragment {
+
+    private String currentSearch;
 
     @Override
     protected RecyclerViewBaseAdapter getAdapter() {
@@ -34,11 +38,13 @@ public class TracksSimpleFragment extends AbstractSimpleFragment {
 
     @Override
     protected void seeAllResults() {
-
+        String title = String.format(Locale.getDefault(),getString(R.string.see_all_artists_tracks_title), currentSearch);
+        bus.post(new SeeAllResultsEvent(title, currentSearch, SeeAllResultsEvent.ResultTypes.TRACKS ));
     }
 
     @Override
     public void search(String text) {
+        currentSearch = text;
         bus.post(new SearchTracksEvent(text,options));
     }
 

@@ -31,7 +31,11 @@ import com.example.sergio.spotify_angular.fragments.ExplorerFragment;
 import com.example.sergio.spotify_angular.fragments.NewReleasesFragment;
 import com.example.sergio.spotify_angular.fragments.PlaylistPreviewFragment;
 import com.example.sergio.spotify_angular.fragments.SearchFragment;
+import com.example.sergio.spotify_angular.fragments.resultsearch.AbstractEndlessScrollFragment;
+import com.example.sergio.spotify_angular.fragments.resultsearch.AlbumsFragment;
 import com.example.sergio.spotify_angular.fragments.resultsearch.ArtistFragment;
+import com.example.sergio.spotify_angular.fragments.resultsearch.PlaylistFragment;
+import com.example.sergio.spotify_angular.fragments.resultsearch.TracksFragment;
 import com.example.sergio.spotify_angular.utils.AppHelpers;
 import com.example.sergio.spotify_angular.utils.ImageUtils;
 import com.squareup.picasso.Picasso;
@@ -215,12 +219,32 @@ public class HomeActivity extends AppCompatActivity  {
 
     @Subscribe
     public void onSeeAllResults(SeeAllResultsEvent event){
-        Fragment fragment = null;
-        if (event.getType() == SeeAllResultsEvent.ResultTypes.ARTISTS){
-            fragment = ArtistFragment.newInstance(event.getText());
+        Class<? extends AbstractEndlessScrollFragment> fragmentClass;
+        switch (event.getType()){
+            case ARTISTS:
+                fragmentClass = ArtistFragment.class;
+                break;
+            case ALBUMS:
+                fragmentClass = AlbumsFragment.class;
+                break;
+            case TRACKS:
+                fragmentClass = TracksFragment.class;
+                break;
+            case PLAYLIST:
+                fragmentClass = PlaylistFragment.class;
+                break;
+            default:
+                fragmentClass = ArtistFragment.class;
         }
-        AppHelpers.setFragment(this,fragment, R.id.flContent, true,true);
-        setTitle(event.getTitle());
+        try {
+            AppHelpers.setFragment(this,AbstractEndlessScrollFragment.newInstance(event.getText(),fragmentClass), R.id.flContent, true,true);
+            setTitle(event.getTitle());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Subscribe

@@ -3,11 +3,13 @@ package com.example.sergio.spotify_angular.services;
 
 import android.content.Context;
 
+import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.events.ApiErrorEvent;
 import com.example.sergio.spotify_angular.events.FeaturedPlaylistLoadedEvent;
 import com.example.sergio.spotify_angular.events.LoadFeaturedPlaylistEvent;
 import com.example.sergio.spotify_angular.events.LoadPlaylistEvent;
 import com.example.sergio.spotify_angular.events.LoadPlaylistTracksEvent;
+import com.example.sergio.spotify_angular.events.NotFoundPlaylistEvent;
 import com.example.sergio.spotify_angular.events.PlaylistLoadedEvent;
 import com.example.sergio.spotify_angular.events.PlaylistTracksLoadedEvent;
 import com.example.sergio.spotify_angular.events.PlaylistsFoundEvent;
@@ -92,7 +94,14 @@ public class PlaylistsService extends BaseService {
 
             @Override
             public void failure(RetrofitError error) {
-                bus.post(new ApiErrorEvent(ApiErrorEvent.Type.ALERT,error.getMessage()));
+                ApiErrorEvent errorEvent;
+                if (error.getResponse().getStatus() == 400){
+                    errorEvent = new ApiErrorEvent(ApiErrorEvent.Type.INFO,context.getString(R.string.search_playlist_status_code_400));
+                }else{
+                    errorEvent = new ApiErrorEvent(ApiErrorEvent.Type.ALERT,context.getString(R.string.search_playlist_status_code_500));
+                }
+                bus.post(errorEvent);
+                bus.post(new NotFoundPlaylistEvent());
             }
         });
     }

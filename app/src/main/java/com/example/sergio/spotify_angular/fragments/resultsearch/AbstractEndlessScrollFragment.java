@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import kaaes.spotify.webapi.android.models.Artist;
 
 /**
  * Created by sergio on 18/06/2016.
@@ -34,8 +33,8 @@ public abstract class AbstractEndlessScrollFragment<T, E extends RecyclerView.La
     protected List<T> data = new ArrayList<>();
     protected Map<String,Object> defaultOptions;
 
-    public static ArtistFragment newInstance(String text) {
-        ArtistFragment fragment = new ArtistFragment();
+    public static AbstractEndlessScrollFragment newInstance(String text, Class<? extends AbstractEndlessScrollFragment> classFragment) throws IllegalAccessException, java.lang.InstantiationException {
+        AbstractEndlessScrollFragment fragment = classFragment.newInstance();
         Bundle args = new Bundle();
         args.putString(ARG_TEXT, text);
         fragment.setArguments(args);
@@ -67,6 +66,25 @@ public abstract class AbstractEndlessScrollFragment<T, E extends RecyclerView.La
 
         return view;
     }
+
+
+    protected void addData(List<T> newData){
+        if (newData != null && newData.size() > 0){
+            data.addAll(newData);
+            // For efficiency purposes, notify the adapter of only the elements that got changed
+            // curSize will equal to the index of the first element inserted because the list is 0-indexed
+            int curSize = adapter.getItemCount();
+            adapter.notifyItemRangeInserted(curSize, data.size() - 1);
+        }else{
+            adapter.enableFooter(false);
+        }
+    }
+
+    protected void notifyNoDataFound(){
+        adapter.enableFooter(false);
+        adapter.notifyItemChanged(data.size());
+    }
+
 
     protected abstract E getLayoutManager();
     protected abstract ProgressLoadedAdapter getAdapter();
