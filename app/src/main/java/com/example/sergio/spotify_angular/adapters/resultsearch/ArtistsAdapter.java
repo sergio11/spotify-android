@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.sergio.spotify_angular.R;
@@ -19,30 +20,57 @@ import kaaes.spotify.webapi.android.models.Artist;
 /**
  * Created by sergio on 11/06/2016.
  */
-public class ArtistsAdapter extends RecyclerViewBaseAdapter<Artist, ArtistsAdapter.ArtistViewHolder> {
+public class ArtistsAdapter extends RecyclerViewBaseAdapter<Artist, RecyclerView.ViewHolder> {
+
+    private final int VIEW_TYPE_ITEM = 1;
+    private final int VIEW_TYPE_PROGRESSBAR = 0;
+    private boolean isFooterEnabled = false;
 
     public ArtistsAdapter(Context context, List<Artist> data){
         super(context, data);
     }
 
+
     @Override
-    public ArtistViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.artists_result_search_item, parent, false);
-        return new ArtistViewHolder(view);
+    public int getItemCount() {
+        return  (isFooterEnabled) ? data.size() + 1 : data.size();
     }
 
     @Override
-    public void onBindViewHolder(ArtistViewHolder holder, int position) {
-        holder.bind(data.get(position));
-        bindToListener(holder);
+    public int getItemViewType(int position) {
+        return (isFooterEnabled && position >= data.size() ) ? VIEW_TYPE_PROGRESSBAR : VIEW_TYPE_ITEM;
+    }
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        RecyclerView.ViewHolder vh;
+        if (viewType == VIEW_TYPE_ITEM) {
+            View view = LayoutInflater.from(context).inflate(R.layout.artists_result_search_item, parent, false);
+            vh = new ArtistViewHolder(view);
+        }else{
+            View view = LayoutInflater.from(context).inflate(R.layout.progress_item, parent, false);
+            vh = new ProgressViewHolder(view);
+        }
+
+        return vh;
     }
 
     @Override
-    public void onBindViewHolder(ArtistViewHolder holder, int position, List<Object> payloads) {
-        holder.bind(data.get(position));
-        bindToListener(holder);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof  ArtistViewHolder){
+            ((ArtistViewHolder)holder).bind(data.get(position));
+            bindToListener(holder);
+        }
+
     }
 
+    /**
+     * Enable or disable footer (Default is true)
+     *
+     * @param isEnabled boolean to turn on or off footer.
+     */
+    public void enableFooter(boolean isEnabled){
+        this.isFooterEnabled = isEnabled;
+    }
 
 
     public class ArtistViewHolder extends RecyclerView.ViewHolder{
@@ -70,5 +98,14 @@ public class ArtistsAdapter extends RecyclerViewBaseAdapter<Artist, ArtistsAdapt
         }
 
 
+    }
+
+    public  class ProgressViewHolder extends RecyclerView.ViewHolder {
+        public ProgressBar progressBar;
+
+        public ProgressViewHolder(View v) {
+            super(v);
+            progressBar = (ProgressBar) v.findViewById(R.id.progressBar);
+        }
     }
 }

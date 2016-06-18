@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.adapters.resultsearch.ArtistsAdapter;
 import com.example.sergio.spotify_angular.events.ArtistsFoundEvent;
+import com.example.sergio.spotify_angular.events.NotFoundArtistEvent;
 import com.example.sergio.spotify_angular.events.SearchArtistsEvent;
 import com.example.sergio.spotify_angular.fragments.EventBusFragment;
 import com.example.sergio.spotify_angular.utils.DividerItemDecoration;
@@ -68,15 +69,17 @@ public class ArtistFragment extends EventBusFragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.white_divider),false, true));
         artistsAdapter = new ArtistsAdapter(getActivity(), artists);
+        artistsAdapter.enableFooter(true);
         recyclerView.setAdapter(artistsAdapter);
         recyclerView.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
 
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
-                Map<String,Object> options = new HashMap<>();
+                final Map<String,Object> options = new HashMap<>();
                 options.put("limit",totalItemsCount);
                 options.put("offset",totalItemsCount + page);
                 bus.post(new SearchArtistsEvent(text,options));
+
             }
         });
 
@@ -85,6 +88,7 @@ public class ArtistFragment extends EventBusFragment {
 
     @Subscribe
     public void onArtistsFound(ArtistsFoundEvent event){
+
         List<Artist> artistsFound = event.getArtists();
         if (artistsFound.size() > 0){
             artists.addAll(artistsFound);
@@ -92,8 +96,18 @@ public class ArtistFragment extends EventBusFragment {
             // curSize will equal to the index of the first element inserted because the list is 0-indexed
             int curSize = artistsAdapter.getItemCount();
             artistsAdapter.notifyItemRangeInserted(curSize, artists.size() - 1);
+        }else{
+            artistsAdapter.enableFooter(false);
         }
     }
+
+    @Subscribe
+    public void onNotFoundArtist(NotFoundArtistEvent event){
+        artistsAdapter.enableFooter(false);
+        artistsAdapter.notifyItemChanged(artists.size());
+    }
+
+
 
 
 }

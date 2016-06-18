@@ -2,6 +2,7 @@ package com.example.sergio.spotify_angular.services;
 
 import com.example.sergio.spotify_angular.events.ApiErrorEvent;
 import com.example.sergio.spotify_angular.events.ArtistsFoundEvent;
+import com.example.sergio.spotify_angular.events.NotFoundArtistEvent;
 import com.example.sergio.spotify_angular.events.SearchArtistsEvent;
 import com.example.sergio.spotify_angular.utils.AppHelpers;
 
@@ -35,6 +36,7 @@ public class ArtistsService extends BaseService {
             @Override
             public void failure(RetrofitError error) {
                 bus.post(new ApiErrorEvent(error));
+                bus.post(new NotFoundArtistEvent());
             }
         });
     }
