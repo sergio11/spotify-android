@@ -43,6 +43,7 @@
 
     <!-- See all results -->
     <string formatted="false" name="see_all_artists_title">%s IN ARTIST</string>
+    <string formatted="false" name="see_all_artists_playlist_title">%s IN PLAYLIST</string>
 
     <!-- Fragments Titles -->
     <string name="new_releases_fragment_title">Nuevos Lanzamientos</string>

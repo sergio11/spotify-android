@@ -6,7 +6,7 @@ package com.example.sergio.spotify_angular.events;
 public class SeeAllResultsEvent {
 
     public enum ResultTypes{
-        ARTISTS(),ALBUMS();
+        ARTISTS(),ALBUMS(),PLAYLIST();
     }
 
     private String title;

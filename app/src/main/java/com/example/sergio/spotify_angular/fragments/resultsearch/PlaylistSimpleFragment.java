@@ -9,10 +9,12 @@ import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
 import com.example.sergio.spotify_angular.events.PlaylistSelectedEvent;
 import com.example.sergio.spotify_angular.events.PlaylistsFoundEvent;
 import com.example.sergio.spotify_angular.events.SearchPlaylistEvent;
+import com.example.sergio.spotify_angular.events.SeeAllResultsEvent;
 
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import kaaes.spotify.webapi.android.models.PlaylistSimple;
 
@@ -21,6 +23,7 @@ import kaaes.spotify.webapi.android.models.PlaylistSimple;
  */
 public class PlaylistSimpleFragment extends AbstractSimpleFragment<PlaylistSimple> implements RecyclerViewBaseAdapter.OnItemClickListener<PlaylistSimple> {
 
+    private String currentSearch;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -45,11 +48,13 @@ public class PlaylistSimpleFragment extends AbstractSimpleFragment<PlaylistSimpl
 
     @Override
     protected void seeAllResults() {
-
+        String title = String.format(Locale.getDefault(),getString(R.string.see_all_artists_playlist_title), currentSearch);
+        bus.post(new SeeAllResultsEvent(title, currentSearch, SeeAllResultsEvent.ResultTypes.PLAYLIST ));
     }
 
     @Override
     public void search(String text) {
+        currentSearch = text;
         bus.post(new SearchPlaylistEvent(text, options));
     }
 
