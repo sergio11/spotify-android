@@ -1,4 +1,4 @@
-package com.example.sergio.spotify_angular.fragments.resultsearch.simple;
+package com.example.sergio.spotify_angular.fragments.resultsearch;
 
 
 import android.os.Bundle;
@@ -11,19 +11,23 @@ import com.example.sergio.spotify_angular.events.ArtistsFoundEvent;
 import com.example.sergio.spotify_angular.events.FollowedArtistFoundEvent;
 import com.example.sergio.spotify_angular.events.GetFollowedArtistsEvent;
 import com.example.sergio.spotify_angular.events.SearchArtistsEvent;
+import com.example.sergio.spotify_angular.events.SeeAllResultsEvent;
+
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import kaaes.spotify.webapi.android.models.Artist;
 
 /**
  * Created by sergio on 11/06/2016.
  */
-public class ArtistsFragment extends AbstractFragment<Artist> {
+public class ArtistsSimpleFragment extends AbstractSimpleFragment<Artist> {
 
     private List<Artist> followedArtists;
+    private String currentSearch;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,9 +51,17 @@ public class ArtistsFragment extends AbstractFragment<Artist> {
     }
 
     @Override
+    protected void seeAllResults() {
+        String title = String.format(Locale.getDefault(),getString(R.string.see_all_artists_title), currentSearch);
+        bus.post(new SeeAllResultsEvent(title, currentSearch, SeeAllResultsEvent.ResultTypes.ARTISTS ));
+    }
+
+    @Override
     public void search(String text) {
+        currentSearch = text;
         bus.post(new SearchArtistsEvent(text,options));
     }
+
 
     private void markFollowedArtists(){
         List<Artist> artists = adapter.getData();

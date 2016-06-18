@@ -1,4 +1,4 @@
-package com.example.sergio.spotify_angular.fragments.resultsearch.simple;
+package com.example.sergio.spotify_angular.fragments.resultsearch;
 
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public abstract class AbstractFragment<T> extends EventBusFragment {
+public abstract class AbstractSimpleFragment<T> extends EventBusFragment {
 
     protected RecyclerViewBaseAdapter adapter;
     protected Map<String, Object> options;
@@ -43,6 +43,12 @@ public abstract class AbstractFragment<T> extends EventBusFragment {
         titleTextView.setText(getString(getTitle()));
         TextView seeAll = (TextView) view.findViewById(R.id.see_all);
         seeAll.setText(getString(getSeeAllText()));
+        seeAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AbstractSimpleFragment.this.seeAllResults();
+            }
+        });
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.result_recyclerView);
         recyclerView.setLayoutManager( new LinearLayoutManager(getActivity()) {
             @Override
@@ -67,6 +73,8 @@ public abstract class AbstractFragment<T> extends EventBusFragment {
     protected abstract int getTitle();
 
     protected abstract int getSeeAllText();
+
+    protected abstract void seeAllResults();
 
     public abstract void search(String text);
 

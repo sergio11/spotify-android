@@ -25,10 +25,12 @@ import com.example.sergio.spotify_angular.events.ExplorerMenuItemSelected;
 import com.example.sergio.spotify_angular.events.LoadProfileEvent;
 import com.example.sergio.spotify_angular.events.PlaylistSelectedEvent;
 import com.example.sergio.spotify_angular.events.ProfileLoadedEvent;
+import com.example.sergio.spotify_angular.events.SeeAllResultsEvent;
 import com.example.sergio.spotify_angular.fragments.ExplorerFragment;
 import com.example.sergio.spotify_angular.fragments.NewReleasesFragment;
 import com.example.sergio.spotify_angular.fragments.PlaylistPreviewFragment;
 import com.example.sergio.spotify_angular.fragments.SearchFragment;
+import com.example.sergio.spotify_angular.fragments.resultsearch.ArtistFragment;
 import com.example.sergio.spotify_angular.utils.AppHelpers;
 import com.example.sergio.spotify_angular.utils.ImageUtils;
 import com.squareup.picasso.Picasso;
@@ -208,6 +210,16 @@ public class HomeActivity extends AppCompatActivity  {
         fragment.setArguments(bundle);
         AppHelpers.setFragment(this,fragment, R.id.flContent, true,true);
         setTitle(event.getPlaylist().name);
+    }
+
+    @Subscribe
+    public void onSeeAllResults(SeeAllResultsEvent event){
+        Fragment fragment = null;
+        if (event.getType() == SeeAllResultsEvent.ResultTypes.ARTISTS){
+            fragment = ArtistFragment.newInstance(event.getText());
+        }
+        AppHelpers.setFragment(this,fragment, R.id.flContent, true,true);
+        setTitle(event.getTitle());
     }
 
     public void clearToolbar(){

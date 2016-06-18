@@ -16,11 +16,11 @@ import android.widget.TextView;
 
 import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.activities.HomeActivity;
-import com.example.sergio.spotify_angular.fragments.resultsearch.simple.AlbumsFragment;
-import com.example.sergio.spotify_angular.fragments.resultsearch.simple.ArtistsFragment;
-import com.example.sergio.spotify_angular.fragments.resultsearch.simple.PlaylistFragment;
-import com.example.sergio.spotify_angular.fragments.resultsearch.simple.AbstractFragment;
-import com.example.sergio.spotify_angular.fragments.resultsearch.simple.TracksFragment;
+import com.example.sergio.spotify_angular.fragments.resultsearch.AbstractSimpleFragment;
+import com.example.sergio.spotify_angular.fragments.resultsearch.AlbumsSimpleFragment;
+import com.example.sergio.spotify_angular.fragments.resultsearch.ArtistsSimpleFragment;
+import com.example.sergio.spotify_angular.fragments.resultsearch.PlaylistSimpleFragment;
+import com.example.sergio.spotify_angular.fragments.resultsearch.TracksSimpleFragment;
 import com.example.sergio.spotify_angular.utils.AppHelpers;
 
 import java.util.ArrayList;
@@ -31,11 +31,11 @@ import java.util.Locale;
 /**
  * Created by sergio on 04/06/2016.
  */
-public class SearchFragment extends Fragment implements SearchView.OnQueryTextListener, AbstractFragment.OnResultSearchListener{
+public class SearchFragment extends Fragment implements SearchView.OnQueryTextListener, AbstractSimpleFragment.OnResultSearchListener{
 
     private SearchView searchView;
     private InputMethodManager imm;
-    private List<AbstractFragment> resultFragments;
+    private List<AbstractSimpleFragment> resultFragments;
 
     private TextView notResultFoundTextView;
 
@@ -45,9 +45,9 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         super.onCreate(savedInstanceState);
         resultFragments = new ArrayList<>();
         try {
-            Class[] fragments = {ArtistsFragment.class, AlbumsFragment.class, PlaylistFragment.class, TracksFragment.class};
+            Class[] fragments = {ArtistsSimpleFragment.class, AlbumsSimpleFragment.class, PlaylistSimpleFragment.class, TracksSimpleFragment.class};
             for (int i = 0, len = fragments.length; i < len; i++){
-                AbstractFragment fragment = (AbstractFragment) fragments[i].newInstance();
+                AbstractSimpleFragment fragment = (AbstractSimpleFragment) fragments[i].newInstance();
                 fragment.setListener(this);
                 resultFragments.add(fragment);
                 AppHelpers.setFragment(getActivity(),fragment,R.id.results,false,true);
@@ -91,7 +91,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     public boolean onQueryTextChange(String query) {
         if (!query.isEmpty()){
             AppHelpers.showViewById((ViewGroup) getView(),R.id.results_container);
-            for (AbstractFragment fragment : resultFragments) fragment.search(query);
+            for (AbstractSimpleFragment fragment : resultFragments) fragment.search(query);
         }else{
             AppHelpers.showViewById((ViewGroup) getView(),R.id.no_search);
         }

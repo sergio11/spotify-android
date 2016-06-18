@@ -27,7 +27,7 @@
 
     <string name="search_hint">Busca artistas, playlist, canciones por nombre</string>
     <string name="search_description">Busca tu canción favorita, artistas, albumes, podcast, playlists y amigos</string>
-    <string formatted="false" name="search_not_result_found_primary">Ningún resultado encontrado para %s</string>
+    <string name="search_not_result_found_primary" formatted="false">Ningún resultado encontrado para %s</string>
     <string name="search_not_result_found_secondary">Por favor, compruebe que tiene la ortografía correcta o prueba con otras palabras</string>
     <!-- Search Results Titles -->
     <string name="search_result_artists">Artistas</string>
@@ -41,8 +41,13 @@
     <string name="see_all_playlist">Ver todas las playlist</string>
     <string name="see_all_tracks">Ver todas las pistas</string>
 
+    <!-- See all results -->
+    <string formatted="false" name="see_all_artists_title">%s IN ARTIST</string>
+
     <!-- Fragments Titles -->
     <string name="new_releases_fragment_title">Nuevos Lanzamientos</string>
+
+
 
 
 </resources>

@@ -1,4 +1,4 @@
-package com.example.sergio.spotify_angular.fragments.resultsearch.simple;
+package com.example.sergio.spotify_angular.fragments.resultsearch;
 
 import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
@@ -15,7 +15,7 @@ import kaaes.spotify.webapi.android.models.Track;
 /**
  * Created by sergio on 11/06/2016.
  */
-public class TracksFragment extends AbstractFragment {
+public class TracksSimpleFragment extends AbstractSimpleFragment {
 
     @Override
     protected RecyclerViewBaseAdapter getAdapter() {
@@ -30,6 +30,11 @@ public class TracksFragment extends AbstractFragment {
     @Override
     protected int getSeeAllText() {
         return R.string.see_all_tracks;
+    }
+
+    @Override
+    protected void seeAllResults() {
+
     }
 
     @Override

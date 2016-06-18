@@ -1,4 +1,4 @@
-package com.example.sergio.spotify_angular.fragments.resultsearch.simple;
+package com.example.sergio.spotify_angular.fragments.resultsearch;
 
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +19,7 @@ import kaaes.spotify.webapi.android.models.PlaylistSimple;
 /**
  * Created by sergio on 11/06/2016.
  */
-public class PlaylistFragment extends AbstractFragment<PlaylistSimple> implements RecyclerViewBaseAdapter.OnItemClickListener<PlaylistSimple> {
+public class PlaylistSimpleFragment extends AbstractSimpleFragment<PlaylistSimple> implements RecyclerViewBaseAdapter.OnItemClickListener<PlaylistSimple> {
 
 
     @Override
@@ -41,6 +41,11 @@ public class PlaylistFragment extends AbstractFragment<PlaylistSimple> implement
     @Override
     protected int getSeeAllText() {
         return R.string.see_all_playlist;
+    }
+
+    @Override
+    protected void seeAllResults() {
+
     }
 
     @Override
