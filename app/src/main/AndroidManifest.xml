@@ -33,6 +33,10 @@
         <activity
             android:name="com.spotify.sdk.android.authentication.LoginActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+
+        <provider android:name=".contentproviders.SearchHistoryContentProvider"
+            android:authorities="com.example.sergio.spotify_angular.contentproviderscom.example.sergio.spotify_angular.contentproviders" />
+
     </application>
 
 </manifest>

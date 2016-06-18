@@ -9,7 +9,6 @@ import com.example.sergio.spotify_angular.adapters.resultsearch.PlayListCardAdap
 import com.example.sergio.spotify_angular.events.NotFoundPlaylistEvent;
 import com.example.sergio.spotify_angular.events.PlaylistSelectedEvent;
 import com.example.sergio.spotify_angular.events.PlaylistsFoundEvent;
-import com.example.sergio.spotify_angular.events.SearchArtistsEvent;
 import com.example.sergio.spotify_angular.events.SearchPlaylistEvent;
 import com.example.sergio.spotify_angular.utils.EndlessRecyclerViewScrollListener;
 import com.example.sergio.spotify_angular.utils.GridAutofitLayoutManager;

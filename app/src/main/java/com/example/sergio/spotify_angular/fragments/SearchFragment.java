@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.os.Bundle;
+import android.provider.SearchRecentSuggestions;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.activities.HomeActivity;
+import com.example.sergio.spotify_angular.contentproviders.SearchHistoryContentProvider;
 import com.example.sergio.spotify_angular.fragments.resultsearch.AbstractSimpleFragment;
 import com.example.sergio.spotify_angular.fragments.resultsearch.AlbumsSimpleFragment;
 import com.example.sergio.spotify_angular.fragments.resultsearch.ArtistsSimpleFragment;
@@ -36,7 +38,8 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     private SearchView searchView;
     private InputMethodManager imm;
     private List<AbstractSimpleFragment> resultFragments;
-
+    private SearchRecentSuggestions suggestions = new SearchRecentSuggestions(getActivity(),
+            SearchHistoryContentProvider.AUTHORITY, SearchHistoryContentProvider.MODE);
     private TextView notResultFoundTextView;
 
 
@@ -44,6 +47,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         resultFragments = new ArrayList<>();
+
         try {
             Class[] fragments = {ArtistsSimpleFragment.class, AlbumsSimpleFragment.class, PlaylistSimpleFragment.class, TracksSimpleFragment.class};
             for (int i = 0, len = fragments.length; i < len; i++){
@@ -76,6 +80,13 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         searchView.setIconifiedByDefault(false);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(new ComponentName(getActivity(), HomeActivity.class)));
         searchView.setOnQueryTextListener(this);
+        
+        /*searchView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                return;
+            }
+        });*/
 
     }
 
@@ -84,6 +95,10 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     public boolean onQueryTextSubmit(String query) {
         //hide the Android Soft Keyboard
         imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+
+        suggestions.saveRecentQuery(query, null);
+
+
         return true;
     }
 
