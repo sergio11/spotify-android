@@ -47,6 +47,9 @@
     <!-- Fragments Titles -->
     <string name="new_releases_fragment_title">Nuevos Lanzamientos</string>
 
+    <!-- Errors -->
+    <string name="search_artist_status_code_400">No se han encontrado más artistas</string>
+    <string name="search_artist_status_code_500">Error al obtener los artistas</string>
 
 
 

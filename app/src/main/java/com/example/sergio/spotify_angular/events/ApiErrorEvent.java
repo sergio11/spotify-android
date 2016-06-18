@@ -1,19 +1,36 @@
 package com.example.sergio.spotify_angular.events;
 
-import retrofit.RetrofitError;
 
 /**
  * Created by sergio on 14/05/2016.
  */
 public class ApiErrorEvent {
 
-    private RetrofitError error;
-
-    public ApiErrorEvent(RetrofitError error) {
-        this.error = error;
+    public enum Type{
+        ALERT(),INFO(),WARNING();
     }
 
-    public RetrofitError getError() {
-        return error;
+    private Type type;
+    private String message;
+
+    public ApiErrorEvent(Type type, String message) {
+        this.type = type;
+        this.message = message;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

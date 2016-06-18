@@ -1,5 +1,7 @@
 package com.example.sergio.spotify_angular.services;
 
+import android.content.Context;
+
 import com.example.sergio.spotify_angular.events.AlbumsFoundEvent;
 import com.example.sergio.spotify_angular.events.ApiErrorEvent;
 import com.example.sergio.spotify_angular.events.LoadNewReleases;
@@ -15,6 +17,7 @@ import kaaes.spotify.webapi.android.models.AlbumsPager;
 import kaaes.spotify.webapi.android.models.NewReleases;
 import retrofit.Callback;
 import retrofit.RetrofitError;
+import retrofit.client.Client;
 import retrofit.client.Response;
 
 /**
@@ -22,8 +25,9 @@ import retrofit.client.Response;
  */
 public class AlbumsService extends BaseService {
 
-    public AlbumsService(SpotifyService service, EventBus bus) {
-        super(service, bus);
+
+    public AlbumsService(Context context, SpotifyService service, EventBus bus) {
+        super(context, service, bus);
     }
 
     @Subscribe
@@ -36,7 +40,7 @@ public class AlbumsService extends BaseService {
 
             @Override
             public void failure(RetrofitError error) {
-                bus.post(new ApiErrorEvent(error));
+                bus.post(new ApiErrorEvent(ApiErrorEvent.Type.ALERT,error.getMessage()));
             }
         });
 
@@ -52,7 +56,7 @@ public class AlbumsService extends BaseService {
 
             @Override
             public void failure(RetrofitError error) {
-                bus.post(new ApiErrorEvent(error));
+                bus.post(new ApiErrorEvent(ApiErrorEvent.Type.ALERT,error.getMessage()));
             }
         });
     }

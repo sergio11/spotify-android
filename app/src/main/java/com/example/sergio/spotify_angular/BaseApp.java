@@ -1,26 +1,17 @@
 package com.example.sergio.spotify_angular;
 
 import android.app.Application;
-import android.util.Log;
-import android.widget.Toast;
+import android.content.Context;
 
-import com.example.sergio.spotify_angular.events.ApiErrorEvent;
 import com.example.sergio.spotify_angular.events.ProfileLoadedEvent;
-import com.example.sergio.spotify_angular.services.AlbumsService;
-import com.example.sergio.spotify_angular.services.BaseService;
-import com.example.sergio.spotify_angular.services.CategoriesService;
-import com.example.sergio.spotify_angular.services.PlaylistsService;
-import com.example.sergio.spotify_angular.services.UserService;
+
 import com.joanzapata.iconify.Iconify;
-import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Set;
 
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
@@ -51,7 +42,7 @@ public class BaseApp extends Application {
         for (int i = 0, len = services.length; i < len; i++){
             try {
                 String classPath = packageName + services[i];
-                bus.register(Class.forName(classPath.replace(File.separatorChar, '.')).getDeclaredConstructor(SpotifyService.class, EventBus.class).newInstance(spotify,bus));
+                bus.register(Class.forName(classPath.replace(File.separatorChar, '.')).getDeclaredConstructor(Context.class,SpotifyService.class, EventBus.class).newInstance(this,spotify,bus));
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -66,11 +57,7 @@ public class BaseApp extends Application {
 
     }
 
-    @Subscribe
-    public void onApiError(ApiErrorEvent event) {
-        Toast.makeText(this,event.getError().getMessage(), Toast.LENGTH_LONG).show();
-        Log.e("ReaderApp", event.getError().getMessage());
-    }
+
 
     public UserPrivate getMe() {
         return me;

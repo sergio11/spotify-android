@@ -1,6 +1,8 @@
 package com.example.sergio.spotify_angular.services;
 
 
+import android.content.Context;
+
 import com.example.sergio.spotify_angular.events.ApiErrorEvent;
 import com.example.sergio.spotify_angular.events.FeaturedPlaylistLoadedEvent;
 import com.example.sergio.spotify_angular.events.LoadFeaturedPlaylistEvent;
@@ -31,8 +33,8 @@ import retrofit.client.Response;
 public class PlaylistsService extends BaseService {
 
 
-    public PlaylistsService(SpotifyService service, EventBus bus) {
-        super(service, bus);
+    public PlaylistsService(Context context, SpotifyService service, EventBus bus) {
+        super(context, service, bus);
     }
 
     @Subscribe
@@ -45,7 +47,7 @@ public class PlaylistsService extends BaseService {
 
             @Override
             public void failure(RetrofitError error) {
-                bus.post(new ApiErrorEvent(error));
+                bus.post(new ApiErrorEvent(ApiErrorEvent.Type.ALERT,error.getMessage()));
             }
         });
     }
@@ -60,7 +62,7 @@ public class PlaylistsService extends BaseService {
 
             @Override
             public void failure(RetrofitError error) {
-                bus.post(new ApiErrorEvent(error));
+                bus.post(new ApiErrorEvent(ApiErrorEvent.Type.ALERT,error.getMessage()));
             }
         });
     }
@@ -75,7 +77,7 @@ public class PlaylistsService extends BaseService {
 
             @Override
             public void failure(RetrofitError error) {
-                bus.post(new ApiErrorEvent(error));
+                bus.post(new ApiErrorEvent(ApiErrorEvent.Type.ALERT,error.getMessage()));
             }
         });
     }
@@ -90,7 +92,7 @@ public class PlaylistsService extends BaseService {
 
             @Override
             public void failure(RetrofitError error) {
-                bus.post(new ApiErrorEvent(error));
+                bus.post(new ApiErrorEvent(ApiErrorEvent.Type.ALERT,error.getMessage()));
             }
         });
     }

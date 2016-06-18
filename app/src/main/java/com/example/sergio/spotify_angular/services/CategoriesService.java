@@ -1,6 +1,8 @@
 package com.example.sergio.spotify_angular.services;
 
 
+import android.content.Context;
+
 import com.example.sergio.spotify_angular.events.ApiErrorEvent;
 import com.example.sergio.spotify_angular.events.CategoriesLoadedEvent;
 import com.example.sergio.spotify_angular.events.LoadCategoriesEvent;
@@ -19,8 +21,9 @@ import retrofit.client.Response;
  */
 public class CategoriesService extends BaseService{
 
-    public CategoriesService(SpotifyService service, EventBus bus) {
-        super(service,bus);
+
+    public CategoriesService(Context context, SpotifyService service, EventBus bus) {
+        super(context, service, bus);
     }
 
     @Subscribe
@@ -33,7 +36,7 @@ public class CategoriesService extends BaseService{
 
             @Override
             public void failure(RetrofitError error) {
-                bus.post(new ApiErrorEvent(error));
+                bus.post(new ApiErrorEvent(ApiErrorEvent.Type.ALERT,error.getMessage()));
             }
         });
     }

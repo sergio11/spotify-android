@@ -12,15 +12,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.devspark.appmsg.AppMsg;
 import com.example.sergio.spotify_angular.R;
+import com.example.sergio.spotify_angular.events.ApiErrorEvent;
 import com.example.sergio.spotify_angular.events.ExplorerMenuItemSelected;
 import com.example.sergio.spotify_angular.events.LoadProfileEvent;
 import com.example.sergio.spotify_angular.events.PlaylistSelectedEvent;
@@ -220,6 +221,28 @@ public class HomeActivity extends AppCompatActivity  {
         }
         AppHelpers.setFragment(this,fragment, R.id.flContent, true,true);
         setTitle(event.getTitle());
+    }
+
+    @Subscribe
+    public void onApiError(ApiErrorEvent event) {
+        AppMsg.Style style;
+        switch (event.getType()){
+            case ALERT:
+                style = AppMsg.STYLE_ALERT;
+                break;
+            case INFO:
+                style = AppMsg.STYLE_INFO;
+                break;
+            case WARNING:
+                style = AppMsg.STYLE_CONFIRM;
+                break;
+            default:
+                style = AppMsg.STYLE_ALERT;
+        }
+
+        AppMsg msg = AppMsg.makeText(this, event.getMessage(), style);
+        msg.setParent(R.id.flContent);
+        msg.show();
     }
 
     public void clearToolbar(){

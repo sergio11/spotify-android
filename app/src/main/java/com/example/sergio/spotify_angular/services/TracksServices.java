@@ -1,5 +1,7 @@
 package com.example.sergio.spotify_angular.services;
 
+import android.content.Context;
+
 import com.example.sergio.spotify_angular.events.ApiErrorEvent;
 import com.example.sergio.spotify_angular.events.SearchTracksEvent;
 import com.example.sergio.spotify_angular.events.TracksFoundEvent;
@@ -18,8 +20,10 @@ import retrofit.client.Response;
  * Created by sergio on 11/06/2016.
  */
 public class TracksServices extends BaseService {
-    public TracksServices(SpotifyService service, EventBus bus) {
-        super(service, bus);
+
+
+    public TracksServices(Context context, SpotifyService service, EventBus bus) {
+        super(context, service, bus);
     }
 
     @Subscribe
@@ -32,7 +36,7 @@ public class TracksServices extends BaseService {
 
             @Override
             public void failure(RetrofitError error) {
-                bus.post(new ApiErrorEvent(error));
+                bus.post(new ApiErrorEvent(ApiErrorEvent.Type.ALERT,error.getMessage()));
             }
         });
     }

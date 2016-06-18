@@ -51,4 +51,6 @@ dependencies {
     compile 'com.github.kanytu:android-parallax-recyclerview:v1.7'
     compile 'com.google.guava:guava:19.0'
     compile 'com.android.support:support-v4:23.4.0'
+    //In-layout notifications. Based on Toast notifications and article by Cyril Mottier
+    compile 'com.github.johnkil.android-appmsg:appmsg:1.2.0'
 }

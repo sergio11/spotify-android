@@ -1,5 +1,7 @@
 package com.example.sergio.spotify_angular.services;
 
+import android.content.Context;
+
 import com.example.sergio.spotify_angular.events.ApiErrorEvent;
 import com.example.sergio.spotify_angular.events.AreFollowingPlaylistCheckedEvent;
 import com.example.sergio.spotify_angular.events.AreFollowingPlaylistEvent;
@@ -32,8 +34,9 @@ import retrofit.client.Response;
 
 public class UserService extends BaseService {
 
-    public UserService(SpotifyService service, EventBus bus) {
-        super(service, bus);
+
+    public UserService(Context context, SpotifyService service, EventBus bus) {
+        super(context, service, bus);
     }
 
     @Subscribe
@@ -46,7 +49,7 @@ public class UserService extends BaseService {
 
             @Override
             public void failure(RetrofitError error) {
-                bus.post(new ApiErrorEvent(error));
+                bus.post(new ApiErrorEvent(ApiErrorEvent.Type.ALERT,error.getMessage()));
             }
         });
     }
@@ -61,7 +64,7 @@ public class UserService extends BaseService {
 
             @Override
             public void failure(RetrofitError error) {
-                bus.post(new ApiErrorEvent(error));
+                bus.post(new ApiErrorEvent(ApiErrorEvent.Type.ALERT,error.getMessage()));
             }
         });
     }
@@ -80,7 +83,7 @@ public class UserService extends BaseService {
 
             @Override
             public void failure(RetrofitError error) {
-                bus.post(new ApiErrorEvent(error));
+                bus.post(new ApiErrorEvent(ApiErrorEvent.Type.ALERT,error.getMessage()));
             }
         });
     }
@@ -95,7 +98,7 @@ public class UserService extends BaseService {
 
             @Override
             public void failure(RetrofitError error) {
-                bus.post(new ApiErrorEvent(error));
+                bus.post(new ApiErrorEvent(ApiErrorEvent.Type.ALERT,error.getMessage()));
             }
         });
     }
@@ -110,7 +113,7 @@ public class UserService extends BaseService {
 
             @Override
             public void failure(RetrofitError error) {
-                bus.post(new ApiErrorEvent(error));
+                bus.post(new ApiErrorEvent(ApiErrorEvent.Type.ALERT,error.getMessage()));
             }
         });
     }
@@ -125,7 +128,7 @@ public class UserService extends BaseService {
 
             @Override
             public void failure(RetrofitError error) {
-                bus.post(new ApiErrorEvent(error));
+                bus.post(new ApiErrorEvent(ApiErrorEvent.Type.ALERT,error.getMessage()));
             }
         });
     }

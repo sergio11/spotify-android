@@ -1,5 +1,8 @@
 package com.example.sergio.spotify_angular.services;
 
+import android.content.Context;
+
+import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.events.ApiErrorEvent;
 import com.example.sergio.spotify_angular.events.ArtistsFoundEvent;
 import com.example.sergio.spotify_angular.events.NotFoundArtistEvent;
@@ -20,8 +23,9 @@ import retrofit.client.Response;
  */
 public class ArtistsService extends BaseService {
 
-    public ArtistsService(SpotifyService service, EventBus bus) {
-        super(service, bus);
+
+    public ArtistsService(Context context, SpotifyService service, EventBus bus) {
+        super(context, service, bus);
     }
 
     @Subscribe
@@ -35,7 +39,13 @@ public class ArtistsService extends BaseService {
 
             @Override
             public void failure(RetrofitError error) {
-                bus.post(new ApiErrorEvent(error));
+                ApiErrorEvent errorEvent;
+                if (error.getResponse().getStatus() == 400){
+                    errorEvent = new ApiErrorEvent(ApiErrorEvent.Type.INFO,context.getString(R.string.search_artist_status_code_400));
+                }else{
+                    errorEvent = new ApiErrorEvent(ApiErrorEvent.Type.ALERT,context.getString(R.string.search_artist_status_code_500));
+                }
+                bus.post(errorEvent);
                 bus.post(new NotFoundArtistEvent());
             }
         });
