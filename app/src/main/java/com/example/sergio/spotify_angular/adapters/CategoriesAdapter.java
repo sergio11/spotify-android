@@ -32,14 +32,11 @@ public class CategoriesAdapter extends RecyclerViewBaseAdapter<Category,Categori
 
     @Override
     public void onBindViewHolder(CategoriesViewHolder holder, int position) {
-        Category category = data.get(position);
-        holder.setName(category.name);
-        bindToListener(holder);
-        Picasso.with(context).load(category.icons.get(0).url).placeholder(R.drawable.ic_categories).into(holder.getImage());
+        holder.bind(data.get(position));
     }
 
 
-    public class CategoriesViewHolder extends RecyclerView.ViewHolder{
+    public class CategoriesViewHolder extends RecyclerViewBaseAdapter<Category, CategoriesAdapter.CategoriesViewHolder>.BaseViewHolder<Category>{
 
         private ImageView image;
         private TextView name;
@@ -50,18 +47,13 @@ public class CategoriesAdapter extends RecyclerViewBaseAdapter<Category,Categori
             name = (TextView) itemView.findViewById(R.id.tittle);
         }
 
-        public ImageView getImage() {
-            return image;
+        @Override
+        public void bind(Category category) {
+            super.bind(category);
+            name.setText(category.name);
+            Picasso.with(context).load(category.icons.get(0).url).placeholder(R.drawable.ic_categories).into(image);
         }
 
-
-        public TextView getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name.setText(name);
-        }
     }
 
 }

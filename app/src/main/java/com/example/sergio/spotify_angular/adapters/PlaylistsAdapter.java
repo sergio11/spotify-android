@@ -31,14 +31,12 @@ public class PlaylistsAdapter extends RecyclerViewBaseAdapter<PlaylistSimple, Pl
 
     @Override
     public void onBindViewHolder(FeaturedPlaylistsViewHolder holder, int position) {
-        PlaylistSimple playlist = data.get(position);
-        holder.setName(playlist.name);
-        bindToListener(holder);
-        Picasso.with(context).load(playlist.images.get(0).url).placeholder(R.drawable.ic_playlist).into(holder.getImage());
+        holder.bind(data.get(position));
+
     }
 
 
-    public class FeaturedPlaylistsViewHolder extends RecyclerView.ViewHolder{
+    public class FeaturedPlaylistsViewHolder extends RecyclerViewBaseAdapter<PlaylistSimple, PlaylistsAdapter.FeaturedPlaylistsViewHolder>.BaseViewHolder<PlaylistSimple>{
 
         private ImageView image;
         private TextView name;
@@ -49,19 +47,11 @@ public class PlaylistsAdapter extends RecyclerViewBaseAdapter<PlaylistSimple, Pl
             name = (TextView) itemView.findViewById(R.id.playlist_name);
         }
 
-        public ImageView getImage() {
-            return image;
+        @Override
+        public void bind(PlaylistSimple playlist) {
+            super.bind(playlist);
+            name.setText(playlist.name);
+            Picasso.with(context).load(playlist.images.get(0).url).placeholder(R.drawable.ic_playlist).into(image);
         }
-
-
-        public TextView getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name.setText(name);
-        }
-
-
     }
 }

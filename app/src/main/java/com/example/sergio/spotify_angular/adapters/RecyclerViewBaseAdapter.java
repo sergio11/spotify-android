@@ -44,15 +44,7 @@ public abstract class RecyclerViewBaseAdapter<T,E extends RecyclerView.ViewHolde
         return this.data;
     };
 
-    public void bindToListener(final RecyclerView.ViewHolder view) {
-        if(listener != null){
-            view.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
-                    listener.onItemClick(data.get(view.getLayoutPosition()));
-                }
-            });
-        }
-    }
+
 
     public void setOnItemClickListener(OnItemClickListener<T> listener){
         this.listener = listener;
@@ -60,6 +52,23 @@ public abstract class RecyclerViewBaseAdapter<T,E extends RecyclerView.ViewHolde
 
     public interface OnItemClickListener<T> {
         void onItemClick(T item);
+    }
+
+    public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder{
+
+        public BaseViewHolder(View itemView) {
+            super(itemView);
+        }
+
+        public void bind(T element){
+            if(listener != null){
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override public void onClick(View v) {
+                        listener.onItemClick(data.get(getLayoutPosition()));
+                    }
+                });
+            }
+        }
     }
 
 }

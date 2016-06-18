@@ -1,7 +1,6 @@
 package com.example.sergio.spotify_angular.adapters.resultsearch;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +33,9 @@ public class PlaylistAdapter extends RecyclerViewBaseAdapter<PlaylistSimple, Pla
     @Override
     public void onBindViewHolder(PlaylistViewHolder holder, int position) {
         holder.bind(data.get(position));
-        bindToListener(holder);
     }
 
-    public class PlaylistViewHolder extends RecyclerView.ViewHolder{
+    public class PlaylistViewHolder extends RecyclerViewBaseAdapter<PlaylistSimple, PlaylistAdapter.PlaylistViewHolder>.BaseViewHolder<PlaylistSimple>{
 
         protected final ImageView photo;
         protected final TextView title;
@@ -52,6 +50,7 @@ public class PlaylistAdapter extends RecyclerViewBaseAdapter<PlaylistSimple, Pla
         }
 
         public void bind(PlaylistSimple playlistSimple) {
+            super.bind(playlistSimple);
             if (playlistSimple.images != null && playlistSimple.images.size() > 0)
                 Picasso.with(context).load(playlistSimple.images.get(0).url).into(photo);
             title.setText(playlistSimple.name);

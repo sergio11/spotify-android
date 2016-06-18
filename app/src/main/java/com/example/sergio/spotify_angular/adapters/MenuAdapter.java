@@ -32,14 +32,12 @@ public class MenuAdapter extends RecyclerViewBaseAdapter<MenuAppItem,MenuAdapter
 
     @Override
     public void onBindViewHolder(MenuViewHolder holder, int position) {
-        MenuAppItem item = data.get(position);
-        holder.setText(item.getText());
-        holder.setIcon(new IconDrawable(context, FontAwesomeIcons.valueOf(item.getIcon())).colorRes(R.color.primary));
-        bindToListener(holder);
+        holder.bind(data.get(position));
+
     }
 
 
-    public class MenuViewHolder extends RecyclerView.ViewHolder{
+    public class MenuViewHolder extends RecyclerViewBaseAdapter<MenuAppItem, MenuAdapter.MenuViewHolder>.BaseViewHolder<MenuAppItem>{
 
         private ImageView icon;
         private TextView text;
@@ -50,22 +48,11 @@ public class MenuAdapter extends RecyclerViewBaseAdapter<MenuAppItem,MenuAdapter
             text = (TextView) itemView.findViewById(R.id.menu_text);
         }
 
-        public ImageView getIcon() {
-            return icon;
+        @Override
+        public void bind(MenuAppItem item) {
+            super.bind(item);
+            text.setText(item.getText());
+            icon.setImageDrawable(new IconDrawable(context, FontAwesomeIcons.valueOf(item.getIcon())).colorRes(R.color.primary));
         }
-
-        public void setIcon(Drawable icon) {
-            this.icon.setImageDrawable(icon);
-        }
-
-        public TextView getText() {
-            return text;
-        }
-
-        public void setText(String text) {
-            this.text.setText(text);
-        }
-
-
     }
 }

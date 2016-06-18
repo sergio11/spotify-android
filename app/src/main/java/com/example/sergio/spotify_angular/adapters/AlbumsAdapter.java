@@ -34,11 +34,11 @@ public class AlbumsAdapter extends RecyclerViewBaseAdapter<AlbumSimple,AlbumsAda
     @Override
     public void onBindViewHolder(AlbumViewHolder holder, int position) {
         AlbumSimple album = data.get(position);
-        holder.bindToView(album);
+        holder.bind(album);
     }
 
 
-    public class AlbumViewHolder extends RecyclerView.ViewHolder{
+    public class AlbumViewHolder extends RecyclerViewBaseAdapter<AlbumSimple, AlbumsAdapter.AlbumViewHolder>.BaseViewHolder<AlbumSimple>{
 
         private final ImageView photo;
         private final TextView name;
@@ -51,10 +51,13 @@ public class AlbumsAdapter extends RecyclerViewBaseAdapter<AlbumSimple,AlbumsAda
             type = (TextView)itemView.findViewById(R.id.album_type);
         }
 
-        public void bindToView(final AlbumSimple album){
+        @Override
+        public void bind(AlbumSimple album) {
+            super.bind(album);
             Picasso.with(context).load(album.images.get(0).url).into(photo);
             name.setText(album.name);
             type.setText(album.album_type);
         }
+
     }
 }

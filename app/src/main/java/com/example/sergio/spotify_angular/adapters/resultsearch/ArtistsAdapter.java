@@ -29,19 +29,13 @@ public class ArtistsAdapter extends ProgressLoadedAdapter<Artist, ArtistsAdapter
     }
 
     @Override
-    protected RecyclerView.ViewHolder getViewHolderItem(ViewGroup parent) {
+    protected RecyclerViewBaseAdapter.BaseViewHolder getViewHolderItem(ViewGroup parent) {
          View view = LayoutInflater.from(context).inflate(R.layout.artists_result_search_item, parent, false);
          return new ArtistViewHolder(view);
     }
 
-    @Override
-    protected void bind(ArtistViewHolder holder, int position) {
-        holder.bind(data.get(position));
-        bindToListener(holder);
-    }
 
-
-    public class ArtistViewHolder extends RecyclerView.ViewHolder{
+    public class ArtistViewHolder extends RecyclerViewBaseAdapter<Artist, ArtistsAdapter.ArtistViewHolder>.BaseViewHolder<Artist>{
 
         protected final ImageView photo;
         protected final TextView title;
@@ -56,6 +50,7 @@ public class ArtistsAdapter extends ProgressLoadedAdapter<Artist, ArtistsAdapter
         }
 
         public void bind(Artist artist) {
+            super.bind(artist);
             //search image
             if (artist.images != null && artist.images.size() > 0)
                 Picasso.with(context).load(artist.images.get(0).url).into(photo);

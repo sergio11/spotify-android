@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Created by sergio on 18/06/2016.
  */
-public abstract class ProgressLoadedAdapter<T, E extends RecyclerView.ViewHolder > extends RecyclerViewBaseAdapter<T, RecyclerView.ViewHolder>{
+public abstract class ProgressLoadedAdapter<T, E extends RecyclerViewBaseAdapter.BaseViewHolder > extends RecyclerViewBaseAdapter<T, RecyclerViewBaseAdapter.BaseViewHolder>{
 
     private final int VIEW_TYPE_ITEM = 1;
     private final int VIEW_TYPE_PROGRESSBAR = 0;
@@ -35,8 +35,8 @@ public abstract class ProgressLoadedAdapter<T, E extends RecyclerView.ViewHolder
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        RecyclerView.ViewHolder vh;
+    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        BaseViewHolder vh;
         if (viewType == VIEW_TYPE_ITEM) {
 
             vh = getViewHolderItem(parent);
@@ -49,9 +49,9 @@ public abstract class ProgressLoadedAdapter<T, E extends RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(BaseViewHolder holder, int position) {
         if (holder.getClass() != ProgressViewHolder.class){
-           bind((E)holder,position);
+            holder.bind(data.get(position));
         }
     }
 
@@ -64,11 +64,9 @@ public abstract class ProgressLoadedAdapter<T, E extends RecyclerView.ViewHolder
         this.isFooterEnabled = isEnabled;
     }
 
-    protected abstract RecyclerView.ViewHolder getViewHolderItem(ViewGroup parent);
+    protected abstract BaseViewHolder getViewHolderItem(ViewGroup parent);
 
-    protected abstract void bind(E holder, int position);
-
-    public  class ProgressViewHolder extends RecyclerView.ViewHolder {
+    public  class ProgressViewHolder extends RecyclerViewBaseAdapter<T, RecyclerViewBaseAdapter.BaseViewHolder>.BaseViewHolder<T> {
         public ProgressBar progressBar;
 
         public ProgressViewHolder(View v) {

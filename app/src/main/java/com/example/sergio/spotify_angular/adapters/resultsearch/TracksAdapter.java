@@ -37,10 +37,9 @@ public class TracksAdapter extends RecyclerViewBaseAdapter<Track, TracksAdapter.
     @Override
     public void onBindViewHolder(TrackViewHolder holder, int position) {
         holder.bind(data.get(position));
-        bindToListener(holder);
     }
 
-    public class TrackViewHolder extends RecyclerView.ViewHolder{
+    public class TrackViewHolder extends  RecyclerViewBaseAdapter<Track, TracksAdapter.TrackViewHolder>.BaseViewHolder<Track>{
 
         protected final TextView title;
         protected final TextView subtitle;
@@ -53,6 +52,7 @@ public class TracksAdapter extends RecyclerViewBaseAdapter<Track, TracksAdapter.
         }
 
         public void bind(Track track) {
+            super.bind(track);
             title.setText(track.name);
             List<String> names = Lists.transform(track.artists, new Function<ArtistSimple, String>() {
                 @Override

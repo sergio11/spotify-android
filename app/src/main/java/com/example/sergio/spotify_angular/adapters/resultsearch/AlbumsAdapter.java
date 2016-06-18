@@ -36,10 +36,9 @@ public class AlbumsAdapter extends RecyclerViewBaseAdapter<AlbumSimple, AlbumsAd
     @Override
     public void onBindViewHolder(AlbumViewHolder holder, int position) {
         holder.bind(data.get(position));
-        bindToListener(holder);
     }
 
-    public class AlbumViewHolder extends RecyclerView.ViewHolder{
+    public class AlbumViewHolder extends RecyclerViewBaseAdapter<AlbumSimple, AlbumsAdapter.AlbumViewHolder>.BaseViewHolder<AlbumSimple>{
 
         protected final ImageView photo;
         protected final TextView title;
@@ -54,6 +53,7 @@ public class AlbumsAdapter extends RecyclerViewBaseAdapter<AlbumSimple, AlbumsAd
         }
 
         public void bind(AlbumSimple albumSimple) {
+            super.bind(albumSimple);
 
             if (albumSimple.images != null && albumSimple.images.size() > 0)
                 Picasso.with(context).load(albumSimple.images.get(0).url).into(photo);
