@@ -31,6 +31,23 @@ public class ExplorerFragment extends Fragment{
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        FeaturedPlaylistsSelectorFragment f = (FeaturedPlaylistsSelectorFragment) getFragmentManager().findFragmentById(R.id.featured_playlists_selector_fragment);
+        if (f != null)
+            getFragmentManager().beginTransaction().remove(f).commit();
+
+        MenuExplorerFragment m = (MenuExplorerFragment)getFragmentManager().findFragmentById(R.id.main_menu_explorer_fragment);
+        if (m != null)
+            getFragmentManager().beginTransaction().remove(m).commit();
+
+        CategoriesSelectorFragment c = (CategoriesSelectorFragment)getFragmentManager().findFragmentById(R.id.categories_selector_fragment);
+        if (c != null)
+            getFragmentManager().beginTransaction().remove(c).commit();
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.explorer_menu, menu);
         super.onCreateOptionsMenu(menu,inflater);

@@ -1,6 +1,7 @@
 package com.example.sergio.spotify_angular.fragments;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -61,14 +62,25 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-
         imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
     }
+
+
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search_layout, container, false);
         notResultFoundTextView = (TextView) view.findViewById(R.id.not_result_found_primary);
         setHasOptionsMenu(true);
+        FragmentManager childFm = getFragmentManager();
+        int entryCount = childFm.getBackStackEntryCount();
+        if (entryCount > 0) {
+            for (Fragment childfragnested: resultFragments) {
+                FragmentManager childFmNestManager = childfragnested.getFragmentManager();
+                if (childFmNestManager.getBackStackEntryCount() > 0)
+                    childFmNestManager.popBackStack();
+            }
+        }
+
         return view;
     }
 
@@ -136,6 +148,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     @Override
     public void onDataFound(View view) {
         view.setVisibility(View.VISIBLE);
-
     }
+
+
 }

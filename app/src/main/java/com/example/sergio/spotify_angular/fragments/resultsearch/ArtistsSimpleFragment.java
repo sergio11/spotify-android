@@ -64,11 +64,12 @@ public class ArtistsSimpleFragment extends AbstractSimpleFragment<Artist> {
 
 
     private void markFollowedArtists(){
+
         List<Artist> artists = adapter.getData();
         for (int i = 0, leni = followedArtists.size(); i < leni; i++){
             for (int k = 0, lenk = artists.size(); k < lenk; k++){
                 if (followedArtists.get(i).id.equals(artists.get(k).id)){
-                    adapter.notifyItemChanged(k,"Follow");
+                    adapter.notifyItemChanged(k,"Hello Morenito");
                 }
             }
 

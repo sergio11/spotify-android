@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,13 +59,7 @@ public abstract class AbstractSimpleFragment<T> extends EventBusFragment {
         });
         recyclerView.addItemDecoration(new DividerItemDecoration(getResources().getDrawable(R.drawable.white_divider),false, true));
         recyclerView.setAdapter(adapter);
-        DefaultItemAnimator animator = new DefaultItemAnimator() {
-            @Override
-            public boolean canReuseUpdatedViewHolder(RecyclerView.ViewHolder viewHolder) {
-                return true;
-            }
-        };
-        recyclerView.setItemAnimator(animator);
+        recyclerView.setItemAnimator(null);
         return view;
     }
 

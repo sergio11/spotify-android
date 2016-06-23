@@ -24,6 +24,8 @@ public abstract class RecyclerViewBaseAdapter<T,E extends RecyclerView.ViewHolde
         this.data = data;
     }
 
+
+
     @Override
     public int getItemCount() {
         return data.size();
