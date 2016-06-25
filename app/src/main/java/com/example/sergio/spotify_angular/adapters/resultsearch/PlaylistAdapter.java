@@ -51,8 +51,8 @@ public class PlaylistAdapter extends ProgressLoadedAdapter<PlaylistSimple, Playl
             if (playlistSimple.images != null && playlistSimple.images.size() > 0)
                 Picasso.with(context).load(playlistSimple.images.get(0).url).into(photo);
             title.setText(playlistSimple.name);
-            if (playlistSimple.owner != null)
-                subtitle.setText(playlistSimple.owner.display_name);
+            if (playlistSimple.tracks != null)
+                subtitle.setText(playlistSimple.tracks.total + " Songs");
         }
     }
 }

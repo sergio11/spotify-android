@@ -1,20 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/create_playlist_title"
+        android:textAllCaps="true"
+        android:layout_marginLeft="10dp"
+        android:textColor="@color/primary"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/white_divider"/>
+
     <EditText
         android:id="@+id/playlist_name"
         android:inputType="text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
+        android:textColor="@color/primary"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginBottom="4dp"
-        android:textColorLink="@color/secondary"
         android:hint="@string/create_playlist_hint" >
         <requestFocus />
     </EditText>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2"
+        android:layout_marginTop="25dp">
+        <Button
+            android:id="@+id/cancel_create_playlist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/primary"
+            android:background="@drawable/background_dialog_cancel_button"
+            android:text="@string/cancel_create_playlist"/>
+        <Button
+            android:id="@+id/create_playlist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            android:text="@string/create_playlist"
+            android:background="@drawable/background_dialog_create_button"/>
+    </LinearLayout>
 
 
 </LinearLayout>

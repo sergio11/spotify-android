@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 23
@@ -18,6 +19,8 @@ android {
         }
     }
 }
+
+
 
 repositories {
     mavenCentral()
@@ -45,7 +48,8 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.4.0'
     compile 'com.android.support:recyclerview-v7:23.4.0'
     compile 'com.joanzapata.iconify:android-iconify-fontawesome:2.2.2'
-    compile 'com.jakewharton:butterknife:8.0.1'
+    compile 'com.jakewharton:butterknife:8.1.0'
+    apt 'com.jakewharton:butterknife-compiler:8.1.0'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.neovisionaries:nv-i18n:1.18'
     compile 'com.github.kanytu:android-parallax-recyclerview:v1.7'

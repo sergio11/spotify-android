@@ -38,10 +38,13 @@ public class MyPlaylistsFragment extends AbstractEndlessScrollFragment<PlaylistS
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        bus.post(new LoadMyPlaylistsEvent(defaultOptions));
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        bus.post(new LoadMyPlaylistsEvent(defaultOptions));
+    }
 
     @Override
     protected LinearLayoutManager getLayoutManager() {
@@ -115,7 +118,5 @@ public class MyPlaylistsFragment extends AbstractEndlessScrollFragment<PlaylistS
             playlistSimple.owner = playlist.owner;
             this.addItem(playlistSimple);
         }
-
-
     }
 }

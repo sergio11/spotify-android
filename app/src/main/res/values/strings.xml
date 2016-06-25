@@ -73,6 +73,7 @@
     <string name="create_playlist_hint">Nombre de la playlist</string>
     <string name="cancel_create_playlist">Cancelar</string>
     <string name="create_playlist">Crear</string>
+    <string name="playlist_name_not_empty">Debes proporcionar un nombre</string>
 
 
 </resources>
