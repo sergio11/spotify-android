@@ -23,7 +23,7 @@ import kaaes.spotify.webapi.android.models.Artist;
 /**
  * Created by sergio on 18/06/2016.
  */
-public class ArtistFragment extends AbstractEndlessScrollFragment<Artist,LinearLayoutManager> {
+public class ArtistFragment extends AbstractShowResultsFragment<Artist,LinearLayoutManager> {
 
     private LinearLayoutManager linearLayoutManager =  new LinearLayoutManager(getActivity());
 

@@ -2,6 +2,7 @@ package com.example.sergio.spotify_angular.services;
 
 import android.content.Context;
 
+import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.events.ApiErrorEvent;
 import com.example.sergio.spotify_angular.events.AreFollowingPlaylistCheckedEvent;
 import com.example.sergio.spotify_angular.events.AreFollowingPlaylistEvent;
@@ -12,9 +13,11 @@ import com.example.sergio.spotify_angular.events.GetFollowedArtistsEvent;
 import com.example.sergio.spotify_angular.events.LoadMyPlaylistsEvent;
 import com.example.sergio.spotify_angular.events.LoadProfileEvent;
 import com.example.sergio.spotify_angular.events.MyPlaylistsLoadedEvent;
+import com.example.sergio.spotify_angular.events.NotFoundPlaylistEvent;
 import com.example.sergio.spotify_angular.events.ProfileLoadedEvent;
 import com.example.sergio.spotify_angular.events.UnFollowPlaylistEvent;
 import com.example.sergio.spotify_angular.events.UnFollowPlaylistSuccessEvent;
+import com.example.sergio.spotify_angular.utils.AppHelpers;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -105,7 +108,7 @@ public class UserService extends BaseService {
 
     @Subscribe
     public void onLoadMyPlaylists(LoadMyPlaylistsEvent event){
-        service.getMyPlaylists(options, new Callback<Pager<PlaylistSimple>>() {
+        service.getMyPlaylists( AppHelpers.deepMerge(options, event.getOptions()), new Callback<Pager<PlaylistSimple>>() {
             @Override
             public void success(Pager<PlaylistSimple> playlistSimplePager, Response response) {
                 bus.post(new MyPlaylistsLoadedEvent(playlistSimplePager.items));
@@ -113,7 +116,15 @@ public class UserService extends BaseService {
 
             @Override
             public void failure(RetrofitError error) {
-                bus.post(new ApiErrorEvent(ApiErrorEvent.Type.ALERT,error.getMessage()));
+                ApiErrorEvent errorEvent;
+                if (error.getResponse().getStatus() == 400){
+                    errorEvent = new ApiErrorEvent(ApiErrorEvent.Type.INFO,context.getString(R.string.search_playlist_status_code_400));
+                }else{
+                    errorEvent = new ApiErrorEvent(ApiErrorEvent.Type.ALERT,context.getString(R.string.search_playlist_status_code_500));
+                }
+                bus.post(errorEvent);
+                bus.post(new NotFoundPlaylistEvent());
+
             }
         });
     }

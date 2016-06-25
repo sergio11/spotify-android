@@ -20,7 +20,7 @@ import kaaes.spotify.webapi.android.models.AlbumSimple;
 /**
  * Created by sergio on 18/06/2016.
  */
-public class AlbumsFragment extends AbstractEndlessScrollFragment<AlbumSimple,LinearLayoutManager> {
+public class AlbumsFragment extends AbstractShowResultsFragment<AlbumSimple,LinearLayoutManager> {
 
     private LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
 

@@ -33,8 +33,10 @@ import com.example.sergio.spotify_angular.fragments.PlaylistPreviewFragment;
 import com.example.sergio.spotify_angular.fragments.SearchFragment;
 import com.example.sergio.spotify_angular.fragments.YourLibraryFragment;
 import com.example.sergio.spotify_angular.fragments.resultsearch.AbstractEndlessScrollFragment;
+import com.example.sergio.spotify_angular.fragments.resultsearch.AbstractShowResultsFragment;
 import com.example.sergio.spotify_angular.fragments.resultsearch.AlbumsFragment;
 import com.example.sergio.spotify_angular.fragments.resultsearch.ArtistFragment;
+import com.example.sergio.spotify_angular.fragments.resultsearch.MyPlaylistsFragment;
 import com.example.sergio.spotify_angular.fragments.resultsearch.PlaylistFragment;
 import com.example.sergio.spotify_angular.fragments.resultsearch.TracksFragment;
 import com.example.sergio.spotify_angular.utils.AppHelpers;
@@ -205,15 +207,22 @@ public class HomeActivity extends AppCompatActivity  {
 
     @Subscribe
     public void onMenuItemSelected(MenuItemSelected event){
+
+        Fragment fragment = null;
         switch (event.getId()){
             case R.id.new_releases:
-                NewReleasesFragment fragment = new NewReleasesFragment();
-                AppHelpers.setFragment(this,fragment, R.id.flContent, true,true);
+                fragment = new NewReleasesFragment();
                 setTitle(getString(R.string.new_releases_fragment_title));
+                break;
+            case R.id.library_playlist:
+                fragment = new MyPlaylistsFragment();
+                setTitle(getString(R.string.my_playlists));
                 break;
             default:
                 Toast.makeText(this,"Opción no implementada", Toast.LENGTH_LONG).show();
         }
+
+        if (fragment != null) AppHelpers.setFragment(this,fragment, R.id.flContent, true,true);
     }
 
     @Subscribe
@@ -229,7 +238,7 @@ public class HomeActivity extends AppCompatActivity  {
 
     @Subscribe
     public void onSeeAllResults(SeeAllResultsEvent event){
-        Class<? extends AbstractEndlessScrollFragment> fragmentClass;
+        Class<? extends AbstractShowResultsFragment> fragmentClass;
         switch (event.getType()){
             case ARTISTS:
                 fragmentClass = ArtistFragment.class;
@@ -247,7 +256,7 @@ public class HomeActivity extends AppCompatActivity  {
                 fragmentClass = ArtistFragment.class;
         }
         try {
-            AppHelpers.setFragment(this,AbstractEndlessScrollFragment.newInstance(event.getText(),fragmentClass), R.id.flContent, true,true);
+            AppHelpers.setFragment(this,AbstractShowResultsFragment.newInstance(event.getText(),fragmentClass), R.id.flContent, true,true);
             setTitle(event.getTitle());
         } catch (IllegalAccessException e) {
             e.printStackTrace();

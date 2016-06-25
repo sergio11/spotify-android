@@ -2,6 +2,7 @@ package com.example.sergio.spotify_angular.fragments.resultsearch;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,28 +26,16 @@ import java.util.Map;
  */
 public abstract class AbstractEndlessScrollFragment<T, E extends RecyclerView.LayoutManager> extends EventBusFragment{
 
-    private static final String ARG_TEXT = "text_search";
-    private static final int DEFAULT_TOTAL_ITEM = 20;
 
-    protected String text;
+    private static final int DEFAULT_TOTAL_ITEM = 20;
     protected ProgressLoadedAdapter adapter;
     protected List<T> data = new ArrayList<>();
     protected Map<String,Object> defaultOptions;
 
-    public static AbstractEndlessScrollFragment newInstance(String text, Class<? extends AbstractEndlessScrollFragment> classFragment) throws IllegalAccessException, java.lang.InstantiationException {
-        AbstractEndlessScrollFragment fragment = classFragment.newInstance();
-        Bundle args = new Bundle();
-        args.putString(ARG_TEXT, text);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            text = getArguments().getString(ARG_TEXT);
-        }
         defaultOptions = new HashMap<>();
         defaultOptions.put("limit",DEFAULT_TOTAL_ITEM);
         defaultOptions.put("offset",0);

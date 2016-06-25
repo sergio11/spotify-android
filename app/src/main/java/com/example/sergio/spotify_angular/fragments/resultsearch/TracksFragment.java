@@ -19,7 +19,7 @@ import kaaes.spotify.webapi.android.models.Track;
 /**
  * Created by sergio on 18/06/2016.
  */
-public class TracksFragment extends AbstractEndlessScrollFragment<Track,LinearLayoutManager> {
+public class TracksFragment extends AbstractShowResultsFragment<Track,LinearLayoutManager> {
 
     private LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
 

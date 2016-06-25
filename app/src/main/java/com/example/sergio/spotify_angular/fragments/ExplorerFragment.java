@@ -24,7 +24,7 @@ public class ExplorerFragment extends Fragment{
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_explorer, container, false);
-        MenuFragment menuFragment = (MenuFragment) getChildFragmentManager().findFragmentById(R.id.menu_explorer_fragment);
+        MenuFragment menuFragment = (MenuFragment) getFragmentManager().findFragmentById(R.id.main_menu_explorer_fragment);
         menuFragment.setMenu(AppHelpers.getMenuFromResources(getActivity(), R.array.explorer_menu_items ));
         setHasOptionsMenu(true);
         return view;
@@ -44,7 +44,7 @@ public class ExplorerFragment extends Fragment{
         if (f != null)
             getFragmentManager().beginTransaction().remove(f).commit();
 
-        MenuExplorerFragment m = (MenuExplorerFragment)getFragmentManager().findFragmentById(R.id.main_menu_explorer_fragment);
+        MenuFragment m = (MenuFragment)getFragmentManager().findFragmentById(R.id.main_menu_explorer_fragment);
         if (m != null)
             getFragmentManager().beginTransaction().remove(m).commit();
 

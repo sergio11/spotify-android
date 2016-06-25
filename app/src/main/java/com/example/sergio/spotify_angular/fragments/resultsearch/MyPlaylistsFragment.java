@@ -1,18 +1,16 @@
 package com.example.sergio.spotify_angular.fragments.resultsearch;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 
-import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.adapters.ProgressLoadedAdapter;
 import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
-import com.example.sergio.spotify_angular.adapters.resultsearch.PlayListCardAdapter;
+import com.example.sergio.spotify_angular.adapters.resultsearch.PlaylistAdapter;
+import com.example.sergio.spotify_angular.events.LoadMyPlaylistsEvent;
+import com.example.sergio.spotify_angular.events.MyPlaylistsLoadedEvent;
 import com.example.sergio.spotify_angular.events.NotFoundPlaylistEvent;
 import com.example.sergio.spotify_angular.events.PlaylistSelectedEvent;
-import com.example.sergio.spotify_angular.events.PlaylistsFoundEvent;
-import com.example.sergio.spotify_angular.events.SearchPlaylistEvent;
 import com.example.sergio.spotify_angular.utils.EndlessRecyclerViewScrollListener;
-import com.example.sergio.spotify_angular.utils.GridAutofitLayoutManager;
-
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -22,59 +20,62 @@ import java.util.Map;
 import kaaes.spotify.webapi.android.models.PlaylistSimple;
 
 /**
- * Created by sergio on 18/06/2016.
+ * Created by sergio on 25/06/2016.
  */
-public class PlaylistFragment extends AbstractShowResultsFragment<PlaylistSimple,GridAutofitLayoutManager> implements RecyclerViewBaseAdapter.OnItemClickListener<PlaylistSimple> {
+public class MyPlaylistsFragment extends AbstractEndlessScrollFragment<PlaylistSimple,LinearLayoutManager> implements RecyclerViewBaseAdapter.OnItemClickListener<PlaylistSimple> {
 
-    GridAutofitLayoutManager gridAutofitLayoutManager;
+    private LinearLayoutManager linearLayoutManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        float spanColumnWidth = getResources().getDimension(R.dimen.span_column_width_albums);
-        gridAutofitLayoutManager = new GridAutofitLayoutManager(getActivity(), (int) spanColumnWidth);
-        bus.post(new SearchPlaylistEvent(text,defaultOptions));
+        bus.post(new LoadMyPlaylistsEvent(defaultOptions));
     }
 
+
+
     @Override
-    protected GridAutofitLayoutManager getLayoutManager() {
-        return gridAutofitLayoutManager;
+    protected LinearLayoutManager getLayoutManager() {
+        linearLayoutManager =  new LinearLayoutManager(getActivity());
+        return linearLayoutManager;
     }
 
     @Override
     protected ProgressLoadedAdapter getAdapter() {
-        PlayListCardAdapter adapter = new PlayListCardAdapter(getActivity(),data);
+        PlaylistAdapter adapter = new PlaylistAdapter(getActivity(), data);
         adapter.setOnItemClickListener(this);
         return adapter;
     }
 
     @Override
     protected EndlessRecyclerViewScrollListener getEndlessRecyclerViewScrollListener() {
-        return new EndlessRecyclerViewScrollListener(gridAutofitLayoutManager) {
+         return new EndlessRecyclerViewScrollListener(linearLayoutManager) {
 
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 final Map<String,Object> options = new HashMap<>();
                 options.put("limit",totalItemsCount);
                 options.put("offset",totalItemsCount + page);
-                bus.post(new SearchPlaylistEvent(text,options));
-
+                bus.post(new LoadMyPlaylistsEvent(options));
             }
         };
-    }
-
-    @Subscribe
-    public void onPlaylistsFound(PlaylistsFoundEvent event){
-        this.addData(event.getPlaylists());
-    }
-
-    @Subscribe
-    public void onNotFoundPlaylist(NotFoundPlaylistEvent event){
-        this.notifyNoDataFound();
     }
 
     @Override
     public void onItemClick(PlaylistSimple item) {
         bus.post(new PlaylistSelectedEvent(item));
+    }
+
+    @Subscribe
+    public void onMyPlaylistsLoaded(MyPlaylistsLoadedEvent event){
+        if (event.getItems().size() > 0)
+            this.addData(event.getItems());
+        else
+            this.notifyNoDataFound();
+    }
+
+    @Subscribe
+    public void onNotFoundPlaylist(NotFoundPlaylistEvent event){
+        this.notifyNoDataFound();
     }
 }
