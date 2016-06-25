@@ -12,7 +12,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -22,7 +21,7 @@ import android.widget.Toast;
 import com.devspark.appmsg.AppMsg;
 import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.events.ApiErrorEvent;
-import com.example.sergio.spotify_angular.events.ExplorerMenuItemSelected;
+import com.example.sergio.spotify_angular.events.MenuItemSelected;
 import com.example.sergio.spotify_angular.events.LoadProfileEvent;
 import com.example.sergio.spotify_angular.events.PlaylistSelectedEvent;
 import com.example.sergio.spotify_angular.events.ProfileLoadedEvent;
@@ -31,6 +30,7 @@ import com.example.sergio.spotify_angular.fragments.ExplorerFragment;
 import com.example.sergio.spotify_angular.fragments.NewReleasesFragment;
 import com.example.sergio.spotify_angular.fragments.PlaylistPreviewFragment;
 import com.example.sergio.spotify_angular.fragments.SearchFragment;
+import com.example.sergio.spotify_angular.fragments.YourLibraryFragment;
 import com.example.sergio.spotify_angular.fragments.resultsearch.AbstractEndlessScrollFragment;
 import com.example.sergio.spotify_angular.fragments.resultsearch.AlbumsFragment;
 import com.example.sergio.spotify_angular.fragments.resultsearch.ArtistFragment;
@@ -64,6 +64,9 @@ public class HomeActivity extends AppCompatActivity  {
                 break;
             case R.id.nav_explorer:
                 fragment =  new ExplorerFragment();
+                break;
+            case R.id.nav_your_music:
+                fragment = new YourLibraryFragment();
                 break;
             default:
                 fragment =  new PlaylistPreviewFragment();
@@ -194,7 +197,7 @@ public class HomeActivity extends AppCompatActivity  {
     }
 
     @Subscribe
-    public void onExplorerMenuItemSelected(ExplorerMenuItemSelected event){
+    public void onMenuItemSelected(MenuItemSelected event){
         switch (event.getId()){
             case R.id.new_releases:
                 NewReleasesFragment fragment = new NewReleasesFragment();

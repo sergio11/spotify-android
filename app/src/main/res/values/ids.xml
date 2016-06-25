@@ -4,4 +4,9 @@
     <item name="discover" type="id"></item>
     <item name="new_releases" type="id"></item>
     <item name="concerts" type="id"></item>
+    <item name="library_playlist" type="id"></item>
+    <item name="library_stations" type="id"></item>
+    <item name="library_songs" type="id"></item>
+    <item name="library_albums" type="id"></item>
+    <item name="library_artists" type="id"></item>
 </resources>

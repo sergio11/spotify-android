@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Explorer Menu -->
     <array name="explorer_menu_items">
         <item>@array/lists</item>
         <item>@array/new_releases</item>
@@ -31,6 +32,48 @@
         <item>fa_ticket</item>
         <item>@string/explorer_menu_concerts</item>
     </array>
+
+    <!-- Your library menu -->
+    <array name="your_library_menu">
+        <item>@array/playlist</item>
+        <item>@array/stations</item>
+        <item>@array/songs</item>
+        <item>@array/albums</item>
+        <item>@array/artist</item>
+    </array>
+
+    <array name="playlist">
+        <item>@id/library_playlist</item>
+        <item>fa_music</item>
+        <item>@string/your_library_menu_playlist</item>
+    </array>
+
+    <array name="stations">
+        <item>@id/library_stations</item>
+        <item>fa_music</item>
+        <item>@string/your_library_menu_stations</item>
+    </array>
+
+    <array name="songs">
+        <item>@id/library_songs</item>
+        <item>fa_headphones</item>
+        <item>@string/your_library_menu_song</item>
+    </array>
+
+    <array name="albums">
+        <item>@id/library_albums</item>
+        <item>fa_music</item>
+        <item>@string/your_library_menu_albums</item>
+    </array>
+
+    <array name="artist">
+        <item>@id/library_artists</item>
+        <item>fa_music</item>
+        <item>@string/your_library_menu_artists</item>
+    </array>
+
+
+
 
     <!-- App Services -->
     <string-array name="app_services">

@@ -12,18 +12,18 @@ import android.view.ViewGroup;
 import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.adapters.MenuAdapter;
 import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
-import com.example.sergio.spotify_angular.events.ExplorerMenuItemSelected;
+import com.example.sergio.spotify_angular.events.MenuItemSelected;
 import com.example.sergio.spotify_angular.models.MenuAppItem;
-import com.example.sergio.spotify_angular.utils.AppHelpers;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by sergio on 13/05/2016.
  */
-public class MenuExplorerFragment extends Fragment implements RecyclerViewBaseAdapter.OnItemClickListener<MenuAppItem> {
+public class MenuFragment extends Fragment implements RecyclerViewBaseAdapter.OnItemClickListener<MenuAppItem> {
 
     private MenuAdapter adapter;
     private EventBus bus = EventBus.getDefault();
@@ -31,7 +31,7 @@ public class MenuExplorerFragment extends Fragment implements RecyclerViewBaseAd
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.menu_explorer_fragment, container, false);
+        View view = inflater.inflate(R.layout.menu_fragment, container, false);
         RecyclerView recyclerList = (RecyclerView) view.findViewById(R.id.menu_explorer_recyclerview);
         recyclerList.setLayoutManager( new LinearLayoutManager(getActivity()) {
             @Override
@@ -39,8 +39,7 @@ public class MenuExplorerFragment extends Fragment implements RecyclerViewBaseAd
                 return false;
             }
         });
-        List<MenuAppItem> menu = AppHelpers.getMenuFromResources(getActivity(), R.array.explorer_menu_items );
-        adapter =  new MenuAdapter(getActivity(), menu);
+        adapter =  new MenuAdapter(getActivity(),  new ArrayList<MenuAppItem>());
         adapter.setOnItemClickListener(this);
         recyclerList.setAdapter(adapter);
         return view;
@@ -49,8 +48,10 @@ public class MenuExplorerFragment extends Fragment implements RecyclerViewBaseAd
 
     @Override
     public void onItemClick(MenuAppItem item) {
-        bus.post(new ExplorerMenuItemSelected(item.getId()));
+        bus.post(new MenuItemSelected(item.getId()));
     }
 
-
+    public void setMenu(List<MenuAppItem> menu) {
+        adapter.setData(menu);
+    }
 }

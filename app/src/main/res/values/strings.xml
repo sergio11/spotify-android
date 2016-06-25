@@ -24,6 +24,12 @@
     <string name="explorer_menu_new_releases">Nuevos Lanzamientos</string>
     <string name="explorer_menu_discover">Discover</string>
     <string name="explorer_menu_concerts">Conciertos</string>
+    <!-- Your Library Menu -->
+    <string name="your_library_menu_playlist">Playlists</string>
+    <string name="your_library_menu_stations">Estaciones</string>
+    <string name="your_library_menu_song">Canciones</string>
+    <string name="your_library_menu_albums">Albumes</string>
+    <string name="your_library_menu_artists">Artistas</string>
 
     <string name="search_hint">Busca artistas, playlist, canciones por nombre</string>
     <string name="search_description">Busca tu canción favorita, artistas, albumes, podcast, playlists y amigos</string>
