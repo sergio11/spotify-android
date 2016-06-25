@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <selector
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <item android:state_pressed="true" >
+            <shape>
+                <gradient
+                    android:startColor="@color/alert_dialog_button_green_pressed1"
+                    android:endColor="@color/alert_dialog_button_green_pressed2"
+                    android:angle="270" />
+            </shape>
+        </item>
+
+        <item android:state_focused="true" >
+            <shape>
+                <gradient
+                    android:endColor="@color/alert_dialog_button_green_focused1"
+                    android:startColor="@color/alert_dialog_button_green_focused2"
+                    android:angle="270" />
+            </shape>
+        </item>
+
+        <item>
+            <shape>
+                <gradient
+                    android:endColor="@color/alert_dialog_button_green1"
+                    android:startColor="@color/alert_dialog_button_green2"
+                    android:angle="270" />
+            </shape>
+        </item>
+    </selector>
+</selector>

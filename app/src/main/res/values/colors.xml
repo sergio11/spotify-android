@@ -12,4 +12,10 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#B6B6B6</color>
     <color name="black_alpha_40">#66000000</color>
+    <color name="alert_dialog_button_green1">#b4099930</color>
+    <color name="alert_dialog_button_green2">#b4099930</color>
+    <color name="alert_dialog_button_green_focused1">#96099930</color>
+    <color name="alert_dialog_button_green_focused2">#96099930</color>
+    <color name="alert_dialog_button_green_pressed1">#96099930</color>
+    <color name="alert_dialog_button_green_pressed2">#96099930</color>
 </resources>

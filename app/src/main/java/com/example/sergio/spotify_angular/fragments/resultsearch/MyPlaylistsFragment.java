@@ -2,7 +2,11 @@ package com.example.sergio.spotify_angular.fragments.resultsearch;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
+import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.adapters.ProgressLoadedAdapter;
 import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
 import com.example.sergio.spotify_angular.adapters.resultsearch.PlaylistAdapter;
@@ -10,6 +14,9 @@ import com.example.sergio.spotify_angular.events.LoadMyPlaylistsEvent;
 import com.example.sergio.spotify_angular.events.MyPlaylistsLoadedEvent;
 import com.example.sergio.spotify_angular.events.NotFoundPlaylistEvent;
 import com.example.sergio.spotify_angular.events.PlaylistSelectedEvent;
+import com.example.sergio.spotify_angular.events.PlaylistsCreatedEvent;
+import com.example.sergio.spotify_angular.fragments.dialogs.CreatePlaylistDialogFragment;
+import com.example.sergio.spotify_angular.utils.AppHelpers;
 import com.example.sergio.spotify_angular.utils.EndlessRecyclerViewScrollListener;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -17,6 +24,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.HashMap;
 import java.util.Map;
 
+import kaaes.spotify.webapi.android.models.Playlist;
 import kaaes.spotify.webapi.android.models.PlaylistSimple;
 
 /**
@@ -29,6 +37,7 @@ public class MyPlaylistsFragment extends AbstractEndlessScrollFragment<PlaylistS
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         bus.post(new LoadMyPlaylistsEvent(defaultOptions));
     }
 
@@ -66,6 +75,21 @@ public class MyPlaylistsFragment extends AbstractEndlessScrollFragment<PlaylistS
         bus.post(new PlaylistSelectedEvent(item));
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.my_playlists_menu, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.add_playlist){
+            //CreatePlaylistDialogFragment
+            AppHelpers.showDialog(getActivity(),new CreatePlaylistDialogFragment());
+        }
+        return false;
+    }
+
     @Subscribe
     public void onMyPlaylistsLoaded(MyPlaylistsLoadedEvent event){
         if (event.getItems().size() > 0)
@@ -77,5 +101,21 @@ public class MyPlaylistsFragment extends AbstractEndlessScrollFragment<PlaylistS
     @Subscribe
     public void onNotFoundPlaylist(NotFoundPlaylistEvent event){
         this.notifyNoDataFound();
+    }
+
+    @Subscribe
+    public void onPlaylistsCreated(PlaylistsCreatedEvent event){
+        if (event.getPlaylist() != null){
+            Playlist playlist = event.getPlaylist();
+            PlaylistSimple playlistSimple = new PlaylistSimple();
+            playlistSimple.id = playlist.id;
+            playlistSimple.images = playlist.images;
+            playlistSimple.name = playlist.name;
+            playlistSimple.type = playlist.type;
+            playlistSimple.owner = playlist.owner;
+            this.addItem(playlistSimple);
+        }
+
+
     }
 }

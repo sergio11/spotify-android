@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.events.ApiErrorEvent;
+import com.example.sergio.spotify_angular.events.CreatePlaylistEvent;
 import com.example.sergio.spotify_angular.events.FeaturedPlaylistLoadedEvent;
 import com.example.sergio.spotify_angular.events.LoadFeaturedPlaylistEvent;
 import com.example.sergio.spotify_angular.events.LoadPlaylistEvent;
@@ -12,6 +13,7 @@ import com.example.sergio.spotify_angular.events.LoadPlaylistTracksEvent;
 import com.example.sergio.spotify_angular.events.NotFoundPlaylistEvent;
 import com.example.sergio.spotify_angular.events.PlaylistLoadedEvent;
 import com.example.sergio.spotify_angular.events.PlaylistTracksLoadedEvent;
+import com.example.sergio.spotify_angular.events.PlaylistsCreatedEvent;
 import com.example.sergio.spotify_angular.events.PlaylistsFoundEvent;
 import com.example.sergio.spotify_angular.events.SearchPlaylistEvent;
 import com.example.sergio.spotify_angular.utils.AppHelpers;
@@ -104,6 +106,21 @@ public class PlaylistsService extends BaseService {
                 }
                 bus.post(errorEvent);
                 bus.post(new NotFoundPlaylistEvent());
+            }
+        });
+    }
+
+    @Subscribe
+    public void onCreatePlaylist(CreatePlaylistEvent event){
+        service.createPlaylist(event.getUserId(), event.getOptions(), new Callback<Playlist>() {
+            @Override
+            public void success(Playlist playlist, Response response) {
+                bus.post(new PlaylistsCreatedEvent(playlist));
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                bus.post(new ApiErrorEvent(ApiErrorEvent.Type.ALERT,error.getMessage()));
             }
         });
     }

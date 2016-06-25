@@ -66,7 +66,13 @@
     <string name="search_tracks_status_code_500">Error al obtener las pistas</string>
     <string name="search_playlist_status_code_400">No se han encontrado más playlists</string>
     <string name="search_playlist_status_code_500">Error al obtener las pistas</string>
+    <string name="add_playlists">Crear Playlist</string>
 
+    <!-- Dialogs -->
+    <string name="create_playlist_title">Crear nueva Playlist</string>
+    <string name="create_playlist_hint">Nombre de la playlist</string>
+    <string name="cancel_create_playlist">Cancelar</string>
+    <string name="create_playlist">Crear</string>
 
 
 </resources>

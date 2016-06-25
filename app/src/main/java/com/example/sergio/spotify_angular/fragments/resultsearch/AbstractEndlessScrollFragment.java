@@ -69,6 +69,11 @@ public abstract class AbstractEndlessScrollFragment<T, E extends RecyclerView.La
         }
     }
 
+    protected void addItem(T item){
+        data.add(item);
+        adapter.notifyItemInserted(data.size() - 1);
+    }
+
     protected void notifyNoDataFound(){
         adapter.enableFooter(false);
         adapter.notifyItemChanged(data.size());

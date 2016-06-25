@@ -1,6 +1,7 @@
 package com.example.sergio.spotify_angular.utils;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -36,6 +37,19 @@ public class AppHelpers {
         }
         if(addToBackStack) transaction.addToBackStack(null);
         transaction.commit();
+
+    }
+
+    public static void showDialog(Activity activity,DialogFragment dialogFragment){
+        FragmentTransaction ft = activity.getFragmentManager().beginTransaction();
+        Fragment prev = activity.getFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        dialogFragment.show(ft, "dialog");
 
     }
 
