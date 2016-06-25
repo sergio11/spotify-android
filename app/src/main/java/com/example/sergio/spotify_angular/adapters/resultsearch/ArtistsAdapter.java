@@ -2,6 +2,7 @@ package com.example.sergio.spotify_angular.adapters.resultsearch;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,14 @@ public class ArtistsAdapter extends ProgressLoadedAdapter<Artist, ArtistsAdapter
             if (artist.images != null && artist.images.size() > 0)
                 Picasso.with(context).load(artist.images.get(0).url).into(photo);
             //set name
-            title.setText(artist.name);
+            if (hasHighlightText()){
+                Spannable spannable = getSpannableString(artist.name);
+                title.setText(spannable);
+            }else{
+                title.setText(artist.name);
+            }
+
+
             /*if (artist.followers != null)
                 subtitle.setText(artist.followers.total);*/
         }

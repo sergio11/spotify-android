@@ -59,6 +59,7 @@ public class ArtistsSimpleFragment extends AbstractSimpleFragment<Artist> {
     @Override
     public void search(String text) {
         currentSearch = text;
+        adapter.setHighlightText(text);
         bus.post(new SearchArtistsEvent(text,options));
     }
 

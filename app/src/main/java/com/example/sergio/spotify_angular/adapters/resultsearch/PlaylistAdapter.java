@@ -1,6 +1,7 @@
 package com.example.sergio.spotify_angular.adapters.resultsearch;
 
 import android.content.Context;
+import android.text.Spannable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,7 +51,13 @@ public class PlaylistAdapter extends ProgressLoadedAdapter<PlaylistSimple, Playl
             super.bind(playlistSimple);
             if (playlistSimple.images != null && playlistSimple.images.size() > 0)
                 Picasso.with(context).load(playlistSimple.images.get(0).url).into(photo);
-            title.setText(playlistSimple.name);
+
+            if (hasHighlightText()){
+                Spannable spannable = getSpannableString(playlistSimple.name);
+                title.setText(spannable);
+            }else{
+                title.setText(playlistSimple.name);
+            }
             if (playlistSimple.tracks != null)
                 subtitle.setText(playlistSimple.tracks.total + " Songs");
         }

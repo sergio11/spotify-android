@@ -2,6 +2,7 @@ package com.example.sergio.spotify_angular.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -50,7 +51,12 @@ public class PlaylistsAdapter extends RecyclerViewBaseAdapter<PlaylistSimple, Pl
         @Override
         public void bind(PlaylistSimple playlist) {
             super.bind(playlist);
-            name.setText(playlist.name);
+            if (hasHighlightText()){
+                Spannable spannable = getSpannableString(playlist.name);
+                name.setText(spannable);
+            }else{
+                name.setText(playlist.name);
+            }
             Picasso.with(context).load(playlist.images.get(0).url).placeholder(R.drawable.ic_playlist).into(image);
         }
     }

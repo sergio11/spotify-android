@@ -2,6 +2,7 @@ package com.example.sergio.spotify_angular.adapters.resultsearch;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,14 +51,24 @@ public class TracksAdapter extends ProgressLoadedAdapter<Track, TracksAdapter.Tr
 
         public void bind(Track track) {
             super.bind(track);
-            title.setText(track.name);
             List<String> names = Lists.transform(track.artists, new Function<ArtistSimple, String>() {
                 @Override
                 public String apply(ArtistSimple artist) {
                     return artist.name;
                 }
             });
-            subtitle.setText(TextUtils.join(", ",names));
+            if (hasHighlightText()){
+                Spannable spannableTitle = getSpannableString(track.name);
+                title.setText(spannableTitle);
+                Spannable spannableNames = getSpannableString(TextUtils.join(", ",names));
+                subtitle.setText(spannableNames);
+            }else{
+                title.setText(track.name);
+                subtitle.setText(TextUtils.join(", ",names));
+            }
+
+
+
         }
     }
 }

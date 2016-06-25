@@ -1,7 +1,11 @@
 package com.example.sergio.spotify_angular.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -16,6 +20,7 @@ public abstract class RecyclerViewBaseAdapter<T,E extends RecyclerView.ViewHolde
     protected LayoutInflater inflater;
     protected List<T> data;
     private  OnItemClickListener<T> listener;
+    protected String highlightText;
 
 
     public RecyclerViewBaseAdapter(Context context, List<T> data){
@@ -24,7 +29,9 @@ public abstract class RecyclerViewBaseAdapter<T,E extends RecyclerView.ViewHolde
         this.data = data;
     }
 
-
+    public void setHighlightText(String highlightText) {
+        this.highlightText = highlightText.toLowerCase();
+    }
 
     @Override
     public int getItemCount() {
@@ -46,7 +53,20 @@ public abstract class RecyclerViewBaseAdapter<T,E extends RecyclerView.ViewHolde
         return this.data;
     };
 
+    public boolean hasHighlightText(){
+        return highlightText != null && highlightText.length() > 0 ? true : false;
+    }
 
+    protected Spannable getSpannableString(String text){
+        String lowerText = text.toLowerCase();
+        Spannable spannable = new SpannableString(lowerText);
+        int startIndex = lowerText.indexOf(highlightText);
+        if (startIndex >= 0){
+            int stopIndex = startIndex + highlightText.length();
+            spannable.setSpan(new ForegroundColorSpan(Color.YELLOW), startIndex, stopIndex, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        }
+        return spannable;
+    }
 
     public void setOnItemClickListener(OnItemClickListener<T> listener){
         this.listener = listener;

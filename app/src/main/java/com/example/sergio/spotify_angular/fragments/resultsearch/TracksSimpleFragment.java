@@ -45,6 +45,7 @@ public class TracksSimpleFragment extends AbstractSimpleFragment {
     @Override
     public void search(String text) {
         currentSearch = text;
+        adapter.setHighlightText(text);
         bus.post(new SearchTracksEvent(text,options));
     }
 

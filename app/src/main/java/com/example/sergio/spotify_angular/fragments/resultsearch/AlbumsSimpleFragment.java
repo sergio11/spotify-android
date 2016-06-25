@@ -1,11 +1,18 @@
 package com.example.sergio.spotify_angular.fragments.resultsearch;
 
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+
 import com.example.sergio.spotify_angular.R;
 import com.example.sergio.spotify_angular.adapters.RecyclerViewBaseAdapter;
 import com.example.sergio.spotify_angular.adapters.resultsearch.AlbumsAdapter;
 import com.example.sergio.spotify_angular.events.AlbumsFoundEvent;
 import com.example.sergio.spotify_angular.events.SearchAlbumsEvent;
 import com.example.sergio.spotify_angular.events.SeeAllResultsEvent;
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -45,6 +52,7 @@ public class AlbumsSimpleFragment extends AbstractSimpleFragment<AlbumSimple> {
     @Override
     public void search(String text) {
         currentSearch = text;
+        adapter.setHighlightText(text);
         bus.post(new SearchAlbumsEvent(text,options));
     }
 

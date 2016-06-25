@@ -55,6 +55,7 @@ public class PlaylistSimpleFragment extends AbstractSimpleFragment<PlaylistSimpl
     @Override
     public void search(String text) {
         currentSearch = text;
+        adapter.setHighlightText(text);
         bus.post(new SearchPlaylistEvent(text, options));
     }
 

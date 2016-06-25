@@ -47,8 +47,10 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        resultFragments = new ArrayList<>();
+    }
 
+    private void loadSearchFragment(){
+        resultFragments = new ArrayList<>();
         try {
             Class[] fragments = {ArtistsSimpleFragment.class, AlbumsSimpleFragment.class, PlaylistSimpleFragment.class, TracksSimpleFragment.class};
             for (int i = 0, len = fragments.length; i < len; i++){
@@ -62,7 +64,6 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
     }
 
 
@@ -71,7 +72,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
         View view = inflater.inflate(R.layout.fragment_search_layout, container, false);
         notResultFoundTextView = (TextView) view.findViewById(R.id.not_result_found_primary);
         setHasOptionsMenu(true);
-        FragmentManager childFm = getFragmentManager();
+        /*FragmentManager childFm = getFragmentManager();
         int entryCount = childFm.getBackStackEntryCount();
         if (entryCount > 0) {
             for (Fragment childfragnested: resultFragments) {
@@ -79,7 +80,11 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
                 if (childFmNestManager.getBackStackEntryCount() > 0)
                     childFmNestManager.popBackStack();
             }
-        }
+        }*/
+        loadSearchFragment();
+
+        imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
         return view;
     }
@@ -147,6 +152,7 @@ public class SearchFragment extends Fragment implements SearchView.OnQueryTextLi
 
     @Override
     public void onDataFound(View view) {
+
         view.setVisibility(View.VISIBLE);
     }
 
