@@ -16,6 +16,7 @@ import java.io.File;
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
 import kaaes.spotify.webapi.android.models.UserPrivate;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by sergio on 05/05/2016.
@@ -29,6 +30,11 @@ public class BaseApp extends Application {
         super.onCreate();
         Iconify.with(new FontAwesomeModule());
         bus.register(this); //listen for "global" events
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("Montserrat-Regular.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build()
+        );
     }
 
     public void initServices(String accessToken) {

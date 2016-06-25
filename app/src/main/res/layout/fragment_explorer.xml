@@ -9,12 +9,12 @@
         android:orientation="vertical"
         android:background="@color/secondary">
     <fragment
-        android:id="@+id/featured_playlists_fragment"
+        android:id="@+id/featured_playlists_selector_fragment"
         android:layout_width="match_parent"
         android:layout_height="280dp"
         class="com.example.sergio.spotify_angular.fragments.FeaturedPlaylistsSelectorFragment"></fragment>
     <fragment
-        android:id="@+id/menu_explorer_fragment"
+        android:id="@+id/main_menu_explorer_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         class="com.example.sergio.spotify_angular.fragments.MenuFragment"></fragment>
@@ -22,7 +22,7 @@
         android:text="@string/g_neros_y_estados_de_nimo"
         style="@style/Subtitle"/>
     <fragment
-        android:id="@+id/categories_fragment"
+        android:id="@+id/categories_selector_fragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"

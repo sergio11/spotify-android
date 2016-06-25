@@ -53,4 +53,5 @@ dependencies {
     compile 'com.android.support:support-v4:23.4.0'
     //In-layout notifications. Based on Toast notifications and article by Cyril Mottier
     compile 'com.github.johnkil.android-appmsg:appmsg:1.2.0'
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
 }

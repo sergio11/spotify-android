@@ -2,14 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/featured_playlist_gradient">
+    android:background="@drawable/featured_playlist_gradient"
+    xmlns:tools=" http://schemas.android.com/tools">
     <TextView
-        android:id="@+id/message"
+        android:id="@+id/featured_playlist_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:textColor="@android:color/white"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        tools:ignore="MissingPrefix"
+        fontPath="Montserrat-Bold.ttf"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/featured_playlists_recyclerview"
         android:layout_width="match_parent"
