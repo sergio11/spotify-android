@@ -1,4 +1,4 @@
-# spotify-android
+# Spotify Android APP Clone
 A Spotify Android APP
 
 ## Some screenshots
